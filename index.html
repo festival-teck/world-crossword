@@ -1,0 +1,3583 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>多言語クロスワード｜日本語・한국어・English で遊べる無料クロスワード</title>
+<meta name="description" content="日本語・韓国語・英語で遊べる無料のクロスワードパズル。果物・動物・国など8つのお題と3段階の難易度。スマホでもPCでもすぐ遊べます。 / Free crossword puzzles in Japanese, Korean and English.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="多言語クロスワード / Multilingual Crossword">
+<meta property="og:description" content="日本語・한국어・English で遊べる無料クロスワード。Free crosswords in 3 languages.">
+<meta name="theme-color" content="#EFF3EA">
+<link rel="canonical" href="https://crossword.labfond.com/">
+<meta property="og:url" content="https://crossword.labfond.com/">
+<meta property="og:image" content="https://crossword.labfond.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="多言語クロスワード">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EFF3EA;
+    --paper-panel: #F7FAF3;
+    --grid-line: #C7D2BE;
+    --ink: #223022;
+    --ink-soft: #556354;
+    --block: #223022;
+    --accent: #E07B10;
+    --accent-soft: #F3D6AE;
+    --success: #4F7F35;
+    --success-soft: #DCEACC;
+    --error: #B94A3D;
+    --error-soft: #F5D9D3;
+    --tab-idle: #DCE4D4;
+    color-scheme: light dark;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #171D16;
+      --paper-panel: #1E2620;
+      --grid-line: #3A4636;
+      --ink: #EAF0E4;
+      --ink-soft: #AFBBA6;
+      --block: #EAF0E4;
+      --accent: #F2A24E;
+      --accent-soft: #4A3A22;
+      --success: #8DC26C;
+      --success-soft: #2C3B24;
+      --error: #E08A7C;
+      --error-soft: #442823;
+      --tab-idle: #263023;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #171D16;
+    --paper-panel: #1E2620;
+    --grid-line: #3A4636;
+    --ink: #EAF0E4;
+    --ink-soft: #AFBBA6;
+    --block: #EAF0E4;
+    --accent: #F2A24E;
+    --accent-soft: #4A3A22;
+    --success: #8DC26C;
+    --success-soft: #2C3B24;
+    --error: #E08A7C;
+    --error-soft: #442823;
+    --tab-idle: #263023;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100%;
+    background:
+      linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0/28px 28px,
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0/28px 28px,
+      var(--paper);
+    background-attachment: local;
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, 'Hiragino Mincho ProN', serif;
+    padding: 20px 16px calc(40px + env(safe-area-inset-bottom, 0px));
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; }
+
+  header.hero {
+    padding: 6px 2px 18px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 22px;
+  }
+  header.hero h1 {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: italic;
+    font-size: clamp(28px, 6vw, 42px);
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+  }
+  header.hero p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 17px;
+    max-width: 60ch;
+    line-height: 1.9;
+  }
+  header.hero.hero-collapsed {
+    display: none;
+  }
+  /* On wide screens there is plenty of vertical room, and the page looks
+     top-heavy without a title, so keep a compact title bar visible in every
+     view (only the language-prompt subtitle is dropped). Phones keep the
+     fully collapsed hero to save space. */
+  @media (min-width: 720px) {
+    body { padding-top: 36px; }
+    header.hero.hero-collapsed { display: block; padding-bottom: 12px; margin-bottom: 18px; }
+    header.hero.hero-collapsed p { display: none; }
+  }
+
+  .hidden { display: none !important; }
+
+  /* ---- home view: language picker ---- */
+  .lang-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  @media (min-width: 640px) {
+    .lang-cards { grid-template-columns: repeat(3, 1fr); }
+  }
+  .lang-card {
+    font-family: 'Fraunces', serif;
+    text-align: left;
+    background: var(--paper-panel);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 22px 20px;
+    cursor: pointer;
+    transition: transform .12s ease, background .15s ease;
+  }
+  .lang-card:hover { background: var(--accent-soft); transform: translateY(-2px); }
+  .lang-card:active { transform: translateY(0); }
+  .lang-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .lang-card .native {
+    display: block;
+    font-size: clamp(22px, 5vw, 28px);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .lang-card .caption {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  /* ---- difficulty view ---- */
+  .crumb {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+  .crumb button {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    border: none;
+    background: none;
+    color: var(--accent);
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+  }
+  .diff-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  @media (min-width: 640px) {
+    .diff-cards { grid-template-columns: repeat(3, 1fr); }
+  }
+  .diff-card {
+    text-align: left;
+    background: var(--paper-panel);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 18px 18px;
+    cursor: pointer;
+    transition: transform .12s ease, background .15s ease;
+    font-family: inherit;
+    color: var(--ink);
+  }
+  .diff-card:hover { background: var(--accent-soft); transform: translateY(-2px); }
+  .diff-card:active { transform: translateY(0); }
+  .diff-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .diff-card .dots { font-family: 'IBM Plex Mono', monospace; letter-spacing: 3px; color: var(--accent); font-size: 14px; margin-bottom: 8px; }
+  .diff-card .label {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+  .diff-card .desc {
+    display: block;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .play-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .play-badge strong { color: var(--ink); font-weight: 600; }
+  .play-badge button {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    border: none;
+    background: none;
+    color: var(--accent);
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+  }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid var(--ink);
+    background: var(--paper-panel);
+    padding: 12px;
+    border-radius: 0 8px 8px 8px;
+    margin-bottom: 18px;
+  }
+  .toolbar label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-soft); }
+  select#topicSelect {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    padding: 7px 10px;
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    background: var(--paper);
+    color: var(--ink);
+  }
+  button {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform .1s ease, background .15s ease;
+  }
+  button:hover { background: var(--accent-soft); }
+  button:active { transform: translateY(1px); }
+  button.primary { background: var(--ink); color: var(--paper); }
+  button.primary:hover { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .spacer { flex: 1; }
+
+  .status-line {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    min-height: 18px;
+    margin-bottom: 14px;
+    color: var(--ink-soft);
+  }
+  .status-line.correct { color: var(--success); font-weight: 600; }
+  .status-line.wrong { color: var(--error); }
+
+  /* On mobile the clue list sits below the grid (single-column board),
+     so reading a clue means scrolling away from the grid. This bar sits
+     right above the grid and shows whichever clue is currently active,
+     updated on every cell/word focus, so the clue is visible without
+     scrolling. Hidden once the clue list becomes a visible side panel. */
+  .active-clue-bar {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    background: var(--accent-soft);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .active-clue-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .active-clue-text { color: var(--ink); }
+  @media (min-width: 720px) {
+    .active-clue-bar { display: none !important; }
+  }
+
+  .board {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+  @media (min-width: 720px) {
+    .board { grid-template-columns: auto minmax(260px, 1fr); align-items: start; }
+    /* On the advanced grid especially, the clue list can run much longer
+       than the grid is tall, forcing the whole page to scroll a long way
+       just to reach the down clues. Giving the clue column its own
+       scrollable, viewport-anchored box keeps both the grid and the clue
+       list on screen together instead. */
+    .clues {
+      max-height: calc(100vh - 160px);
+      overflow-y: auto;
+      position: sticky;
+      top: 16px;
+      padding-right: 8px;
+    }
+  }
+
+  .grid-panel {
+    border: 2px solid var(--ink);
+    background: var(--paper-panel);
+    padding: 14px;
+    border-radius: 8px;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+  }
+  #grid {
+    display: grid;
+    gap: 2px;
+    background: var(--ink);
+    border: 2px solid var(--ink);
+    width: max-content;
+  }
+  .cell {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    background: var(--paper);
+  }
+  .cell.block { background: var(--block); }
+  .cell input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-family: 'IBM Plex Mono', 'Hiragino Sans', 'Noto Sans KR', system-ui, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    caret-color: var(--accent);
+    padding: 0;
+    text-transform: uppercase;
+  }
+  .cell input:focus { outline: none; background: var(--accent-soft); }
+  .cell.active-word input:not(:focus) { background: color-mix(in srgb, var(--accent-soft) 45%, transparent); }
+  .cell.correct input { color: var(--success); }
+  .cell.wrong input { background: var(--error-soft); }
+  .cell .num {
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    color: var(--ink-soft);
+    pointer-events: none;
+    line-height: 1;
+  }
+  @media (min-width: 480px) {
+    .cell { width: 38px; height: 38px; }
+    .cell input { font-size: 17px; }
+  }
+
+  .clues { display: flex; flex-direction: column; gap: 18px; }
+  .clue-group h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--grid-line);
+  }
+  .clue-group ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .clue-group li {
+    display: flex;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 1.45;
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .15s ease;
+  }
+  .clue-group li:hover { background: var(--accent-soft); }
+  .clue-group li.active { background: var(--accent-soft); font-weight: 600; }
+  .clue-group li .n {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    flex-shrink: 0;
+    min-width: 1.4em;
+  }
+
+  footer.note {
+    margin-top: 28px;
+    padding-top: 14px;
+    border-top: 1px solid var(--grid-line);
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  /* ---- light/dark toggle ---- */
+  .theme-toggle {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 60;
+    width: 42px;
+    height: 42px;
+    line-height: 1;
+    font-size: 18px;
+    border: 2px solid var(--ink);
+    background: var(--paper-panel);
+    color: var(--ink);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    transition: transform .12s ease, background .15s ease;
+  }
+  .theme-toggle:hover { background: var(--accent-soft); transform: translateY(-1px); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (min-width: 640px) {
+    .theme-toggle { top: 20px; right: 20px; }
+  }
+
+  /* ---- site-wide footer ---- */
+  .site-footer {
+    max-width: 920px;
+    margin: 36px auto 0;
+    padding: 18px 16px calc(24px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--grid-line);
+    text-align: center;
+  }
+  .site-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 18px;
+    margin-bottom: 10px;
+  }
+  .footer-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    border: none;
+    background: none;
+    color: var(--ink-soft);
+    cursor: pointer;
+    padding: 4px 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .footer-link:hover { color: var(--accent); }
+  .footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .site-footer-copy {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin: 0;
+    opacity: 0.8;
+  }
+
+  /* ---- info modal (使い方 / FAQ / 運営者情報 / プライバシーポリシー) ---- */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+  }
+  .modal-overlay.hidden { display: none; }
+  .modal-box {
+    position: relative;
+    background: var(--paper-panel);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 28px 24px 24px;
+  }
+  .modal-box h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    margin: 0 0 14px;
+  }
+  .modal-body { font-size: 14px; line-height: 1.75; }
+  .modal-body h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 18px 0 6px;
+  }
+  .modal-body h3:first-child { margin-top: 0; }
+  .modal-body p { margin: 0 0 10px; }
+  .modal-body ol, .modal-body ul { margin: 0 0 10px; padding-left: 1.3em; }
+  .modal-body li { margin-bottom: 6px; }
+  .modal-body a { color: var(--accent); }
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    color: var(--ink-soft);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  .modal-close:hover { background: var(--accent-soft); color: var(--ink); }
+  .modal-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="ダークモード切り替え" title="ダークモード切り替え">🌙</button>
+<div class="wrap">
+  <header class="hero" id="hero">
+    <h1>多言語クロスワード</h1>
+    <p id="heroSubtitle">
+      あそびたい言語をえらんでね<br>
+      플레이할 언어를 선택하세요<br>
+      Choose a language to play in.
+    </p>
+  </header>
+
+  <!-- SCREEN 1: language picker -->
+  <div id="homeView">
+    <div class="lang-cards">
+      <button class="lang-card" data-lang="ja">
+        <span class="native">日本語</span>
+        <span class="caption">JAPANESE</span>
+      </button>
+      <button class="lang-card" data-lang="ko">
+        <span class="native">한국어</span>
+        <span class="caption">KOREAN</span>
+      </button>
+      <button class="lang-card" data-lang="en">
+        <span class="native">English</span>
+        <span class="caption">ENGLISH</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: difficulty picker -->
+  <div id="difficultyView" class="hidden">
+    <div class="crumb"><button id="backToHomeBtn">&larr; <span id="backToHomeLabel">言語をえらびなおす</span></button></div>
+    <div class="diff-cards" id="diffCards"></div>
+  </div>
+
+  <!-- SCREEN 3: the puzzle -->
+  <div id="puzzleView" class="hidden">
+    <div class="crumb"><button id="backToDiffBtn">&larr; <span id="backToDiffLabel">難易度を変える</span></button></div>
+    <div class="play-badge">
+      <span><strong id="badgeLang"></strong> ・ <span id="badgeDiff"></span></span>
+    </div>
+
+    <div class="toolbar">
+      <label for="topicSelect" id="topicLabel">お題</label>
+      <select id="topicSelect"></select>
+      <button id="newPuzzleBtn" class="primary">🔄 <span id="newPuzzleLabel">新しいパズル</span></button>
+      <div class="spacer"></div>
+      <button id="checkBtn"><span id="checkLabel">答え合わせ</span></button>
+      <button id="revealBtn"><span id="revealLabel">答えを見る</span></button>
+    </div>
+
+    <div class="status-line" id="statusLine"></div>
+
+    <div id="activeClueBar" class="active-clue-bar hidden">
+      <span id="activeClueNumber" class="active-clue-number"></span>
+      <span id="activeClueText" class="active-clue-text"></span>
+    </div>
+
+    <div class="board">
+      <div class="grid-panel"><div id="grid"></div></div>
+      <div class="clues">
+        <div class="clue-group">
+          <h2 id="acrossLabel">よこ (ACROSS)</h2>
+          <ul id="acrossList"></ul>
+        </div>
+        <div class="clue-group">
+          <h2 id="downLabel">たて (DOWN)</h2>
+          <ul id="downList"></ul>
+        </div>
+      </div>
+    </div>
+
+    <footer class="note" id="footerNote">
+      このパズルはブラウザ上でランダム生成されています。単語同士の重なり方によって、出題数は毎回多少前後します。
+    </footer>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <nav class="site-footer-links">
+    <button type="button" class="footer-link" data-info="howto">使い方</button>
+    <button type="button" class="footer-link" data-info="faq">よくある質問</button>
+    <button type="button" class="footer-link" data-info="about">運営者情報</button>
+    <button type="button" class="footer-link" data-info="privacy">プライバシーポリシー</button>
+    <a class="footer-link" href="https://docs.google.com/forms/d/1ul9e318yHhixHOjYTOZlA2eYhhNiN5sS4JxnIKr2HPA/viewform" target="_blank" rel="noopener noreferrer">お問い合わせ</a>
+  </nav>
+  <p class="site-footer-copy">&copy; <span id="footerYear"></span> 多言語クロスワード</p>
+</footer>
+
+<div id="infoModalOverlay" class="modal-overlay hidden">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+    <button type="button" id="infoModalClose" class="modal-close" aria-label="閉じる">&times;</button>
+    <h2 id="infoModalTitle"></h2>
+    <div id="infoModalBody" class="modal-body"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------------------------------------------------------
+   1. WORD BANKS  (topic -> language -> [{w, c}])
+   New topics can be added later by adding a key to TOPICS
+   and matching entries in WORDS.ja / .ko / .en
+--------------------------------------------------------- */
+const TOPICS = [
+  { id: "fruits", enabled: true,  label: { ja: "果物", ko: "과일", en: "Fruits" } },
+  { id: "animals", enabled: true, label: { ja: "動物", ko: "동물", en: "Animals" } },
+  { id: "vegetables", enabled: true, label: { ja: "野菜", ko: "채소", en: "Vegetables" } },
+  { id: "jobs", enabled: true, label: { ja: "仕事", ko: "직업", en: "Jobs" } },
+  { id: "sports", enabled: true, noLang: ["ko"], label: { ja: "運動", ko: "스포츠", en: "Sports" } },
+  { id: "vehicles", enabled: true, noLang: ["ko"], label: { ja: "乗り物", ko: "탈것", en: "Vehicles" } },
+  { id: "countries", enabled: true, label: { ja: "国", ko: "나라", en: "Countries" } },
+  { id: "general", enabled: true, label: { ja: "自由", ko: "자유", en: "Free" } }
+];
+
+const WORDS = {
+  fruits: {
+    ja: [
+      /* level 1: beginner — common, everyday fruits, no cultivar/variety jargon */
+      {w:"りんご", c:"赤や緑の丸い果物。1日1個で医者いらず", lv:1},
+      {w:"みかん", c:"冬によく食べる、オレンジ色の甘い果物", lv:1},
+      {w:"ばなな", c:"黄色くて長い、皮をむいて食べる果物", lv:1},
+      {w:"いちご", c:"赤くて種が外側についている甘い果物", lv:1},
+      {w:"ぶどう", c:"紫や緑の小さな実が房になった果物", lv:1},
+      {w:"もも", c:"夏が旬の、うぶ毛のある甘い果物", lv:1},
+      {w:"なし", c:"みずみずしくてシャリシャリした食感の果物", lv:1},
+      {w:"すいか", c:"夏の風物詩、緑と黒の縞模様の大きな果物", lv:1},
+      {w:"めろん", c:"網目模様がある高級な甘い果物", lv:1},
+      {w:"れもん", c:"とても酸っぱい黄色い果物", lv:1},
+      {w:"おれんじ", c:"皮がオレンジ色でビタミンCが豊富な果物", lv:1},
+      {w:"きうい", c:"茶色い皮の中が緑色の果物", lv:1},
+      {w:"まんごー", c:"南国生まれの甘くてとろける果物", lv:1},
+      {w:"さくらんぼ", c:"小さくて赤い、二つ並んでいることが多い果物", lv:1},
+      {w:"かき", c:"秋が旬のオレンジ色の果物。渋いものと甘いものがある", lv:1},
+      {w:"ゆず", c:"香りが強い黄色い柑橘。お風呂に入れることもある", lv:1},
+      {w:"あぼかど", c:"森のバターとも呼ばれる緑色のクリーミーな果物", lv:1},
+      {w:"いちじく", c:"中につぶつぶがある、甘くねっとりした果物", lv:1},
+      {w:"すもも", c:"酸味が強い、梅に似た赤紫色の果物", lv:1},
+      {w:"あんず", c:"梅に似たオレンジ色の果物。ジャムによく使われる", lv:1},
+      {w:"びわ", c:"初夏が旬のオレンジ色の果物。種が大きい", lv:1},
+      {w:"ぐみ", c:"庭木にもなる、赤い小さな実がなる果物", lv:1},
+      {w:"うめ", c:"春に花が咲き、梅干しや梅酒に使われる酸っぱい果物", lv:1},
+      {w:"あけび", c:"秋に紫色に熟し、ぱっくり割れる日本の野生の果物", lv:1},
+      {w:"すだち", c:"徳島県が名産の、香り高い小さな緑の柑橘", lv:1},
+      {w:"かぼす", c:"大分県が名産の、爽やかな香りの緑の柑橘", lv:1},
+      {w:"ぐあば", c:"独特の香りが強い、南国生まれのピンクの果肉の果物", lv:1},
+      {w:"らいむ", c:"レモンより小さく緑色をした酸味の強い柑橘", lv:1},
+
+      /* level 2: intermediate — still fairly familiar, a few named varieties */
+      {w:"いよかん", c:"愛媛県が名産の、皮の剥きやすい柑橘", lv:2},
+      {w:"はっさく", c:"ほろ苦さのある大きめの柑橘", lv:2},
+      {w:"ぱいなっぷる", c:"葉っぱが上についた、酸味と甘みのある南国の果物", lv:2},
+      {w:"ぱぱいや", c:"オレンジ色の果肉で種が黒い南国の果物", lv:2},
+      {w:"でこぽん", c:"頭がぽこっと出た形が特徴のかんきつ", lv:2},
+      {w:"きんかん", c:"皮ごと食べられる小さなオレンジ色の柑橘", lv:2},
+      {w:"らいち", c:"白い果肉と甘い香りが特徴の南国フルーツ", lv:2},
+      {w:"ざくろ", c:"赤い粒がぎっしり詰まった果物", lv:2},
+      {w:"ねくたりん", c:"毛のない、つるっとした桃の仲間", lv:2},
+      {w:"ぱっしょんふるーつ", c:"酸味の強いゼリー状の種が特徴の南国フルーツ", lv:2},
+      {w:"きょほう", c:"大粒で濃い紫色の人気ぶどう品種", lv:2},
+      {w:"ますかっと", c:"緑色で皮ごと食べられる高級ぶどう品種", lv:2},
+      {w:"ざぼん", c:"柑橘の中でも特に大きい、ほろ苦い果物", lv:2},
+      {w:"ぶんたん", c:"ざぼんの一種で、厚い皮とさっぱりした甘さが特徴", lv:2},
+      {w:"ゆこう", c:"徳島の在来種で、ゆずに似た香りの柑橘", lv:2},
+      {w:"ぽんかん", c:"皮が薄くて甘い、冬が旬のみかんの仲間", lv:2},
+      {w:"なつみかん", c:"夏に食べごろを迎える、酸味の強い大きな柑橘", lv:2},
+      {w:"たんかん", c:"奄美・沖縄でとれる、甘みの強い柑橘", lv:2},
+      {w:"どりあん", c:"「果物の王様」と呼ばれる、強烈な匂いが特徴の南国フルーツ", lv:2},
+      {w:"まんごすちん", c:"「果物の女王」と呼ばれる、白い果肉が上品な紫色の果物", lv:2},
+
+      /* level 3: advanced — rarer fruits and named cultivars */
+      {w:"しらぬい", c:"でこぽんのもとになった品種のかんきつ", lv:3},
+      {w:"どらごんふるーつ", c:"ピンクの皮に白い果肉、黒いつぶつぶが特徴の南国フルーツ", lv:3},
+      {w:"ぐれーぷふるーつ", c:"ほろ苦さが特徴の大きな柑橘", lv:3},
+      {w:"あせろら", c:"ビタミンCが豊富な小さな赤い果実", lv:3},
+      {w:"らずべりー", c:"赤くてつぶつぶした小さなベリー", lv:3},
+      {w:"ぶるーべりー", c:"目にいいといわれる青紫色の小さな丸い実", lv:3},
+      {w:"せとか", c:"とろけるような食感が人気の高級みかん", lv:3},
+      {w:"はるか", c:"とろけるような甘さが特徴の黄色いみかんの仲間", lv:3},
+      {w:"きよみ", c:"みかんとオレンジをかけあわせた、ジューシーな柑橘", lv:3},
+      {w:"はれひめ", c:"種が少なく食べやすい、愛媛生まれの柑橘", lv:3},
+      {w:"あまなつ", c:"夏みかんより甘く、爽やかな酸味の柑橘", lv:3},
+      {w:"しーくゎーさー", c:"沖縄名産の、強い酸味とさわやかな香りの小さな柑橘", lv:3},
+      {w:"ちぇりもや", c:"カスタードのような濃厚な甘さの南国フルーツ", lv:3},
+      {w:"たまりんど", c:"酸味と甘みが独特な、さやの中に果肉が入った果物", lv:3},
+      {w:"かむかむ", c:"ビタミンCが世界一とも言われる、酸っぱい南米の果実", lv:3}
+    ],
+    ko: [
+      {w:"사과", c:"빨갛고 동그란 가을 과일"},
+      {w:"바나나", c:"길고 노란, 껍질을 벗겨 먹는 과일"},
+      {w:"포도", c:"작은 알갱이가 송이를 이루는 보라색 과일"},
+      {w:"딸기", c:"빨갛고 씨가 겉에 박힌 달콤한 과일"},
+      {w:"복숭아", c:"솜털이 있고 향긋한 여름 과일"},
+      {w:"수박", c:"초록 줄무늬에 속은 빨간 여름 과일"},
+      {w:"참외", c:"노란 껍질의 한국 여름 과일"},
+      {w:"자두", c:"새콤달콤한 보라색 작은 과일"},
+      {w:"레몬", c:"아주 신맛이 나는 노란 과일"},
+      {w:"오렌지", c:"새콤달콤한 주황색 과일"},
+      {w:"키위", c:"갈색 껍질 속이 초록색인 과일"},
+      {w:"망고", c:"달콤하고 진한 향의 열대 과일"},
+      {w:"메론", c:"그물무늬가 있는 고급 과일"},
+      {w:"체리", c:"작고 빨간, 쌍으로 열리는 과일"},
+      {w:"파인애플", c:"뾰족뾰족한 껍질의 열대 과일"},
+      {w:"자몽", c:"쓴맛이 도는 분홍빛 속살의 큰 감귤류"},
+      {w:"무화과", c:"꽃이 보이지 않는 채로 열리는 달콤한 보라색 과일"},
+      {w:"석류", c:"빨간 알갱이가 가득한 새콤한 과일"},
+      {w:"용과", c:"분홍 껍질에 하얀 속살, 검은 씨가 있는 열대 과일"},
+      {w:"살구", c:"주황빛의 새콤달콤한 여름 과일"},
+      {w:"구아바", c:"향이 진한 분홍빛 속살의 열대 과일"},
+      {w:"파파야", c:"주황색 속살에 검은 씨가 있는 열대 과일"},
+      {w:"아보카도", c:"숲속의 버터라 불리는 초록빛 크림 같은 과일"},
+      {w:"청포도", c:"껍질째 먹는 연둣빛 포도 품종"},
+      {w:"망고스틴", c:"과일의 여왕이라 불리는 보라색 열대 과일"},
+      {w:"오디", c:"뽕나무에서 열리는 작고 검붉은 열매"},
+      {w:"두리안", c:"냄새는 강하지만 맛은 달콤한 열대 과일의 왕"},
+      {w:"바오밥", c:"아프리카 나무에 열리는 크고 단단한 열매"},
+      {w:"천도복숭아", c:"털이 없고 매끈한 껍질의 복숭아 품종"},
+      {w:"레드향", c:"붉은빛을 띠는 새콤달콤한 만감류 감귤"},
+      {w:"천혜향", c:"향이 좋고 껍질이 얇은 만감류 감귤"},
+      {w:"비파", c:"초여름이 제철인 주황빛 과일. 씨가 큼"},
+      {w:"모과", c:"딱딱하고 향이 좋은 노란 과일. 차로 많이 마심"},
+      {w:"구스베리", c:"작고 새콤한 초록빛 열매"},
+      {w:"라즈베리", c:"붉고 오돌토돌한 작은 베리류"},
+      {w:"블루베리", c:"눈에 좋다고 알려진 짙은 보라색 열매"},
+      {w:"라임", c:"레몬보다 작고 초록빛인 새콤한 감귤류"},
+      {w:"금귤", c:"껍질째 먹는 작은 주황빛 감귤"},
+      {w:"라이치", c:"하얀 과육에 향긋한 향이 나는 열대 과일"},
+      {w:"넥타린", c:"털이 없고 매끈한 복숭아 품종"},
+      {w:"패션프루트", c:"새콤한 젤리 같은 씨가 특징인 열대 과일"},
+      {w:"아세로라", c:"비타민C가 풍부한 작고 빨간 열매"},
+      {w:"한라봉", c:"제주도가 명산지인 울퉁불퉁한 껍질의 감귤"},
+      {w:"크랜베리", c:"새콤하고 붉은 작은 열매. 주스로 유명"}
+    ],
+    en: [
+      {w:"APPLE", c:"A round fruit, red or green, said to keep the doctor away", lv:1},
+      {w:"BANANA", c:"Long yellow fruit you peel before eating", lv:1},
+      {w:"GRAPE", c:"Small fruit that grows in bunches, used for wine", lv:1},
+      {w:"STRAWBERRY", c:"Red fruit with seeds on the outside", lv:1},
+      {w:"PEACH", c:"Fuzzy summer fruit with a pit", lv:1},
+      {w:"WATERMELON", c:"Big green-striped fruit with red flesh", lv:1},
+      {w:"PEAR", c:"Bell-shaped juicy fruit", lv:1},
+      {w:"LEMON", c:"Very sour yellow citrus fruit", lv:1},
+      {w:"ORANGE", c:"Round citrus fruit rich in vitamin C", lv:1},
+      {w:"KIWI", c:"Fuzzy brown fruit, green inside", lv:1},
+      {w:"MANGO", c:"Sweet tropical fruit with orange flesh", lv:1},
+      {w:"MELON", c:"Large sweet fruit with netted skin", lv:1},
+      {w:"CHERRY", c:"Small red fruit that grows in pairs", lv:1},
+      {w:"PLUM", c:"Small purple stone fruit", lv:1},
+      {w:"FIG", c:"Soft sweet fruit with many tiny seeds", lv:1},
+      {w:"LIME", c:"Small green sour citrus fruit", lv:1},
+      {w:"GUAVA", c:"Tropical fruit with pink flesh", lv:2},
+      {w:"PAPAYA", c:"Tropical fruit with orange flesh and black seeds", lv:2},
+      {w:"PINEAPPLE", c:"Spiky tropical fruit with sweet yellow flesh", lv:2},
+      {w:"COCONUT", c:"Large brown tropical fruit with white flesh and milk inside", lv:2},
+      {w:"APRICOT", c:"Small orange stone fruit, like a mini peach", lv:2},
+      {w:"TANGERINE", c:"Small easy-to-peel orange citrus fruit", lv:2},
+      {w:"BLUEBERRY", c:"Tiny round blue-purple berry", lv:2},
+      {w:"RASPBERRY", c:"Small red bumpy berry", lv:2},
+      {w:"NECTARINE", c:"Smooth-skinned cousin of the peach, no fuzz", lv:2},
+      {w:"LYCHEE", c:"White-fleshed tropical fruit with a fragrant smell", lv:2},
+      {w:"PERSIMMON", c:"Orange fall fruit, sweet when ripe", lv:2},
+      {w:"POMEGRANATE", c:"Fruit packed with juicy red seeds", lv:2},
+      {w:"PASSIONFRUIT", c:"Tropical fruit with tangy jelly-like seeds", lv:3},
+      {w:"KUMQUAT", c:"Tiny citrus fruit you eat peel and all", lv:3},
+      {w:"GOOSEBERRY", c:"Small tart green berry", lv:3},
+      {w:"CRANBERRY", c:"Small tart red berry, often made into sauce", lv:3},
+      {w:"DRAGONFRUIT", c:"Pink-skinned tropical fruit with black-speckled white flesh", lv:3},
+      {w:"ACEROLA", c:"Small red fruit very high in vitamin C", lv:3},
+      {w:"QUINCE", c:"Hard, fragrant yellow fruit, too tart to eat raw", lv:3},
+      {w:"STARFRUIT", c:"Yellow fruit that looks like a star when sliced", lv:3},
+      {w:"JACKFRUIT", c:"Huge spiky tropical fruit, sometimes used as a meat substitute", lv:3}
+    ]
+  },
+  animals: {
+    ja: [
+      {w:"いぬ", c:"人と暮らす、ワンと鳴く動物", lv:1},
+      {w:"ねこ", c:"人と暮らす、ニャーと鳴く動物", lv:1},
+      {w:"うさぎ", c:"長い耳とぴょんぴょん跳ねる足が特徴の動物", lv:1},
+      {w:"とり", c:"空を飛ぶ、羽の生えた動物", lv:1},
+      {w:"さかな", c:"水の中で泳ぐ、えらで呼吸する動物", lv:1},
+      {w:"うし", c:"モーと鳴く、牛乳をとる動物", lv:1},
+      {w:"うま", c:"人を乗せて走る、たてがみのある動物", lv:1},
+      {w:"ぶた", c:"ブーと鳴く、ピンク色の動物", lv:1},
+      {w:"ひつじ", c:"もこもこの毛におおわれた動物", lv:1},
+      {w:"にわとり", c:"卵を産む、コケコッコーと鳴く鳥", lv:1},
+      {w:"ぞう", c:"長い鼻が特徴の、とても大きな動物", lv:1},
+      {w:"きりん", c:"首がとても長い、草原に住む動物", lv:1},
+      {w:"らいおん", c:"たてがみが特徴の、百獣の王と呼ばれる動物", lv:1},
+      {w:"とら", c:"黒と黄色のしま模様が特徴の動物", lv:1},
+      {w:"くま", c:"冬に冬眠する、はちみつが好きな動物", lv:1},
+      {w:"さる", c:"木に登るのが得意な、人に似た動物", lv:1},
+      {w:"かめ", c:"甲羅を背負った、動きがゆっくりな動物", lv:1},
+      {w:"へび", c:"足がなく、地面をはって進む動物", lv:1},
+      {w:"かえる", c:"ケロケロと鳴く、水辺にすむ動物", lv:1},
+      {w:"ぺんぎん", c:"飛べないが泳ぎが得意な、南極にもすむ鳥", lv:1},
+      {w:"やぎ", c:"あごひげが特徴の、紙も食べると言われる動物", lv:2},
+      {w:"あひる", c:"水かきのある足でよちよち歩く鳥", lv:2},
+      {w:"しか", c:"オスに角がある、森にすむ動物", lv:2},
+      {w:"りす", c:"ふさふさのしっぽでどんぐりを集める動物", lv:2},
+      {w:"いるか", c:"頭がよく、ジャンプが得意な海の動物", lv:2},
+      {w:"くじら", c:"海にすむ、とても大きな動物", lv:2},
+      {w:"たこ", c:"8本の足を持つ、海にすむ生き物", lv:2},
+      {w:"かに", c:"横歩きをする、はさみを持つ生き物", lv:2},
+      {w:"えび", c:"体が曲がった、殻に包まれた生き物", lv:2},
+      {w:"ちょう", c:"花から花へひらひら飛ぶ、羽の美しい昆虫", lv:2},
+      {w:"はち", c:"花の蜜を集める、刺すこともある昆虫", lv:2},
+      {w:"あり", c:"行列を作って歩く、小さな昆虫", lv:2},
+      {w:"くも", c:"糸で巣を張る、足が8本ある生き物", lv:2},
+      {w:"こうもり", c:"夜に飛び回る、羽を持つ動物", lv:2},
+      {w:"わに", c:"鋭い歯を持つ、水辺にすむ大きな動物", lv:2},
+      {w:"ふくろう", c:"夜に活動する、丸い目が特徴の鳥", lv:2},
+      {w:"からす", c:"カーカーと鳴く、黒い羽の鳥", lv:2},
+      {w:"すずめ", c:"茶色くて小さな、身近によくいる鳥", lv:2},
+      {w:"らくだ", c:"背中にこぶがある、砂漠にすむ動物", lv:3},
+      {w:"かば", c:"口が大きく開く、水辺にすむ大きな動物", lv:3},
+      {w:"ひょう", c:"体に斑点模様がある、すばやい動物", lv:3},
+      {w:"おおかみ", c:"群れで暮らす、犬に似た野生の動物", lv:3},
+      {w:"きつね", c:"三角の耳と長いしっぽが特徴の動物", lv:3},
+      {w:"たぬき", c:"ずんぐりした体で、日本の昔話にもよく出る動物", lv:3},
+      {w:"あざらし", c:"丸い体で氷の上に寝そべる海の動物", lv:3},
+      {w:"こあら", c:"ユーカリの葉を食べる、オーストラリアの動物", lv:3},
+      {w:"かんがるー", c:"おなかの袋で子どもを育てる動物", lv:3},
+      {w:"はりねずみ", c:"体中がとげでおおわれた小さな動物", lv:3},
+      {w:"もぐら", c:"土の中にトンネルを掘って暮らす動物", lv:3},
+      {w:"かわうそ", c:"川や海であそぶのが得意な動物", lv:3},
+      {w:"とかげ", c:"日なたぼっこが好きな、しっぽの長い生き物", lv:3},
+      {w:"さそり", c:"しっぽの先に毒針を持つ生き物", lv:3},
+      {w:"くらげ", c:"体がやわらかく、ゆらゆら海を漂う生き物", lv:3},
+      {w:"ひとで", c:"星のような形をした、海にすむ生き物", lv:3},
+      {w:"うなぎ", c:"細長い体をした、蒲焼きでも有名な魚", lv:3}
+    ],
+    ko: [
+      {w:"개", c:"멍멍 짖는, 사람과 함께 사는 동물", lv:1},
+      {w:"고양이", c:"야옹 하고 우는, 사람과 함께 사는 동물", lv:1},
+      {w:"토끼", c:"귀가 길고 깡충깡충 뛰는 동물", lv:1},
+      {w:"새", c:"하늘을 나는, 날개 달린 동물", lv:1},
+      {w:"물고기", c:"물속에서 아가미로 숨 쉬는 동물", lv:1},
+      {w:"소", c:"음매 하고 우는, 우유를 주는 동물", lv:1},
+      {w:"말", c:"갈기가 있고 사람을 태우고 달리는 동물", lv:1},
+      {w:"돼지", c:"꿀꿀 우는, 분홍빛 동물", lv:1},
+      {w:"양", c:"곱슬곱슬한 털로 덮인 동물", lv:1},
+      {w:"닭", c:"알을 낳는, 꼬끼오 우는 새", lv:1},
+      {w:"코끼리", c:"긴 코가 특징인 아주 큰 동물", lv:1},
+      {w:"기린", c:"목이 아주 긴, 초원에 사는 동물", lv:1},
+      {w:"사자", c:"갈기가 있는, 백수의 왕이라 불리는 동물", lv:1},
+      {w:"호랑이", c:"검고 노란 줄무늬가 있는 동물", lv:1},
+      {w:"곰", c:"겨울잠을 자는, 꿀을 좋아하는 동물", lv:1},
+      {w:"원숭이", c:"나무를 잘 타는, 사람과 닮은 동물", lv:1},
+      {w:"거북이", c:"등딱지를 지고 다니는, 느린 동물", lv:1},
+      {w:"뱀", c:"다리가 없이 땅을 기어 다니는 동물", lv:1},
+      {w:"개구리", c:"개굴개굴 우는, 물가에 사는 동물", lv:1},
+      {w:"펭귄", c:"날지 못하지만 헤엄을 잘 치는 남극의 새", lv:1},
+      {w:"염소", c:"턱수염이 특징인 동물", lv:2},
+      {w:"오리", c:"물갈퀴로 뒤뚱뒤뚱 걷는 새", lv:2},
+      {w:"사슴", c:"수컷에게 뿔이 있는, 숲에 사는 동물", lv:2},
+      {w:"다람쥐", c:"복슬복슬한 꼬리로 도토리를 모으는 동물", lv:2},
+      {w:"돌고래", c:"똑똑하고 점프를 잘하는 바다 동물", lv:2},
+      {w:"고래", c:"바다에 사는 아주 큰 동물", lv:2},
+      {w:"문어", c:"다리가 여덟 개인 바다 생물", lv:2},
+      {w:"게", c:"옆으로 걷는, 집게발이 있는 생물", lv:2},
+      {w:"새우", c:"몸이 굽은, 껍데기로 덮인 생물", lv:2},
+      {w:"나비", c:"꽃 사이를 팔랑팔랑 날아다니는 곤충", lv:2},
+      {w:"벌", c:"꽃의 꿀을 모으는, 쏘기도 하는 곤충", lv:2},
+      {w:"개미", c:"줄지어 다니는 작은 곤충", lv:2},
+      {w:"거미", c:"실로 집을 짓는, 다리가 여덟 개인 생물", lv:2},
+      {w:"박쥐", c:"밤에 날아다니는, 날개 달린 동물", lv:2},
+      {w:"악어", c:"날카로운 이빨을 가진, 물가에 사는 큰 동물", lv:2},
+      {w:"부엉이", c:"밤에 활동하는, 눈이 동그란 새", lv:2},
+      {w:"까마귀", c:"까악까악 우는, 검은 깃털의 새", lv:2},
+      {w:"참새", c:"작고 갈색인, 흔히 볼 수 있는 새", lv:2},
+      {w:"낙타", c:"등에 혹이 있는, 사막에 사는 동물", lv:3},
+      {w:"하마", c:"입을 크게 벌리는, 물가에 사는 큰 동물", lv:3},
+      {w:"표범", c:"몸에 반점 무늬가 있는 날쌘 동물", lv:3},
+      {w:"늑대", c:"무리를 지어 사는, 개를 닮은 야생 동물", lv:3},
+      {w:"여우", c:"세모난 귀와 긴 꼬리가 특징인 동물", lv:3},
+      {w:"너구리", c:"통통한 몸매의, 옛이야기에도 자주 나오는 동물", lv:3},
+      {w:"코알라", c:"유칼립투스 잎을 먹는 호주의 동물", lv:3},
+      {w:"캥거루", c:"배주머니에 새끼를 키우는 동물", lv:3},
+      {w:"고슴도치", c:"온몸이 가시로 덮인 작은 동물", lv:3},
+      {w:"두더지", c:"땅속에 굴을 파고 사는 동물", lv:3},
+      {w:"수달", c:"강이나 바다에서 노는 것을 좋아하는 동물", lv:3},
+      {w:"도마뱀", c:"햇볕 쬐기를 좋아하는, 꼬리가 긴 생물", lv:3},
+      {w:"전갈", c:"꼬리 끝에 독침이 있는 생물", lv:3},
+      {w:"해파리", c:"몸이 부드럽고 바다를 둥둥 떠다니는 생물", lv:3},
+      {w:"불가사리", c:"별 모양을 한, 바다에 사는 생물", lv:3},
+      {w:"장어", c:"몸이 길쭉한, 구이로도 유명한 물고기", lv:3}
+    ],
+    en: [
+      {w:"DOG", c:"A pet that barks", lv:1},
+      {w:"CAT", c:"A pet that meows", lv:1},
+      {w:"RABBIT", c:"An animal with long ears that hops", lv:1},
+      {w:"BIRD", c:"A feathered animal that flies", lv:1},
+      {w:"FISH", c:"An animal that breathes through gills underwater", lv:1},
+      {w:"COW", c:"A farm animal that gives milk and says moo", lv:1},
+      {w:"HORSE", c:"An animal with a mane that people ride", lv:1},
+      {w:"PIG", c:"A pink farm animal that oinks", lv:1},
+      {w:"SHEEP", c:"A woolly farm animal", lv:1},
+      {w:"CHICKEN", c:"A farm bird that lays eggs", lv:1},
+      {w:"ELEPHANT", c:"A huge animal with a long trunk", lv:1},
+      {w:"GIRAFFE", c:"An animal with a very long neck", lv:1},
+      {w:"LION", c:"A maned animal called the king of the jungle", lv:1},
+      {w:"TIGER", c:"A big cat with black and orange stripes", lv:1},
+      {w:"BEAR", c:"A large animal that hibernates in winter", lv:1},
+      {w:"MONKEY", c:"An animal that's good at climbing trees", lv:1},
+      {w:"TURTLE", c:"A slow animal that carries its shell", lv:1},
+      {w:"SNAKE", c:"A legless animal that slithers along the ground", lv:1},
+      {w:"FROG", c:"A hopping animal that lives near water", lv:1},
+      {w:"PENGUIN", c:"A flightless bird found in Antarctica", lv:1},
+      {w:"GOAT", c:"A bearded farm animal said to eat anything", lv:2},
+      {w:"DUCK", c:"A bird with webbed feet that waddles", lv:2},
+      {w:"DEER", c:"A forest animal, the male has antlers", lv:2},
+      {w:"SQUIRREL", c:"A bushy-tailed animal that collects acorns", lv:2},
+      {w:"DOLPHIN", c:"A smart sea animal known for jumping", lv:2},
+      {w:"WHALE", c:"A huge animal that lives in the ocean", lv:2},
+      {w:"OCTOPUS", c:"A sea creature with eight arms", lv:2},
+      {w:"CRAB", c:"A sea creature that walks sideways", lv:2},
+      {w:"SHRIMP", c:"A small curved sea creature in a shell", lv:2},
+      {w:"BUTTERFLY", c:"An insect with colorful wings that flits between flowers", lv:2},
+      {w:"BEE", c:"An insect that collects nectar and can sting", lv:2},
+      {w:"ANT", c:"A tiny insect that marches in lines", lv:2},
+      {w:"SPIDER", c:"A creature with eight legs that spins webs", lv:2},
+      {w:"BAT", c:"A winged animal that flies around at night", lv:2},
+      {w:"CROCODILE", c:"A sharp-toothed animal that lurks in the water", lv:2},
+      {w:"OWL", c:"A round-eyed bird active at night", lv:2},
+      {w:"CROW", c:"A black bird known for its harsh call", lv:2},
+      {w:"SPARROW", c:"A small, common brown bird", lv:2},
+      {w:"CAMEL", c:"A desert animal with a hump on its back", lv:3},
+      {w:"HIPPO", c:"A huge animal that opens its mouth very wide", lv:3},
+      {w:"LEOPARD", c:"A fast, spotted big cat", lv:3},
+      {w:"WOLF", c:"A wild, dog-like animal that lives in packs", lv:3},
+      {w:"FOX", c:"An animal with a bushy tail and pointed ears", lv:3},
+      {w:"RACCOON", c:"A masked animal known for raiding trash cans", lv:3},
+      {w:"KOALA", c:"An Australian animal that eats eucalyptus leaves", lv:3},
+      {w:"KANGAROO", c:"An animal that carries its baby in a pouch", lv:3},
+      {w:"HEDGEHOG", c:"A small animal covered in spines", lv:3},
+      {w:"MOLE", c:"An animal that digs tunnels underground", lv:3},
+      {w:"OTTER", c:"A playful animal that loves rivers and the sea", lv:3},
+      {w:"LIZARD", c:"A long-tailed creature that likes sunbathing", lv:3},
+      {w:"SCORPION", c:"A creature with a venomous stinger on its tail", lv:3},
+      {w:"JELLYFISH", c:"A soft-bodied creature that drifts through the sea", lv:3},
+      {w:"STARFISH", c:"A star-shaped creature found in the ocean", lv:3},
+      {w:"EEL", c:"A long, slender fish", lv:3}
+    ]
+  },
+  vegetables: {
+    ja: [
+      {w:"にんじん", c:"オレンジ色で細長い、ウサギが好む野菜", lv:1},
+      {w:"たまねぎ", c:"切ると涙が出る、丸い野菜", lv:1},
+      {w:"じゃがいも", c:"土の中にできる、でんぷん質の多いいも", lv:1},
+      {w:"きゅうり", c:"緑色で細長い、サラダによく使う野菜", lv:1},
+      {w:"なす", c:"紫色でつやのある、夏が旬の野菜", lv:1},
+      {w:"とまと", c:"赤くて丸い、ジューシーな野菜", lv:1},
+      {w:"きゃべつ", c:"葉が幾重にも重なった、丸い野菜", lv:1},
+      {w:"はくさい", c:"鍋料理によく使われる、淡い黄緑色の葉野菜", lv:1},
+      {w:"ほうれんそう", c:"鉄分が豊富な、緑の葉野菜", lv:1},
+      {w:"だいこん", c:"白くて長い、おろしにもする根菜", lv:1},
+      {w:"ねぎ", c:"薬味としてよく刻まれる、細長い野菜", lv:1},
+      {w:"ぴーまん", c:"独特の苦みがある、緑色の野菜", lv:1},
+      {w:"かぼちゃ", c:"オレンジ色の果肉を持つ、甘みのある野菜", lv:1},
+      {w:"さつまいも", c:"甘くてホクホクした、紫色の皮のいも", lv:1},
+      {w:"とうもろこし", c:"黄色い粒がぎっしり並んだ野菜", lv:1},
+      {w:"れたす", c:"サラダによく使われる、葉が柔らかい野菜", lv:1},
+      {w:"かぶ", c:"丸くて白い、葉つきの根菜", lv:1},
+      {w:"もやし", c:"白くて細い、値段が手頃な野菜", lv:1},
+      {w:"にんにく", c:"強い香りを持つ、料理に欠かせない香味野菜", lv:1},
+      {w:"しょうが", c:"辛みと香りが強い、薬味にもなる根菜", lv:1},
+      {w:"れんこん", c:"穴がたくさん空いている、白い根菜", lv:2},
+      {w:"ごぼう", c:"土の香りが強い、細長い茶色の根菜", lv:2},
+      {w:"ぶろっこりー", c:"木のような形をした、緑色の野菜", lv:2},
+      {w:"せろり", c:"独特の香りがある、筋の多い野菜", lv:2},
+      {w:"おくら", c:"切ると星形の断面が見える、ねばねばした野菜", lv:2},
+      {w:"しゅんぎく", c:"鍋料理に入れる、独特の香りの葉野菜", lv:2},
+      {w:"さやいんげん", c:"さやごと食べる、細長い緑の野菜", lv:2},
+      {w:"えだまめ", c:"ビールのお供の定番、塩ゆでにする豆", lv:2},
+      {w:"そらまめ", c:"大きなさやに入った、春が旬の豆", lv:2},
+      {w:"あすぱらがす", c:"細長い茎を食べる、春が旬の野菜", lv:2},
+      {w:"みずな", c:"シャキシャキした食感の、京野菜のひとつ", lv:2},
+      {w:"みょうが", c:"薬味に使われる、日本独特の香味野菜", lv:2},
+      {w:"ちんげんさい", c:"中華料理でよく使われる、緑色の葉野菜", lv:2},
+      {w:"ずっきーに", c:"きゅうりに似た見た目の、かぼちゃの仲間", lv:2},
+      {w:"ごーや", c:"強い苦みが特徴の、沖縄料理でおなじみの野菜", lv:2},
+      {w:"ししとう", c:"たまに辛いものが混じる、細長い緑の野菜", lv:2},
+      {w:"やまいも", c:"すりおろすとねばねばする、山でとれるいも", lv:2},
+      {w:"さといも", c:"ぬめりがある、里で育てるいも", lv:2},
+      {w:"たけのこ", c:"春に地面から顔を出す、竹の若い芽", lv:2},
+      {w:"うど", c:"山菜の一種で、香りとシャキシャキ感が特徴の野菜", lv:3},
+      {w:"ふき", c:"独特の香りとほろ苦さがある、春の山菜", lv:3},
+      {w:"くわい", c:"お正月料理に使われる、芽が出た形の縁起物の野菜", lv:3},
+      {w:"らっきょう", c:"カレーの付け合わせでおなじみの、甘酢漬けにする野菜", lv:3},
+      {w:"とうがん", c:"冬まで保存がきく、大きな緑色の瓜", lv:3},
+      {w:"わさび", c:"つんとした辛みが特徴の、すりおろして使う根菜", lv:3},
+      {w:"つるむらさき", c:"つるが伸びる、夏に旬を迎えるねばねばした葉野菜", lv:3},
+      {w:"えんどう", c:"さやから取り出して食べる、丸い緑の豆", lv:3},
+      {w:"ふだんそう", c:"一年中収穫できる、葉物野菜の一種", lv:3},
+      {w:"わらび", c:"山菜として親しまれる、くるんと巻いたシダの若芽", lv:3},
+      {w:"ぜんまい", c:"渦巻き状の若芽を食べる、山菜の一種", lv:3},
+      {w:"こごみ", c:"くるんと丸まった形が特徴の、シダの若芽", lv:3},
+      {w:"たらのめ", c:"天ぷらでも人気の、木の芽を食べる山菜", lv:3},
+      {w:"あしたば", c:"「今日摘んでも明日には芽が出る」といわれる、栄養豊富な葉野菜", lv:3},
+      {w:"もろへいや", c:"刻むとねばねばする、夏バテ予防に人気の葉野菜", lv:3},
+      {w:"きくいも", c:"生姜のような見た目の、ほんのり甘いいも", lv:3}
+    ],
+    ko: [
+      {w:"당근", c:"오렌지색에 길쭉한, 토끼가 좋아하는 채소", lv:1},
+      {w:"양파", c:"자르면 눈물이 나는, 동그란 채소", lv:1},
+      {w:"감자", c:"땅속에서 자라는, 전분이 많은 채소", lv:1},
+      {w:"오이", c:"초록색에 길쭉한, 샐러드에 자주 쓰이는 채소", lv:1},
+      {w:"가지", c:"보라색에 윤기가 나는 채소", lv:1},
+      {w:"토마토", c:"빨갛고 동그란, 즙이 많은 채소", lv:1},
+      {w:"양배추", c:"잎이 겹겹이 싸인 둥근 채소", lv:1},
+      {w:"배추", c:"김치를 담글 때 쓰는, 연한 녹색 잎채소", lv:1},
+      {w:"시금치", c:"철분이 풍부한 초록 잎채소", lv:1},
+      {w:"무", c:"희고 긴, 즙을 내기도 하는 뿌리채소", lv:1},
+      {w:"파", c:"양념으로 자주 다져 쓰는 길쭉한 채소", lv:1},
+      {w:"피망", c:"은은한 쓴맛이 있는 초록색 채소", lv:1},
+      {w:"호박", c:"주황빛 속살에 단맛이 있는 채소", lv:1},
+      {w:"고구마", c:"달고 포슬포슬한, 자주색 껍질의 뿌리채소", lv:1},
+      {w:"옥수수", c:"노란 알갱이가 빽빽하게 박힌 채소", lv:1},
+      {w:"상추", c:"쌈을 싸 먹는, 잎이 부드러운 채소", lv:1},
+      {w:"콩나물", c:"희고 가느다란, 값이 저렴한 채소", lv:1},
+      {w:"마늘", c:"향이 강한, 요리에 빠질 수 없는 향신 채소", lv:1},
+      {w:"생강", c:"알싸하고 향이 강한 뿌리채소", lv:1},
+      {w:"고추", c:"매운맛이 나는 길쭉한 채소", lv:1},
+      {w:"연근", c:"구멍이 송송 뚫린 하얀 뿌리채소", lv:2},
+      {w:"우엉", c:"흙냄새가 강한 길쭉한 갈색 뿌리채소", lv:2},
+      {w:"브로콜리", c:"나무처럼 생긴 초록색 채소", lv:2},
+      {w:"셀러리", c:"독특한 향이 나는, 줄기가 억센 채소", lv:2},
+      {w:"오크라", c:"자르면 별 모양 단면이 나오는, 끈적한 채소", lv:2},
+      {w:"깻잎", c:"향이 강한, 쌈에 자주 쓰는 초록 잎", lv:2},
+      {w:"완두콩", c:"꼬투리에서 꺼내 먹는 동그란 초록 콩", lv:2},
+      {w:"아스파라거스", c:"가느다란 줄기를 먹는, 봄이 제철인 채소", lv:2},
+      {w:"청경채", c:"중화요리에 자주 쓰이는 초록 잎채소", lv:2},
+      {w:"주키니", c:"오이와 비슷하게 생긴 호박의 한 종류", lv:2},
+      {w:"여주", c:"쓴맛이 강한, 오키나와 요리로도 유명한 채소", lv:2},
+      {w:"꽈리고추", c:"가끔 매운 것이 섞여 있는 작은 초록 고추", lv:2},
+      {w:"마", c:"갈면 끈적해지는, 산에서도 나는 뿌리채소", lv:2},
+      {w:"토란", c:"미끈미끈한, 흙에서 캐는 뿌리채소", lv:2},
+      {w:"죽순", c:"봄에 땅을 뚫고 나오는 대나무의 어린 싹", lv:2},
+      {w:"부추", c:"볶음이나 전에 자주 쓰이는 향긋한 잎채소", lv:2},
+      {w:"미나리", c:"향긋한 향이 나는, 물가에서 자라는 채소", lv:2},
+      {w:"숙주나물", c:"나물로 무쳐 먹는 가느다란 콩나물의 한 종류", lv:2},
+      {w:"더덕", c:"쌉쌀한 향이 나는, 도라지와 비슷한 뿌리채소", lv:3},
+      {w:"도라지", c:"흰 꽃이 피고 뿌리를 나물로 먹는 식물", lv:3},
+      {w:"씀바귀", c:"쓴맛이 강한 봄나물", lv:3},
+      {w:"고사리", c:"삶아서 나물로 무쳐 먹는 고비과 산나물", lv:3},
+      {w:"곤드레", c:"강원도에서 밥을 지을 때 넣기도 하는 나물", lv:3},
+      {w:"취나물", c:"향긋한 향이 나는 봄나물", lv:3},
+      {w:"냉이", c:"이른 봄에 캐는, 향긋한 뿌리나물", lv:3},
+      {w:"달래", c:"알싸한 향이 나는 봄나물", lv:3},
+      {w:"두릅", c:"봄에 나는, 쌉쌀한 맛의 나무 새순", lv:3},
+      {w:"쑥", c:"떡을 만드는 데도 쓰이는 향긋한 봄나물", lv:3},
+      {w:"단호박", c:"진한 단맛이 나는 초록 껍질의 호박", lv:3},
+      {w:"비트", c:"자르면 진한 붉은색이 나는 뿌리채소", lv:3},
+      {w:"케일", c:"즙을 내 먹기도 하는 짙은 녹색 잎채소", lv:3},
+      {w:"파프리카", c:"피망보다 두껍고 단맛이 나는 채소", lv:3},
+      {w:"무순", c:"매콤한 맛이 살짝 나는 무의 어린 싹", lv:3}
+    ],
+    en: [
+      {w:"CARROT", c:"Orange, long root vegetable rabbits love", lv:1},
+      {w:"ONION", c:"Round vegetable that makes you cry when cut", lv:1},
+      {w:"POTATO", c:"Starchy vegetable that grows underground", lv:1},
+      {w:"CUCUMBER", c:"Long green vegetable often used in salads", lv:1},
+      {w:"EGGPLANT", c:"Glossy purple vegetable", lv:1},
+      {w:"TOMATO", c:"Round, juicy red vegetable", lv:1},
+      {w:"CABBAGE", c:"Round vegetable with tightly layered leaves", lv:1},
+      {w:"SPINACH", c:"Iron-rich leafy green vegetable", lv:1},
+      {w:"RADISH", c:"Long white root vegetable, often grated", lv:1},
+      {w:"SCALLION", c:"Long thin green vegetable used as a garnish", lv:1},
+      {w:"PEPPER", c:"Green vegetable with a mild bitterness", lv:1},
+      {w:"PUMPKIN", c:"Orange-fleshed, sweet autumn vegetable", lv:1},
+      {w:"CORN", c:"Vegetable with rows of yellow kernels", lv:1},
+      {w:"LETTUCE", c:"Soft-leaved vegetable common in salads", lv:1},
+      {w:"GARLIC", c:"Pungent vegetable essential to many dishes", lv:1},
+      {w:"GINGER", c:"Spicy, fragrant root used as a seasoning", lv:1},
+      {w:"BROCCOLI", c:"Tree-shaped green vegetable", lv:1},
+      {w:"CELERY", c:"Stringy stalked vegetable with a distinct smell", lv:1},
+      {w:"PEA", c:"Small round green vegetable found in a pod", lv:1},
+      {w:"BEAN", c:"Vegetable whose seeds grow inside a pod", lv:1},
+      {w:"CAULIFLOWER", c:"White, tree-shaped relative of broccoli", lv:2},
+      {w:"ASPARAGUS", c:"Thin green stalks, a springtime vegetable", lv:2},
+      {w:"ZUCCHINI", c:"Cucumber-shaped member of the squash family", lv:2},
+      {w:"KALE", c:"Dark leafy green often used in smoothies", lv:2},
+      {w:"TURNIP", c:"Round white root vegetable with a peppery bite", lv:2},
+      {w:"BEET", c:"Root vegetable that turns deep red when cut", lv:2},
+      {w:"LEEK", c:"Mild, onion-like vegetable with long white stalks", lv:2},
+      {w:"ARTICHOKE", c:"Thistle-like vegetable with edible leaves", lv:2},
+      {w:"OKRA", c:"Sticky vegetable with a star-shaped cross-section", lv:2},
+      {w:"CHIVE", c:"Thin, mild-flavored herb from the onion family", lv:2},
+      {w:"SHALLOT", c:"Small, mild member of the onion family", lv:2},
+      {w:"SPROUT", c:"Young shoot eaten fresh, like a bean sprout", lv:2},
+      {w:"SQUASH", c:"General name for pumpkins and their relatives", lv:2},
+      {w:"YAM", c:"Starchy root vegetable, often confused with sweet potato", lv:2},
+      {w:"TARO", c:"Starchy root vegetable used in many Asian dishes", lv:2},
+      {w:"CHICKPEA", c:"Round beige legume used in hummus", lv:2},
+      {w:"LENTIL", c:"Small disc-shaped legume", lv:2},
+      {w:"EDAMAME", c:"Young soybeans, often served salted", lv:2},
+      {w:"WATERCRESS", c:"Peppery leafy green that grows near water", lv:2},
+      {w:"RUTABAGA", c:"Root vegetable, a cross between cabbage and turnip", lv:3},
+      {w:"FENNEL", c:"Aromatic vegetable with a licorice-like flavor", lv:3},
+      {w:"PARSNIP", c:"Pale, carrot-shaped root vegetable", lv:3},
+      {w:"CHICORY", c:"Bitter leafy vegetable, related to endive", lv:3},
+      {w:"ENDIVE", c:"Slightly bitter, pale leafy vegetable", lv:3},
+      {w:"RADICCHIO", c:"Bitter, reddish-purple leafy vegetable", lv:3},
+      {w:"KOHLRABI", c:"Bulbous vegetable in the cabbage family", lv:3},
+      {w:"JICAMA", c:"Crunchy, mildly sweet root vegetable", lv:3},
+      {w:"RAMP", c:"Wild onion found in forests in early spring", lv:3},
+      {w:"FIDDLEHEAD", c:"Curled young fern shoot eaten as a vegetable", lv:3},
+      {w:"BURDOCK", c:"Long brown root vegetable with an earthy taste", lv:3},
+      {w:"DAIKON", c:"Long white Asian radish", lv:3},
+      {w:"BOKCHOY", c:"Asian leafy green with white stalks", lv:3},
+      {w:"RAPINI", c:"Bitter leafy green related to broccoli", lv:3},
+      {w:"SORREL", c:"Tart, lemony-tasting leafy green", lv:3},
+      {w:"SAMPHIRE", c:"Salty, crunchy vegetable that grows by the sea", lv:3}
+    ]
+  },
+  jobs: {
+    ja: [
+      {w:"せんせい", c:"学校で子どもたちに勉強を教える人", lv:1},
+      {w:"いしゃ", c:"病気やけがを診察して治す人", lv:1},
+      {w:"はいしゃ", c:"歯の治療をする専門家", lv:1},
+      {w:"かんごし", c:"病院で患者の世話をする人", lv:1},
+      {w:"けいさつかん", c:"事件を解決し、まちの安全を守る人", lv:1},
+      {w:"しょうぼうし", c:"火事を消し、人々を助ける仕事をする人", lv:1},
+      {w:"うんてんしゅ", c:"バスやタクシーなどを運転する人", lv:1},
+      {w:"りょうりにん", c:"レストランなどで料理を作る人", lv:1},
+      {w:"びようし", c:"髪を切ったり整えたりする人", lv:1},
+      {w:"のうか", c:"田畑で作物を育てる仕事をする人", lv:1},
+      {w:"だいく", c:"木材を使って家を建てる職人", lv:1},
+      {w:"がか", c:"絵を描くことを仕事にする人", lv:1},
+      {w:"かしゅ", c:"歌うことを仕事にする人", lv:1},
+      {w:"はいゆう", c:"映画やドラマで役を演じる人", lv:1},
+      {w:"きしゃ", c:"ニュースを取材して記事を書く人", lv:1},
+      {w:"べんごし", c:"法律の専門家として依頼人を助ける人", lv:1},
+      {w:"けんちくか", c:"建物の設計をする専門家", lv:1},
+      {w:"ぱいろっと", c:"飛行機を操縦する人", lv:1},
+      {w:"ぱんや", c:"パンを作って売る仕事をする人", lv:1},
+      {w:"はなや", c:"花を売る仕事をする人", lv:1},
+      {w:"やくざいし", c:"薬の調合や説明をする専門家", lv:2},
+      {w:"じゅうい", c:"動物の病気やけがを治す医師", lv:2},
+      {w:"つうやくしゃ", c:"異なる言語を話す人同士の会話を訳す人", lv:2},
+      {w:"ほいくし", c:"保育園で小さな子どもの世話をする人", lv:2},
+      {w:"でざいなー", c:"服や商品などの見た目を考える仕事をする人", lv:2},
+      {w:"ぷろぐらまー", c:"コンピューターのプログラムを作る人", lv:2},
+      {w:"えんじにあ", c:"機械や技術を扱う専門職の人", lv:2},
+      {w:"かいけいし", c:"会社のお金の記録や監査をする専門家", lv:2},
+      {w:"ちょうこくか", c:"木や石などを彫って作品を作る人", lv:2},
+      {w:"おんがくか", c:"音楽の演奏や作曲を仕事にする人", lv:2},
+      {w:"ゆうびんやさん", c:"手紙や荷物を家まで届ける人", lv:2},
+      {w:"すしょくにん", c:"すしを握ることを仕事にする職人", lv:2},
+      {w:"きょうし", c:"学校で授業を受け持つ人", lv:2},
+      {w:"こうむいん", c:"国や自治体で働く人", lv:2},
+      {w:"ぎんこういん", c:"銀行で働く人", lv:2},
+      {w:"はんばいいん", c:"店で商品を売る人", lv:2},
+      {w:"えいがかんとく", c:"映画の撮影を指揮する人", lv:2},
+      {w:"てんちょう", c:"店をまとめる責任者", lv:2},
+      {w:"りょうし", c:"海や川で魚をとる仕事をする人", lv:2},
+      {w:"けんきゅうしゃ", c:"ある分野を深く調べ、新しいことを発見する人", lv:3},
+      {w:"うちゅうひこうし", c:"宇宙船に乗って宇宙へ行く人", lv:3},
+      {w:"がいこうかん", c:"外国との交渉や交流を担当する公務員", lv:3},
+      {w:"さいばんかん", c:"裁判で判決を下す人", lv:3},
+      {w:"とうげいか", c:"粘土を焼いて器を作る職人", lv:3},
+      {w:"きしょうよほうし", c:"天気の変化を予測して伝える人", lv:3},
+      {w:"てんもんがくしゃ", c:"星や宇宙について研究する人", lv:3},
+      {w:"こうこがくしゃ", c:"昔の遺跡や遺物を調べる人", lv:3},
+      {w:"ぱてぃしえ", c:"ケーキなどの洋菓子を作る職人", lv:3},
+      {w:"そむりえ", c:"ワインの知識に詳しく、選び方を助言する人", lv:3},
+      {w:"きゅうきゅうたいいん", c:"救急車に乗って応急処置をする人", lv:3},
+      {w:"すいぞくかんしいくいん", c:"水族館で生き物の世話をする人", lv:3},
+      {w:"どうぶつえんしいくいん", c:"動物園で動物の世話をする人", lv:3},
+      {w:"べんりし", c:"発明の特許に関する手続きを行う専門家", lv:3},
+      {w:"しほうしょし", c:"登記などの法律書類を作成する専門家", lv:3},
+      {w:"けんじ", c:"犯罪を捜査し、裁判で起訴する法律の専門家", lv:3}
+    ],
+    ko: [
+      {w:"선생님", c:"학교에서 아이들을 가르치는 사람", lv:1},
+      {w:"의사", c:"아픈 사람을 진찰하고 치료하는 사람", lv:1},
+      {w:"치과의사", c:"이를 치료하는 전문가", lv:1},
+      {w:"간호사", c:"병원에서 환자를 돌보는 사람", lv:1},
+      {w:"경찰관", c:"사건을 해결하고 마을의 안전을 지키는 사람", lv:1},
+      {w:"소방관", c:"불을 끄고 사람을 구조하는 일을 하는 사람", lv:1},
+      {w:"운전기사", c:"버스나 택시 등을 운전하는 사람", lv:1},
+      {w:"요리사", c:"식당 등에서 음식을 만드는 사람", lv:1},
+      {w:"미용사", c:"머리를 자르고 손질해 주는 사람", lv:1},
+      {w:"농부", c:"밭에서 작물을 기르는 일을 하는 사람", lv:1},
+      {w:"목수", c:"나무로 집을 짓는 장인", lv:1},
+      {w:"화가", c:"그림 그리는 것을 직업으로 하는 사람", lv:1},
+      {w:"가수", c:"노래 부르는 것을 직업으로 하는 사람", lv:1},
+      {w:"배우", c:"영화나 드라마에서 역할을 연기하는 사람", lv:1},
+      {w:"기자", c:"뉴스를 취재해서 기사를 쓰는 사람", lv:1},
+      {w:"변호사", c:"법률 전문가로서 의뢰인을 돕는 사람", lv:1},
+      {w:"건축가", c:"건물을 설계하는 전문가", lv:1},
+      {w:"조종사", c:"비행기를 조종하는 사람", lv:1},
+      {w:"제빵사", c:"빵을 만들어 파는 일을 하는 사람", lv:1},
+      {w:"플로리스트", c:"꽃을 다루고 파는 일을 하는 사람", lv:1},
+      {w:"약사", c:"약을 조제하고 설명해 주는 전문가", lv:2},
+      {w:"수의사", c:"동물의 병이나 상처를 치료하는 의사", lv:2},
+      {w:"통역사", c:"서로 다른 언어를 쓰는 사람들의 대화를 옮겨 주는 사람", lv:2},
+      {w:"보육교사", c:"어린이집에서 어린아이를 돌보는 사람", lv:2},
+      {w:"디자이너", c:"옷이나 제품의 모양을 구상하는 사람", lv:2},
+      {w:"프로그래머", c:"컴퓨터 프로그램을 만드는 사람", lv:2},
+      {w:"엔지니어", c:"기계나 기술을 다루는 전문직", lv:2},
+      {w:"회계사", c:"회사의 돈 기록과 감사를 담당하는 전문가", lv:2},
+      {w:"조각가", c:"나무나 돌을 깎아 작품을 만드는 사람", lv:2},
+      {w:"음악가", c:"음악 연주나 작곡을 직업으로 하는 사람", lv:2},
+      {w:"집배원", c:"편지와 소포를 집까지 배달하는 사람", lv:2},
+      {w:"공무원", c:"나라나 지자체에서 일하는 사람", lv:2},
+      {w:"은행원", c:"은행에서 일하는 사람", lv:2},
+      {w:"판매원", c:"가게에서 물건을 파는 사람", lv:2},
+      {w:"영화감독", c:"영화 촬영을 지휘하는 사람", lv:2},
+      {w:"점장", c:"가게를 총괄하는 책임자", lv:2},
+      {w:"어부", c:"바다나 강에서 물고기를 잡는 일을 하는 사람", lv:2},
+      {w:"연구원", c:"어떤 분야를 깊이 조사하고 새로운 것을 밝혀내는 사람", lv:3},
+      {w:"우주비행사", c:"우주선을 타고 우주로 가는 사람", lv:3},
+      {w:"외교관", c:"외국과의 교섭과 교류를 담당하는 공무원", lv:3},
+      {w:"판사", c:"재판에서 판결을 내리는 사람", lv:3},
+      {w:"도예가", c:"흙을 빚고 구워 그릇을 만드는 장인", lv:3},
+      {w:"기상캐스터", c:"날씨 변화를 예측해 전하는 사람", lv:3},
+      {w:"천문학자", c:"별과 우주를 연구하는 사람", lv:3},
+      {w:"고고학자", c:"옛 유적과 유물을 조사하는 사람", lv:3},
+      {w:"파티시에", c:"케이크 등 양과자를 만드는 장인", lv:3},
+      {w:"소믈리에", c:"와인에 대한 지식이 깊고 선택을 도와주는 사람", lv:3},
+      {w:"구급대원", c:"구급차를 타고 응급 처치를 하는 사람", lv:3},
+      {w:"수족관사육사", c:"수족관에서 생물을 돌보는 사람", lv:3},
+      {w:"동물원사육사", c:"동물원에서 동물을 돌보는 사람", lv:3},
+      {w:"변리사", c:"발명의 특허 절차를 담당하는 전문가", lv:3},
+      {w:"법무사", c:"등기 등 법률 서류를 작성하는 전문가", lv:3},
+      {w:"검사", c:"범죄를 수사하고 재판에서 기소하는 법률 전문가", lv:3}
+    ],
+    en: [
+      {w:"TEACHER", c:"Teaches students at a school", lv:1},
+      {w:"DOCTOR", c:"Examines and treats sick or injured people", lv:1},
+      {w:"DENTIST", c:"Treats teeth and gums", lv:1},
+      {w:"NURSE", c:"Cares for patients in a hospital", lv:1},
+      {w:"POLICE", c:"Investigates crime and keeps the town safe", lv:1},
+      {w:"FIREFIGHTER", c:"Puts out fires and rescues people", lv:1},
+      {w:"DRIVER", c:"Operates a bus, taxi, or other vehicle for a living", lv:1},
+      {w:"CHEF", c:"Prepares meals at a restaurant", lv:1},
+      {w:"HAIRDRESSER", c:"Cuts and styles people's hair", lv:1},
+      {w:"FARMER", c:"Grows crops or raises animals for a living", lv:1},
+      {w:"CARPENTER", c:"Builds things out of wood, like houses", lv:1},
+      {w:"PAINTER", c:"Creates pictures as a profession", lv:1},
+      {w:"SINGER", c:"Performs music with their voice", lv:1},
+      {w:"ACTOR", c:"Plays roles in films or plays", lv:1},
+      {w:"REPORTER", c:"Investigates and writes news stories", lv:1},
+      {w:"LAWYER", c:"Represents clients using knowledge of the law", lv:1},
+      {w:"ARCHITECT", c:"Designs buildings", lv:1},
+      {w:"PILOT", c:"Flies an airplane", lv:1},
+      {w:"BAKER", c:"Makes and sells bread and pastries", lv:1},
+      {w:"FLORIST", c:"Arranges and sells flowers", lv:1},
+      {w:"PHARMACIST", c:"Prepares and explains medicines", lv:2},
+      {w:"VET", c:"Treats sick or injured animals", lv:2},
+      {w:"INTERPRETER", c:"Translates spoken words between languages", lv:2},
+      {w:"DESIGNER", c:"Plans how clothes or products will look", lv:2},
+      {w:"PROGRAMMER", c:"Writes code to build software", lv:2},
+      {w:"ENGINEER", c:"Applies science to design or build things", lv:2},
+      {w:"ACCOUNTANT", c:"Manages and audits a company's finances", lv:2},
+      {w:"SCULPTOR", c:"Carves or shapes art from wood or stone", lv:2},
+      {w:"MUSICIAN", c:"Performs or composes music professionally", lv:2},
+      {w:"MAILMAN", c:"Delivers letters and packages to homes", lv:2},
+      {w:"PROFESSOR", c:"Teaches and researches at a university", lv:2},
+      {w:"CLERK", c:"Handles paperwork or sells goods in a shop", lv:2},
+      {w:"BANKER", c:"Works handling money at a bank", lv:2},
+      {w:"CASHIER", c:"Handles payments at a checkout counter", lv:2},
+      {w:"DIRECTOR", c:"Oversees the making of a film", lv:2},
+      {w:"MANAGER", c:"Runs the daily operations of a business", lv:2},
+      {w:"FISHERMAN", c:"Catches fish for a living", lv:2},
+      {w:"ELECTRICIAN", c:"Installs and repairs electrical wiring", lv:2},
+      {w:"PLUMBER", c:"Installs and repairs water pipes", lv:2},
+      {w:"RESEARCHER", c:"Investigates a subject deeply to discover new things", lv:3},
+      {w:"ASTRONAUT", c:"Travels into space aboard a spacecraft", lv:3},
+      {w:"DIPLOMAT", c:"Represents their country in dealings with others", lv:3},
+      {w:"JUDGE", c:"Decides the outcome of court cases", lv:3},
+      {w:"POTTER", c:"Shapes and fires clay into pots", lv:3},
+      {w:"METEOROLOGIST", c:"Studies and forecasts the weather", lv:3},
+      {w:"ASTRONOMER", c:"Studies stars and the universe", lv:3},
+      {w:"ARCHAEOLOGIST", c:"Studies ancient ruins and artifacts", lv:3},
+      {w:"PASTRYCHEF", c:"Specializes in making cakes and sweets", lv:3},
+      {w:"SOMMELIER", c:"An expert who advises on choosing wine", lv:3},
+      {w:"PARAMEDIC", c:"Gives emergency medical care at the scene", lv:3},
+      {w:"ZOOKEEPER", c:"Cares for animals at a zoo", lv:3},
+      {w:"SURVEYOR", c:"Measures land to map or mark boundaries", lv:3},
+      {w:"LINGUIST", c:"Studies the structure and history of languages", lv:3},
+      {w:"GEOLOGIST", c:"Studies rocks and the structure of the earth", lv:3},
+      {w:"PROSECUTOR", c:"Brings criminal charges against defendants in court", lv:3}
+    ]
+  },
+  sports: {
+    ja: [
+      {w:"やきゅう", c:"バットとボールで9人ずつが戦う球技", lv:1},
+      {w:"サッカー", c:"足でボールを蹴ってゴールを狙う競技", lv:1},
+      {w:"テニス", c:"ラケットでネット越しにボールを打ち合う", lv:1},
+      {w:"すいえい", c:"プールや海で泳ぐこと", lv:1},
+      {w:"ゴルフ", c:"クラブでボールを打ち、少ない打数で穴に入れる", lv:1},
+      {w:"スキー", c:"雪の上を板をはいて滑る", lv:1},
+      {w:"スケート", c:"氷の上を刃のついた靴で滑る", lv:1},
+      {w:"マラソン", c:"42キロ以上を走る長距離走", lv:1},
+      {w:"バレーボール", c:"ネット越しに手でボールを打ち合う6人制の競技", lv:2},
+      {w:"バスケットボール", c:"ボールをリングに入れて得点する競技", lv:2},
+      {w:"ボクシング", c:"グローブをつけて拳で戦う格闘技", lv:2},
+      {w:"じゅうどう", c:"投げ技や寝技で相手を倒す日本発祥の武道", lv:2},
+      {w:"からて", c:"突きや蹴りで戦う沖縄生まれの武道", lv:2},
+      {w:"ラグビー", c:"楕円形のボールを持って走り、トライを狙う", lv:2},
+      {w:"バドミントン", c:"シャトルをラケットで打ち合う", lv:2},
+      {w:"サーフィン", c:"波の上を板に乗って滑る", lv:2},
+      {w:"ダイビング", c:"水に飛び込む、または海にもぐること", lv:2},
+      {w:"フェンシング", c:"剣で相手を突いて得点を競う", lv:2},
+      {w:"たいそう", c:"器具や床で体を使った技を競う", lv:2},
+      {w:"レスリング", c:"組み合って相手の肩をマットにつける", lv:2},
+      {w:"ボウリング", c:"ボールを転がしてピンを倒す", lv:2},
+      {w:"ホッケー", c:"スティックで小さな球やパックを打つ", lv:2},
+      {w:"クライミング", c:"壁や岩をよじ登る", lv:2},
+      {w:"ソフトボール", c:"野球に似た、少し大きなボールを使う競技", lv:2},
+      {w:"ハンドボール", c:"手でボールを投げてゴールに入れる", lv:2},
+      {w:"アーチェリー", c:"弓で的を狙う", lv:3},
+      {w:"スノーボード", c:"1枚の板に乗って雪の斜面を滑る", lv:3},
+      {w:"スケートボード", c:"車輪のついた板に乗って技を決める", lv:3},
+      {w:"トライアスロン", c:"水泳・自転車・ランニングを続けて行う", lv:3},
+      {w:"クリケット", c:"バットとウィケットを使う、英国生まれの球技", lv:3},
+      {w:"やりなげ", c:"細長い槍を遠くへ投げる陸上競技", lv:3},
+      {w:"えんばんなげ", c:"円盤を回転させて遠くへ投げる", lv:3}
+    ],
+    ko: [
+      {w:"야구", c:"배트와 공으로 9명씩 겨루는 구기", lv:1},
+      {w:"축구", c:"발로 공을 차서 골을 넣는 경기", lv:1},
+      {w:"테니스", c:"라켓으로 네트 너머로 공을 치는 경기", lv:1},
+      {w:"수영", c:"물속에서 헤엄치는 운동", lv:1},
+      {w:"골프", c:"클럽으로 공을 쳐 적은 타수로 홀에 넣는 경기", lv:1},
+      {w:"스키", c:"눈 위를 판을 신고 미끄러지는 운동", lv:1},
+      {w:"스케이트", c:"얼음 위를 날 달린 신발로 미끄러지는 운동", lv:1},
+      {w:"마라톤", c:"42킬로미터 넘게 달리는 장거리 경주", lv:1},
+      {w:"배구", c:"네트 너머로 손으로 공을 치는 6인제 경기", lv:2},
+      {w:"농구", c:"공을 높은 링에 넣어 득점하는 경기", lv:2},
+      {w:"복싱", c:"글러브를 끼고 주먹으로 싸우는 격투기", lv:2},
+      {w:"유도", c:"던지기와 누르기로 겨루는 일본 기원의 무술", lv:2},
+      {w:"가라테", c:"주먹과 발차기를 쓰는 오키나와 기원의 무술", lv:2},
+      {w:"럭비", c:"타원형 공을 들고 달려 트라이를 노리는 경기", lv:2},
+      {w:"배드민턴", c:"셔틀콕을 라켓으로 주고받는 경기", lv:2},
+      {w:"서핑", c:"파도 위를 보드를 타고 미끄러지는 운동", lv:2},
+      {w:"다이빙", c:"물에 뛰어들거나 바닷속에 잠수하는 일", lv:2},
+      {w:"펜싱", c:"검으로 상대를 찔러 점수를 겨루는 경기", lv:2},
+      {w:"체조", c:"기구나 바닥에서 몸 기술을 겨루는 운동", lv:2},
+      {w:"레슬링", c:"맞붙어 상대의 어깨를 매트에 닿게 하는 격투기", lv:2},
+      {w:"볼링", c:"공을 굴려 핀을 쓰러뜨리는 경기", lv:2},
+      {w:"하키", c:"스틱으로 작은 공이나 퍽을 치는 경기", lv:2},
+      {w:"클라이밍", c:"벽이나 바위를 기어오르는 운동", lv:2},
+      {w:"소프트볼", c:"야구와 비슷하지만 더 큰 공을 쓰는 경기", lv:2},
+      {w:"핸드볼", c:"손으로 공을 던져 골에 넣는 경기", lv:2},
+      {w:"양궁", c:"활로 과녁을 맞히는 경기", lv:3},
+      {w:"스노보드", c:"한 장의 판을 타고 눈 쌓인 비탈을 내려오는 운동", lv:3},
+      {w:"스케이트보드", c:"바퀴 달린 판을 타고 기술을 보이는 운동", lv:3},
+      {w:"트라이애슬론", c:"수영, 자전거, 달리기를 이어서 하는 경기", lv:3},
+      {w:"크리켓", c:"배트와 위킷을 쓰는 영국 기원의 구기", lv:3},
+      {w:"창던지기", c:"긴 창을 멀리 던지는 육상 경기", lv:3},
+      {w:"원반던지기", c:"원반을 회전시켜 멀리 던지는 육상 경기", lv:3}
+    ],
+    en: [
+      {w:"BASEBALL", c:"Bat-and-ball game with nine players per side", lv:1},
+      {w:"SOCCER", c:"Players kick a ball into the opposing goal", lv:1},
+      {w:"TENNIS", c:"Racket sport played over a net", lv:1},
+      {w:"SWIMMING", c:"Moving through water using arms and legs", lv:1},
+      {w:"GOLF", c:"Hit a ball into a hole in as few strokes as possible", lv:1},
+      {w:"SKIING", c:"Gliding down snowy slopes on long boards", lv:1},
+      {w:"SKATING", c:"Gliding on ice with blades on your shoes", lv:1},
+      {w:"MARATHON", c:"A very long running race of about 42 kilometres", lv:1},
+      {w:"VOLLEYBALL", c:"Teams hit a ball over a high net with their hands", lv:2},
+      {w:"BASKETBALL", c:"Score by shooting a ball through a hoop", lv:2},
+      {w:"BOXING", c:"Fighting sport using padded gloves", lv:2},
+      {w:"JUDO", c:"Japanese martial art of throws and holds", lv:2},
+      {w:"KARATE", c:"Martial art of punches and kicks from Okinawa", lv:2},
+      {w:"RUGBY", c:"Players carry an oval ball to score tries", lv:2},
+      {w:"BADMINTON", c:"Racket sport played with a shuttlecock", lv:2},
+      {w:"SURFING", c:"Riding ocean waves on a board", lv:2},
+      {w:"DIVING", c:"Jumping into water or going deep under the sea", lv:2},
+      {w:"FENCING", c:"Sword-fighting sport scored by touches", lv:2},
+      {w:"GYMNASTICS", c:"Sport of acrobatic moves on floor and apparatus", lv:2},
+      {w:"WRESTLING", c:"Grappling sport on a mat", lv:2},
+      {w:"BOWLING", c:"Roll a ball to knock down pins", lv:2},
+      {w:"HOCKEY", c:"Players hit a ball or puck with sticks", lv:2},
+      {w:"CLIMBING", c:"Scaling walls or rock faces", lv:2},
+      {w:"SOFTBALL", c:"Baseball-like game with a larger ball", lv:2},
+      {w:"HANDBALL", c:"Throw a ball into the goal by hand", lv:2},
+      {w:"ARCHERY", c:"Shooting arrows at a target", lv:3},
+      {w:"SNOWBOARD", c:"Sliding down a snowy slope on a single board", lv:3},
+      {w:"SKATEBOARD", c:"Riding a wheeled deck and doing tricks", lv:3},
+      {w:"TRIATHLON", c:"Swim, bike and run in one race", lv:3},
+      {w:"CRICKET", c:"Bat-and-ball sport popular in Britain and India", lv:3},
+      {w:"JAVELIN", c:"Track-and-field event throwing a long spear", lv:3},
+      {w:"DISCUS", c:"Throwing a heavy disc as far as possible", lv:3}
+    ]
+  },
+  vehicles: {
+    ja: [
+      {w:"くるま", c:"道路を走る四つ輪の乗り物", lv:1},
+      {w:"バス", c:"大勢の人を乗せて決まった道を走る", lv:1},
+      {w:"でんしゃ", c:"線路の上を走る電気で動く乗り物", lv:1},
+      {w:"ひこうき", c:"空を飛んで遠くへ行く乗り物", lv:1},
+      {w:"ふね", c:"水の上を進む乗り物", lv:1},
+      {w:"じてんしゃ", c:"ペダルをこいで進む二輪の乗り物", lv:1},
+      {w:"バイク", c:"エンジンで走る二輪の乗り物", lv:1},
+      {w:"タクシー", c:"お客を乗せて目的地まで運ぶ車", lv:1},
+      {w:"トラック", c:"荷物をたくさん運ぶ大きな車", lv:1},
+      {w:"ボート", c:"オールやエンジンで進む小さな船", lv:1},
+      {w:"ヘリコプター", c:"プロペラで真上に飛び立てる乗り物", lv:2},
+      {w:"ロケット", c:"宇宙へ飛び出す乗り物", lv:2},
+      {w:"ちかてつ", c:"地下のトンネルを走る電車", lv:2},
+      {w:"きゅうきゅうしゃ", c:"病気やけがの人を病院へ運ぶ車", lv:2},
+      {w:"しょうぼうしゃ", c:"火事を消しに行く赤い車", lv:2},
+      {w:"ヨット", c:"帆に風を受けて進む船", lv:2},
+      {w:"カヌー", c:"パドルでこぐ細長い小舟", lv:2},
+      {w:"フェリー", c:"人や車を乗せて海や川を渡る船", lv:2},
+      {w:"トラクター", c:"畑を耕す大きなタイヤの農業用車", lv:2},
+      {w:"スクーター", c:"小型で足元が広い二輪車", lv:2},
+      {w:"そり", c:"雪や氷の上を滑って進む乗り物", lv:2},
+      {w:"ききゅう", c:"熱した空気で空に浮かぶ", lv:2},
+      {w:"ばしゃ", c:"馬が引く昔の乗り物", lv:2},
+      {w:"ゴンドラ", c:"ベネチアの運河を行く細長い舟", lv:3},
+      {w:"ショベルカー", c:"土を掘る長いアームのある車", lv:3},
+      {w:"モノレール", c:"1本のレールにまたがって走る電車", lv:3},
+      {w:"ケーブルカー", c:"ケーブルで引かれて坂を上る", lv:3},
+      {w:"グライダー", c:"エンジンなしで風に乗って飛ぶ", lv:3},
+      {w:"せんすいかん", c:"水中にもぐって進む船", lv:3},
+      {w:"ひこうせん", c:"ガスで浮かぶ細長い空の乗り物", lv:3},
+      {w:"タンカー", c:"石油などを運ぶ大型船", lv:3},
+      {w:"リムジン", c:"とても長い高級な車", lv:3},
+      {w:"ブルドーザー", c:"土砂を押しのける大型の工事車両", lv:3},
+      {w:"フォークリフト", c:"倉庫で荷物を持ち上げる車", lv:3}
+    ],
+    ko: [
+      {w:"자동차", c:"도로를 달리는 네 바퀴 탈것", lv:1},
+      {w:"버스", c:"많은 사람을 태우고 정해진 길을 다니는 차", lv:1},
+      {w:"기차", c:"선로 위를 달리는 긴 탈것", lv:1},
+      {w:"비행기", c:"하늘을 날아 멀리 가는 탈것", lv:1},
+      {w:"배", c:"물 위를 다니는 탈것", lv:1},
+      {w:"자전거", c:"페달을 밟아 가는 두 바퀴 탈것", lv:1},
+      {w:"오토바이", c:"엔진으로 달리는 두 바퀴 탈것", lv:1},
+      {w:"택시", c:"손님을 태워 목적지까지 데려다 주는 차", lv:1},
+      {w:"트럭", c:"짐을 많이 싣는 큰 차", lv:1},
+      {w:"보트", c:"노나 엔진으로 가는 작은 배", lv:1},
+      {w:"헬리콥터", c:"프로펠러로 수직으로 뜨는 비행체", lv:2},
+      {w:"로켓", c:"우주로 날아가는 비행체", lv:2},
+      {w:"지하철", c:"땅속 터널을 달리는 전철", lv:2},
+      {w:"구급차", c:"아픈 사람을 병원으로 옮기는 차", lv:2},
+      {w:"소방차", c:"불을 끄러 가는 빨간 차", lv:2},
+      {w:"요트", c:"돛에 바람을 받아 가는 배", lv:2},
+      {w:"카누", c:"노로 젓는 길쭉한 작은 배", lv:2},
+      {w:"페리", c:"사람과 차를 싣고 바다나 강을 건너는 배", lv:2},
+      {w:"트랙터", c:"밭을 가는 큰 바퀴의 농업용 차", lv:2},
+      {w:"스쿠터", c:"작고 발판이 넓은 두 바퀴 차", lv:2},
+      {w:"썰매", c:"눈이나 얼음 위를 미끄러져 가는 탈것", lv:2},
+      {w:"열기구", c:"뜨거운 공기로 하늘에 떠오르는 탈것", lv:2},
+      {w:"마차", c:"말이 끄는 옛날 탈것", lv:2},
+      {w:"곤돌라", c:"베네치아 운하를 다니는 길쭉한 배", lv:3},
+      {w:"굴착기", c:"땅을 파는 긴 팔이 달린 차", lv:3},
+      {w:"모노레일", c:"한 줄의 레일 위를 달리는 전철", lv:3},
+      {w:"케이블카", c:"케이블에 끌려 비탈을 오르는 차", lv:3},
+      {w:"글라이더", c:"엔진 없이 바람을 타고 나는 비행체", lv:3},
+      {w:"잠수함", c:"물속에 잠겨 다니는 배", lv:3},
+      {w:"비행선", c:"가스로 뜨는 길쭉한 하늘의 탈것", lv:3},
+      {w:"유조선", c:"석유 등을 나르는 대형 선박", lv:3},
+      {w:"리무진", c:"아주 길고 고급스러운 차", lv:3},
+      {w:"불도저", c:"흙을 밀어내는 큰 공사 차량", lv:3},
+      {w:"지게차", c:"창고에서 짐을 들어 올리는 차", lv:3}
+    ],
+    en: [
+      {w:"CAR", c:"Four-wheeled road vehicle", lv:1},
+      {w:"BUS", c:"Large road vehicle carrying many passengers", lv:1},
+      {w:"TRAIN", c:"Runs on rails, pulling many carriages", lv:1},
+      {w:"AIRPLANE", c:"Flies passengers through the sky", lv:1},
+      {w:"SHIP", c:"Large vessel sailing the sea", lv:1},
+      {w:"BICYCLE", c:"Two wheels and pedals", lv:1},
+      {w:"MOTORCYCLE", c:"Two-wheeled vehicle with an engine", lv:1},
+      {w:"TAXI", c:"Hire one to ride to your destination", lv:1},
+      {w:"TRUCK", c:"Large vehicle for hauling goods", lv:1},
+      {w:"BOAT", c:"Small vessel for the water", lv:1},
+      {w:"HELICOPTER", c:"Aircraft with spinning rotor blades", lv:2},
+      {w:"ROCKET", c:"Launched into outer space", lv:2},
+      {w:"SUBWAY", c:"Underground city train", lv:2},
+      {w:"AMBULANCE", c:"Rushes the sick or injured to hospital", lv:2},
+      {w:"FIRETRUCK", c:"Red vehicle that puts out blazes", lv:2},
+      {w:"YACHT", c:"Sailing boat for leisure or racing", lv:2},
+      {w:"CANOE", c:"Narrow boat moved with a paddle", lv:2},
+      {w:"FERRY", c:"Carries people and cars across water", lv:2},
+      {w:"TRACTOR", c:"Farm vehicle for ploughing fields", lv:2},
+      {w:"SCOOTER", c:"Small motorbike or kick-pushed ride", lv:2},
+      {w:"SLED", c:"Slides over snow and ice", lv:2},
+      {w:"BALLOON", c:"Floats in the air, lifted by hot gas", lv:2},
+      {w:"CARRIAGE", c:"Pulled by horses in the old days", lv:2},
+      {w:"GONDOLA", c:"Boat of the Venice canals", lv:3},
+      {w:"EXCAVATOR", c:"Digging machine with a long arm", lv:3},
+      {w:"MONORAIL", c:"Runs on a single track", lv:3},
+      {w:"CABLECAR", c:"Hauled up steep slopes by a cable", lv:3},
+      {w:"GLIDER", c:"Aircraft without an engine", lv:3},
+      {w:"SUBMARINE", c:"Travels beneath the surface of the sea", lv:3},
+      {w:"AIRSHIP", c:"Long gas-filled craft in the sky", lv:3},
+      {w:"TANKER", c:"Large ship that carries oil", lv:3},
+      {w:"LIMOUSINE", c:"Extra-long luxury car", lv:3},
+      {w:"BULLDOZER", c:"Pushes soil with a huge blade", lv:3},
+      {w:"FORKLIFT", c:"Lifts pallets in a warehouse", lv:3}
+    ]
+  },
+  countries: {
+    ja: [
+      {w:"にほん", c:"富士山や桜で知られる東アジアの島国", lv:1},
+      {w:"かんこく", c:"キムチやK-POPで知られるアジアの国", lv:1},
+      {w:"アメリカ", c:"自由の女神がある北米の大国", lv:1},
+      {w:"ちゅうごく", c:"万里の長城があるアジアの大国", lv:1},
+      {w:"イギリス", c:"ロンドンとビッグ・ベンの国", lv:1},
+      {w:"フランス", c:"エッフェル塔がある国", lv:1},
+      {w:"ドイツ", c:"ソーセージとビールで有名なヨーロッパの国", lv:1},
+      {w:"イタリア", c:"ピザとパスタの本場、長靴の形の国", lv:1},
+      {w:"スペイン", c:"フラメンコと闘牛の国", lv:1},
+      {w:"ロシア", c:"世界で一番面積が広い国", lv:1},
+      {w:"インド", c:"カレーとタージ・マハルの国", lv:1},
+      {w:"ブラジル", c:"サンバとコーヒーで知られる南米の国", lv:1},
+      {w:"カナダ", c:"メープルシロップと赤い葉の国旗の国", lv:1},
+      {w:"オーストラリア", c:"カンガルーとコアラの国", lv:2},
+      {w:"メキシコ", c:"タコスとマヤ文明の国", lv:2},
+      {w:"エジプト", c:"ピラミッドとスフィンクスの国", lv:2},
+      {w:"タイ", c:"仏教寺院とトムヤムクンの国", lv:2},
+      {w:"ベトナム", c:"フォーで知られる東南アジアの国", lv:2},
+      {w:"インドネシア", c:"バリ島がある島々の国", lv:2},
+      {w:"ギリシャ", c:"パルテノン神殿がある古代文明の国", lv:2},
+      {w:"トルコ", c:"イスタンブールがあるアジアと欧州にまたがる国", lv:2},
+      {w:"ポルトガル", c:"大航海時代に活躍した、スペインの西の国", lv:2},
+      {w:"スウェーデン", c:"北欧の国。ノーベル賞の授賞式がある", lv:2},
+      {w:"ノルウェー", c:"フィヨルドとオーロラの北欧の国", lv:2},
+      {w:"フィンランド", c:"サンタクロース村とサウナの国", lv:2},
+      {w:"ペルー", c:"マチュピチュで知られる南米の国", lv:2},
+      {w:"チリ", c:"南米大陸の西に細長く伸びる国", lv:2},
+      {w:"キューバ", c:"カリブ海にある葉巻とジャズの島国", lv:2},
+      {w:"ケニア", c:"サファリで有名なアフリカの国", lv:2},
+      {w:"モンゴル", c:"広い草原と遊牧民の国", lv:2},
+      {w:"ネパール", c:"エベレストがそびえる山の国", lv:2},
+      {w:"イラン", c:"古くはペルシャと呼ばれた中東の国", lv:2},
+      {w:"アイルランド", c:"緑の島、シャムロックの国", lv:2},
+      {w:"ポーランド", c:"ショパンの生まれた中欧の国", lv:2},
+      {w:"デンマーク", c:"人魚姫の作者アンデルセンの国", lv:2},
+      {w:"フィリピン", c:"7000以上の島からなる東南アジアの国", lv:3},
+      {w:"スイス", c:"アルプスと時計とチョコレートの国", lv:3},
+      {w:"オランダ", c:"風車とチューリップの国", lv:3},
+      {w:"アルゼンチン", c:"タンゴとサッカーで有名な南米の国", lv:3},
+      {w:"ナイジェリア", c:"アフリカで人口が最も多い国", lv:3},
+      {w:"イスラエル", c:"エルサレムがある中東の国", lv:3},
+      {w:"ハンガリー", c:"ブダペストが首都の中欧の国", lv:3},
+      {w:"オーストリア", c:"モーツァルトが生まれた音楽の国", lv:3},
+      {w:"ベルギー", c:"チョコレートとワッフルで有名な国", lv:3},
+      {w:"アイスランド", c:"火山と温泉と氷河の島国", lv:3},
+      {w:"ジャマイカ", c:"レゲエが生まれたカリブの島国", lv:3},
+      {w:"モロッコ", c:"サハラ砂漠に近い北アフリカの国", lv:3},
+      {w:"エチオピア", c:"コーヒー発祥の地といわれるアフリカの国", lv:3},
+      {w:"ウクライナ", c:"ひまわり畑で知られる東欧の国", lv:3},
+      {w:"マレーシア", c:"ペトロナスツインタワーがある東南アジアの国", lv:3},
+      {w:"シンガポール", c:"マーライオンの都市国家", lv:3},
+      {w:"パキスタン", c:"インダス川が流れる南アジアの国", lv:3}
+    ],
+    ko: [
+      {w:"일본", c:"후지산과 벚꽃으로 알려진 동아시아의 섬나라", lv:1},
+      {w:"한국", c:"김치와 K-POP으로 알려진 아시아의 나라", lv:1},
+      {w:"미국", c:"자유의 여신상이 있는 북미의 큰 나라", lv:1},
+      {w:"중국", c:"만리장성이 있는 아시아의 큰 나라", lv:1},
+      {w:"영국", c:"런던과 빅벤의 나라", lv:1},
+      {w:"프랑스", c:"에펠탑이 있는 나라", lv:1},
+      {w:"독일", c:"소시지와 맥주로 유명한 유럽의 나라", lv:1},
+      {w:"이탈리아", c:"피자와 파스타의 본고장, 장화 모양의 나라", lv:1},
+      {w:"스페인", c:"플라멩코와 투우의 나라", lv:1},
+      {w:"러시아", c:"세계에서 가장 넓은 나라", lv:1},
+      {w:"인도", c:"카레와 타지마할의 나라", lv:1},
+      {w:"브라질", c:"삼바와 커피로 알려진 남미의 나라", lv:1},
+      {w:"캐나다", c:"메이플 시럽과 단풍잎 국기의 나라", lv:1},
+      {w:"호주", c:"캥거루와 코알라의 나라", lv:2},
+      {w:"멕시코", c:"타코와 마야 문명의 나라", lv:2},
+      {w:"이집트", c:"피라미드와 스핑크스의 나라", lv:2},
+      {w:"태국", c:"불교 사원과 똠얌꿍의 나라", lv:2},
+      {w:"베트남", c:"쌀국수로 알려진 동남아시아의 나라", lv:2},
+      {w:"인도네시아", c:"발리섬이 있는 섬들의 나라", lv:2},
+      {w:"그리스", c:"파르테논 신전이 있는 고대 문명의 나라", lv:2},
+      {w:"튀르키예", c:"이스탄불이 있는 아시아와 유럽에 걸친 나라", lv:2},
+      {w:"포르투갈", c:"대항해 시대에 활약한 스페인 서쪽의 나라", lv:2},
+      {w:"스웨덴", c:"북유럽 국가, 노벨상 시상식이 열리는 곳", lv:2},
+      {w:"노르웨이", c:"피오르와 오로라의 북유럽 나라", lv:2},
+      {w:"핀란드", c:"산타마을과 사우나의 나라", lv:2},
+      {w:"페루", c:"마추픽추로 알려진 남미의 나라", lv:2},
+      {w:"칠레", c:"남미 서쪽에 길쭉하게 뻗은 나라", lv:2},
+      {w:"쿠바", c:"카리브해의 시가와 재즈의 섬나라", lv:2},
+      {w:"케냐", c:"사파리로 유명한 아프리카의 나라", lv:2},
+      {w:"몽골", c:"넓은 초원과 유목민의 나라", lv:2},
+      {w:"네팔", c:"에베레스트가 솟은 산의 나라", lv:2},
+      {w:"이란", c:"옛날에 페르시아라 불리던 중동의 나라", lv:2},
+      {w:"아일랜드", c:"초록의 섬, 클로버의 나라", lv:2},
+      {w:"폴란드", c:"쇼팽이 태어난 중부 유럽의 나라", lv:2},
+      {w:"덴마크", c:"인어공주를 쓴 안데르센의 나라", lv:2},
+      {w:"필리핀", c:"7천 개가 넘는 섬으로 이루어진 동남아시아 나라", lv:3},
+      {w:"스위스", c:"알프스와 시계와 초콜릿의 나라", lv:3},
+      {w:"네덜란드", c:"풍차와 튤립의 나라", lv:3},
+      {w:"아르헨티나", c:"탱고와 축구로 유명한 남미의 나라", lv:3},
+      {w:"나이지리아", c:"아프리카에서 인구가 가장 많은 나라", lv:3},
+      {w:"이스라엘", c:"예루살렘이 있는 중동의 나라", lv:3},
+      {w:"헝가리", c:"부다페스트가 수도인 중부 유럽의 나라", lv:3},
+      {w:"오스트리아", c:"모차르트가 태어난 음악의 나라", lv:3},
+      {w:"벨기에", c:"초콜릿과 와플로 유명한 나라", lv:3},
+      {w:"아이슬란드", c:"화산과 온천과 빙하의 섬나라", lv:3},
+      {w:"자메이카", c:"레게가 태어난 카리브의 섬나라", lv:3},
+      {w:"모로코", c:"사하라 사막에 가까운 북아프리카의 나라", lv:3},
+      {w:"에티오피아", c:"커피의 발상지로 알려진 아프리카의 나라", lv:3},
+      {w:"우크라이나", c:"해바라기밭으로 알려진 동유럽의 나라", lv:3},
+      {w:"말레이시아", c:"페트로나스 트윈타워가 있는 동남아시아 나라", lv:3},
+      {w:"싱가포르", c:"머라이언이 있는 도시국가", lv:3},
+      {w:"파키스탄", c:"인더스강이 흐르는 남아시아의 나라", lv:3}
+    ],
+    en: [
+      {w:"JAPAN", c:"East Asian island nation famous for Mount Fuji", lv:1},
+      {w:"KOREA", c:"Asian country known for kimchi and K-pop", lv:1},
+      {w:"USA", c:"Land of the Statue of Liberty", lv:1},
+      {w:"CHINA", c:"Home of the Great Wall", lv:1},
+      {w:"BRITAIN", c:"Land of London and Big Ben", lv:1},
+      {w:"FRANCE", c:"Country of the Eiffel Tower", lv:1},
+      {w:"GERMANY", c:"European country famous for sausages and beer", lv:1},
+      {w:"ITALY", c:"Boot-shaped land of pizza and pasta", lv:1},
+      {w:"SPAIN", c:"Land of flamenco and paella", lv:1},
+      {w:"RUSSIA", c:"The largest country in the world by area", lv:1},
+      {w:"INDIA", c:"Land of curry and the Taj Mahal", lv:1},
+      {w:"BRAZIL", c:"South American land of samba and coffee", lv:1},
+      {w:"CANADA", c:"Maple leaf flag, north of the USA", lv:1},
+      {w:"AUSTRALIA", c:"Home of kangaroos and koalas", lv:2},
+      {w:"MEXICO", c:"Land of tacos and Mayan ruins", lv:2},
+      {w:"EGYPT", c:"Land of pyramids and the Nile", lv:2},
+      {w:"THAILAND", c:"Southeast Asian land of temples and Pad Thai", lv:2},
+      {w:"VIETNAM", c:"Southeast Asian country known for pho", lv:2},
+      {w:"INDONESIA", c:"Archipelago nation that includes Bali", lv:2},
+      {w:"GREECE", c:"Cradle of the ancient Olympics", lv:2},
+      {w:"TURKEY", c:"Straddles Europe and Asia; Istanbul", lv:2},
+      {w:"PORTUGAL", c:"Sea-faring nation west of Spain", lv:2},
+      {w:"SWEDEN", c:"Nordic land of Nobel Prizes", lv:2},
+      {w:"NORWAY", c:"Nordic land of fjords", lv:2},
+      {w:"FINLAND", c:"Nordic land of saunas and thousands of lakes", lv:2},
+      {w:"PERU", c:"Home of Machu Picchu", lv:2},
+      {w:"CHILE", c:"Long, thin South American country", lv:2},
+      {w:"CUBA", c:"Caribbean island nation known for cigars", lv:2},
+      {w:"KENYA", c:"African land of safaris", lv:2},
+      {w:"MONGOLIA", c:"Vast grasslands and nomadic herders", lv:2},
+      {w:"NEPAL", c:"Mountain nation at Everest", lv:2},
+      {w:"IRAN", c:"Middle Eastern land once known as Persia", lv:2},
+      {w:"IRELAND", c:"The Emerald Isle", lv:2},
+      {w:"POLAND", c:"Birthplace of Chopin", lv:2},
+      {w:"DENMARK", c:"Home of Hans Christian Andersen", lv:2},
+      {w:"PHILIPPINES", c:"Southeast Asian archipelago of over 7,000 islands", lv:3},
+      {w:"SWITZERLAND", c:"Alps, watches and chocolate", lv:3},
+      {w:"NETHERLANDS", c:"Windmills, tulips and canals", lv:3},
+      {w:"ARGENTINA", c:"South American land of tango", lv:3},
+      {w:"NIGERIA", c:"Africa's most populous country", lv:3},
+      {w:"ISRAEL", c:"Middle Eastern land with Jerusalem", lv:3},
+      {w:"HUNGARY", c:"Capital is Budapest", lv:3},
+      {w:"AUSTRIA", c:"Land of Mozart and Vienna", lv:3},
+      {w:"BELGIUM", c:"Famous for chocolate, waffles and beer", lv:3},
+      {w:"ICELAND", c:"Island of volcanoes and glaciers", lv:3},
+      {w:"JAMAICA", c:"Caribbean birthplace of reggae", lv:3},
+      {w:"MOROCCO", c:"North African land of Marrakesh", lv:3},
+      {w:"ETHIOPIA", c:"Said to be the birthplace of coffee", lv:3},
+      {w:"UKRAINE", c:"Eastern European land of sunflower fields", lv:3},
+      {w:"MALAYSIA", c:"Southeast Asian home of the Petronas Towers", lv:3},
+      {w:"SINGAPORE", c:"City-state with the Merlion", lv:3},
+      {w:"PAKISTAN", c:"South Asian land along the Indus", lv:3}
+    ]
+  },
+  general: {
+    ja: [
+      {w:"あたま", c:"体の一番上の部分。脳が入っている", lv:1},
+      {w:"かお", c:"目や鼻や口がある、頭の前の部分", lv:1},
+      {w:"め", c:"物を見るための体の部分", lv:1},
+      {w:"はな", c:"においをかぐ、顔の真ん中の部分", lv:1},
+      {w:"くち", c:"食べたり話したりする部分", lv:1},
+      {w:"みみ", c:"音を聞くための体の部分", lv:1},
+      {w:"て", c:"物をつかむための体の部分", lv:1},
+      {w:"あし", c:"歩くための体の部分", lv:1},
+      {w:"ゆび", c:"手や足の先にある細長い部分", lv:1},
+      {w:"かみ", c:"頭に生えている毛", lv:1},
+      {w:"くび", c:"頭と体をつなぐ部分", lv:2},
+      {w:"のど", c:"声が出るところ。ここが渇くと水が飲みたくなる", lv:2},
+      {w:"むね", c:"体の前側、心臓がある辺り", lv:2},
+      {w:"はら", c:"おなかのこと", lv:2},
+      {w:"ひざ", c:"脚の曲がる部分", lv:2},
+      {w:"は", c:"食べ物をかむための体の部分", lv:1},
+      {w:"はは", c:"女親のこと", lv:1},
+      {w:"ちち", c:"男親のこと", lv:1},
+      {w:"あに", c:"年上の男のきょうだい", lv:1},
+      {w:"あね", c:"年上の女のきょうだい", lv:1},
+      {w:"かぞく", c:"一緒に暮らす親子やきょうだいのまとまり", lv:1},
+      {w:"こども", c:"年の若い人。おとなの反対", lv:1},
+      {w:"あかちゃん", c:"生まれたばかりの子ども", lv:1},
+      {w:"いとこ", c:"おじ・おばの子ども", lv:2},
+      {w:"つま", c:"結婚している男性から見た配偶者の女性", lv:2},
+      {w:"そら", c:"雲や太陽が見える、頭の上に広がる空間", lv:1},
+      {w:"くも", c:"空に浮かぶ白い、または灰色のかたまり", lv:1},
+      {w:"あめ", c:"空から降ってくる水のつぶ", lv:1},
+      {w:"ゆき", c:"冬に空から降る白いもの", lv:1},
+      {w:"かぜ", c:"目に見えないが、木の葉を揺らす空気の流れ", lv:1},
+      {w:"つき", c:"夜空に浮かぶ、満ち欠けする天体", lv:1},
+      {w:"ほし", c:"夜空にきらきら光って見える天体", lv:1},
+      {w:"やま", c:"周りより高く盛り上がった地形", lv:1},
+      {w:"かわ", c:"山から海へ水が流れる、細長い地形", lv:1},
+      {w:"うみ", c:"塩水でできた、とても広い水域", lv:1},
+      {w:"もり", c:"木がたくさん生えている場所", lv:1},
+      {w:"いけ", c:"陸に囲まれた、川より小さい水たまり", lv:2},
+      {w:"すな", c:"海辺や砂漠にある細かい粒", lv:1},
+      {w:"みずうみ", c:"陸に囲まれた大きな水域。池よりずっと大きい", lv:2},
+      {w:"たき", c:"川の水が崖から落ちるところ", lv:2},
+      {w:"しま", c:"周りを海に囲まれた陸地", lv:1},
+      {w:"にじ", c:"雨上がりに空にかかる七色の弧", lv:1},
+      {w:"はる", c:"桜が咲く、暖かくなる季節", lv:1},
+      {w:"なつ", c:"一年で一番暑い季節", lv:1},
+      {w:"あき", c:"木の葉が色づく、涼しくなる季節", lv:1},
+      {w:"ふゆ", c:"一年で一番寒い季節", lv:1},
+      {w:"あさ", c:"一日の始まり、日が昇る頃", lv:1},
+      {w:"ひる", c:"太陽が一番高くなる、日中の時間帯", lv:1},
+      {w:"よる", c:"日が沈んでからの、暗い時間帯", lv:1},
+      {w:"きょう", c:"今のこの日のこと", lv:1},
+      {w:"あした", c:"今日の次の日", lv:1},
+      {w:"きのう", c:"今日の前の日", lv:1},
+      {w:"じかん", c:"時計で計る、過ぎていくもの", lv:1},
+      {w:"あか", c:"血やトマトのような色", lv:1},
+      {w:"あお", c:"晴れた空のような色", lv:1},
+      {w:"きいろ", c:"レモンやバナナのような色", lv:1},
+      {w:"みどり", c:"木の葉や芝生のような色", lv:1},
+      {w:"しろ", c:"雪のような、光をすべて反射する色", lv:1},
+      {w:"くろ", c:"夜のような、光をすべて吸収する色", lv:1},
+      {w:"むらさき", c:"赤と青を混ぜたような色", lv:2},
+      {w:"ちゃいろ", c:"木の幹やチョコレートのような色", lv:2},
+      {w:"つくえ", c:"勉強や仕事をするときに使う台", lv:1},
+      {w:"いす", c:"座るための家具", lv:1},
+      {w:"ほん", c:"文字が印刷され、綴じられたもの。読むもの", lv:1},
+      {w:"えんぴつ", c:"芯が木に包まれた、字を書く道具", lv:1},
+      {w:"かばん", c:"物を入れて持ち運ぶための道具", lv:1},
+      {w:"とけい", c:"今何時かを教えてくれる道具", lv:1},
+      {w:"かがみ", c:"自分の姿を映して見る道具", lv:1},
+      {w:"まど", c:"部屋の壁にある、光や風を通す開口部", lv:1},
+      {w:"かさ", c:"雨のときに頭の上にさす道具", lv:1},
+      {w:"はさみ", c:"紙や布を切る、刃が二枚ある道具", lv:1},
+      {w:"てれび", c:"映像と音を映す、居間によくある機械", lv:1},
+      {w:"でんわ", c:"遠くの人と話すための道具", lv:1},
+      {w:"ふとん", c:"寝るときに敷いたりかけたりするもの", lv:1},
+      {w:"まくら", c:"寝るときに頭の下に置くもの", lv:1},
+      {w:"たおる", c:"体や手をふくための布", lv:1},
+      {w:"せっけん", c:"体や手を洗うときに使う泡立つもの", lv:1},
+      {w:"くつ", c:"外を歩くときに足にはくもの", lv:1},
+      {w:"ふく", c:"体に身につける衣類の総称", lv:1},
+      {w:"ぼうし", c:"頭にかぶるもの", lv:1},
+      {w:"めがね", c:"目が悪い人が視力を補うためにかけるもの", lv:1},
+      {w:"ごはん", c:"米を炊いたもの。食事そのものも指す", lv:1},
+      {w:"ぱん", c:"小麦粉を発酵させて焼いた食べ物", lv:1},
+      {w:"すし", c:"酢飯に魚などをのせた、日本の代表的な料理", lv:1},
+      {w:"らーめん", c:"スープと麺が入った、中華風の麺料理", lv:1},
+      {w:"うどん", c:"小麦粉から作る、太くて白い麺", lv:1},
+      {w:"そば", c:"そば粉から作る、茶色っぽい麺", lv:1},
+      {w:"かれー", c:"スパイスの効いた、ご飯にかける料理", lv:1},
+      {w:"たまご", c:"鶏が産む、朝食によく使われる食材", lv:1},
+      {w:"にく", c:"動物から取れる、たんぱく質の多い食材", lv:1},
+      {w:"やさい", c:"畑で育つ、緑色のものが多い食材の総称", lv:1},
+      {w:"おちゃ", c:"茶葉から作る、日本でよく飲まれる飲み物", lv:1},
+      {w:"みず", c:"透明で味のない、生きるために欠かせない液体", lv:1},
+      {w:"さとう", c:"甘い味をつけるための白い調味料", lv:1},
+      {w:"しお", c:"しょっぱい味をつけるための調味料", lv:1},
+      {w:"しょうゆ", c:"大豆から作る、黒っぽい和風の調味料", lv:2},
+      {w:"みそ", c:"大豆を発酵させて作る、みそ汁に使う調味料", lv:1},
+      {w:"がっこう", c:"子どもたちが勉強しに行く場所", lv:1},
+      {w:"びょういん", c:"体の具合が悪いときに行く場所", lv:1},
+      {w:"えき", c:"電車に乗り降りする場所", lv:1},
+      {w:"くうこう", c:"飛行機に乗るための場所", lv:1},
+      {w:"こうえん", c:"子どもが遊んだり散歩したりする屋外の場所", lv:1},
+      {w:"としょかん", c:"本をたくさん置いて、借りたり読んだりできる場所", lv:1},
+      {w:"どうぶつえん", c:"色々な動物を見ることができる施設", lv:1},
+      {w:"えいがかん", c:"映画を見るための施設", lv:2},
+      {w:"ぎんこう", c:"お金を預けたり引き出したりする施設", lv:2},
+      {w:"やおや", c:"野菜や果物を売っているお店", lv:2},
+      {w:"くるま", c:"道路を走る、タイヤが四つある乗り物", lv:1},
+      {w:"でんしゃ", c:"レールの上を走る乗り物", lv:1},
+      {w:"ひこうき", c:"空を飛ぶ乗り物", lv:1},
+      {w:"ふね", c:"水の上を進む乗り物", lv:1},
+      {w:"じてんしゃ", c:"ペダルをこいで進む、二輪の乗り物", lv:1},
+      {w:"ばす", c:"大人数を乗せて走る、大きな乗り物", lv:1},
+      {w:"たくしー", c:"お金を払って乗る、運転手つきの車", lv:1},
+      {w:"せんせい", c:"学校で教える人", lv:1},
+      {w:"せいと", c:"学校で学ぶ人。生徒とも書く", lv:1},
+      {w:"きょうしつ", c:"授業を受ける部屋", lv:1},
+      {w:"しゅくだい", c:"家でやってくるように出される勉強の課題", lv:1},
+      {w:"かいしゃ", c:"人々が働きに行く組織", lv:1},
+      {w:"しごと", c:"お金をもらうためにする作業や役割", lv:1},
+      {w:"やきゅう", c:"バットとボールを使う、日本で人気のスポーツ", lv:1},
+      {w:"さっかー", c:"足でボールを蹴って点を取るスポーツ", lv:1},
+      {w:"すいえい", c:"水の中を泳ぐスポーツ", lv:1},
+      {w:"おんがく", c:"耳で楽しむ、メロディやリズムの芸術", lv:1},
+      {w:"えんそう", c:"楽器を演じて音楽を奏でること", lv:2},
+      {w:"だんす", c:"音楽に合わせて体を動かすこと", lv:1},
+      {w:"りょこう", c:"遠くへ出かけて楽しむこと", lv:1},
+      {w:"まぶた", c:"目を覆う、開け閉めできる皮膚の部分", lv:3},
+      {w:"すね", c:"膝から足首までの、脚の前側の部分", lv:3},
+      {w:"わき", c:"腕の付け根の内側のくぼみ", lv:3},
+      {w:"めい", c:"兄弟姉妹の娘", lv:3},
+      {w:"おい", c:"兄弟姉妹の息子", lv:3},
+      {w:"しゅうと", c:"配偶者の父親", lv:3},
+      {w:"ひまご", c:"孫の子ども", lv:3},
+      {w:"しずく", c:"水などが小さくまとまって垂れる粒", lv:3},
+      {w:"きり", c:"地面近くに立ちこめる、白く細かい水滴の集まり", lv:3},
+      {w:"つゆ", c:"初夏に雨が多く降り続く時期", lv:3},
+      {w:"あらし", c:"風や雨が激しく荒れる天候", lv:3},
+      {w:"みさき", c:"海に突き出た陸地の先端", lv:3},
+      {w:"たいら", c:"でこぼこがなく、平らな土地", lv:3},
+      {w:"かいがら", c:"貝の外側を覆う硬い殻", lv:3},
+      {w:"せいざ", c:"星をつないでできる、動物などの形", lv:3},
+      {w:"にゅうどうぐも", c:"夏によく見られる、もくもくと大きい雲", lv:3},
+      {w:"しゅんぶん", c:"昼と夜の長さがほぼ同じになる春の日", lv:3},
+      {w:"げしゃ", c:"電車やバスから降りること", lv:3},
+      {w:"かいさつ", c:"駅で切符を確認する場所や係", lv:3},
+      {w:"のうえん", c:"作物を育てたり動物を飼ったりする施設", lv:3},
+      {w:"ゆうえんち", c:"乗り物やアトラクションがある遊び場", lv:2},
+      {w:"すいぞくかん", c:"魚や水の生き物を展示している施設", lv:2},
+      {w:"はくぶつかん", c:"歴史や美術品などを展示する施設", lv:2},
+      {w:"びじゅつかん", c:"絵画や彫刻などの芸術作品を展示する施設", lv:2},
+      {w:"ようちえん", c:"小学校の前に通う、幼い子どものための施設", lv:2},
+      {w:"れいぞうこ", c:"食べ物を冷やして保存する家電", lv:1},
+      {w:"せんたくき", c:"服を洗うための機械", lv:1},
+      {w:"けいたいでんわ", c:"持ち歩いて使う電話", lv:2},
+      {w:"じどうはんばいき", c:"お金を入れると商品が出てくる機械", lv:3},
+      {w:"しんかんせん", c:"日本の高速鉄道", lv:2},
+      {w:"こうこうせい", c:"高校に通う生徒", lv:2},
+      {w:"だいがくせい", c:"大学に通う生徒", lv:2},
+      {w:"たんじょうび", c:"生まれた日。毎年お祝いする日", lv:1},
+      {w:"おうだんほどう", c:"道路を渡るための、しま模様の道", lv:3}
+    ],
+    ko: [
+      {w:"머리", c:"몸의 가장 위에 있는 부분. 뇌가 들어있음", lv:1},
+      {w:"얼굴", c:"눈, 코, 입이 있는 머리의 앞부분", lv:1},
+      {w:"눈", c:"사물을 보는 데 쓰는 몸의 부분", lv:1},
+      {w:"코", c:"냄새를 맡는 데 쓰는 몸의 부분", lv:1},
+      {w:"입", c:"먹고 말하는 데 쓰는 몸의 부분", lv:1},
+      {w:"귀", c:"소리를 듣는 데 쓰는 몸의 부분", lv:1},
+      {w:"손", c:"물건을 잡는 데 쓰는 몸의 부분", lv:1},
+      {w:"발", c:"걷는 데 쓰는 몸의 부분", lv:1},
+      {w:"목", c:"머리와 몸통을 연결하는 부분", lv:1},
+      {w:"가슴", c:"몸의 앞쪽, 심장이 있는 부분", lv:1},
+      {w:"무릎", c:"다리가 굽혀지는 관절 부분", lv:1},
+      {w:"팔", c:"어깨부터 손까지의 부분", lv:1},
+      {w:"다리", c:"걷고 서는 데 쓰는 몸의 부분", lv:1},
+      {w:"등", c:"몸의 뒤쪽 부분", lv:1},
+      {w:"피부", c:"몸 전체를 덮고 있는 겉 부분", lv:1},
+      {w:"턱", c:"입 아래에 있는 얼굴 부분", lv:1},
+      {w:"엄마", c:"나를 낳아준 여자 부모", lv:1},
+      {w:"아빠", c:"나를 낳아준 남자 부모", lv:1},
+      {w:"가족", c:"부모와 자녀, 형제자매가 모인 사람들", lv:1},
+      {w:"아이", c:"아직 어른이 아닌 사람", lv:1},
+      {w:"아기", c:"태어난 지 얼마 안 된 아주 어린 아이", lv:1},
+      {w:"사촌", c:"삼촌이나 이모의 자녀", lv:2},
+      {w:"아내", c:"결혼한 남자의 배우자", lv:2},
+      {w:"남편", c:"결혼한 여자의 배우자", lv:2},
+      {w:"삼촌", c:"아버지의 형제", lv:2},
+      {w:"이모", c:"어머니의 여자 형제", lv:2},
+      {w:"하늘", c:"구름과 해가 보이는, 머리 위의 공간", lv:1},
+      {w:"구름", c:"하늘에 떠 있는 하얀 덩어리", lv:1},
+      {w:"비", c:"하늘에서 내리는 물방울", lv:1},
+      {w:"바람", c:"눈에 보이지 않지만 느낄 수 있는 공기의 흐름", lv:1},
+      {w:"달", c:"밤하늘에 떠 있는, 차고 기우는 천체", lv:1},
+      {w:"별", c:"밤하늘에서 반짝이는 작은 빛", lv:1},
+      {w:"산", c:"주위보다 높이 솟은 땅", lv:1},
+      {w:"강", c:"산에서 바다로 흐르는 물줄기", lv:1},
+      {w:"바다", c:"짠물로 이루어진 아주 넓은 물", lv:1},
+      {w:"숲", c:"나무가 많이 자라는 곳", lv:1},
+      {w:"모래", c:"바닷가나 사막에 있는 작은 알갱이", lv:1},
+      {w:"호수", c:"육지로 둘러싸인 큰 물, 연못보다 큼", lv:2},
+      {w:"섬", c:"바다로 둘러싸인 땅", lv:2},
+      {w:"무지개", c:"비가 그친 뒤 하늘에 뜨는 일곱 색깔 활 모양", lv:2},
+      {w:"나무", c:"줄기와 가지, 잎이 있는 식물", lv:1},
+      {w:"봄", c:"꽃이 피는, 따뜻해지는 계절", lv:1},
+      {w:"여름", c:"일 년 중 가장 더운 계절", lv:1},
+      {w:"가을", c:"나뭇잎이 물드는, 선선한 계절", lv:1},
+      {w:"겨울", c:"일 년 중 가장 추운 계절", lv:1},
+      {w:"아침", c:"하루가 시작되는, 해가 뜨는 시간", lv:1},
+      {w:"낮", c:"해가 떠 있는 밝은 시간", lv:1},
+      {w:"밤", c:"해가 진 뒤의 어두운 시간", lv:1},
+      {w:"오늘", c:"바로 지금 이 날", lv:1},
+      {w:"내일", c:"오늘의 다음 날", lv:2},
+      {w:"어제", c:"오늘의 전 날", lv:2},
+      {w:"시간", c:"시계로 재는, 흘러가는 것", lv:1},
+      {w:"주", c:"칠 일을 묶어 부르는 단위", lv:1},
+      {w:"년", c:"열두 달을 묶어 부르는 단위", lv:1},
+      {w:"빨강", c:"피나 잘 익은 토마토 같은 색", lv:1},
+      {w:"파랑", c:"맑은 하늘 같은 색", lv:1},
+      {w:"노랑", c:"레몬이나 바나나 같은 색", lv:1},
+      {w:"초록", c:"풀이나 나뭇잎 같은 색", lv:1},
+      {w:"보라", c:"빨강과 파랑을 섞은 듯한 색", lv:2},
+      {w:"갈색", c:"나무 줄기나 초콜릿 같은 색", lv:2},
+      {w:"분홍", c:"연한 빨간빛을 띠는 색", lv:2},
+      {w:"회색", c:"검정과 하양 사이의 색", lv:2},
+      {w:"책상", c:"공부하거나 일할 때 쓰는 탁자", lv:1},
+      {w:"의자", c:"앉는 데 쓰는 가구", lv:1},
+      {w:"책", c:"글자가 인쇄되어 묶인, 읽는 물건", lv:1},
+      {w:"연필", c:"나무 속에 심이 든, 글씨 쓰는 도구", lv:1},
+      {w:"가방", c:"물건을 넣어 들고 다니는 도구", lv:1},
+      {w:"시계", c:"지금 몇 시인지 알려주는 도구", lv:1},
+      {w:"거울", c:"자기 모습을 비춰 보는 도구", lv:2},
+      {w:"창문", c:"방 벽에 있는, 빛과 바람이 통하는 곳", lv:1},
+      {w:"우산", c:"비가 올 때 머리 위에 쓰는 도구", lv:2},
+      {w:"가위", c:"종이나 천을 자르는, 날이 두 개인 도구", lv:2},
+      {w:"전화", c:"멀리 있는 사람과 이야기하는 도구", lv:1},
+      {w:"수건", c:"몸이나 손을 닦는 데 쓰는 천", lv:1},
+      {w:"비누", c:"손이나 몸을 씻을 때 쓰는 거품 나는 것", lv:1},
+      {w:"신발", c:"밖에 나갈 때 발에 신는 것", lv:1},
+      {w:"모자", c:"머리에 쓰는 물건", lv:1},
+      {w:"안경", c:"눈이 나쁜 사람이 시력을 돕기 위해 쓰는 것", lv:1},
+      {w:"열쇠", c:"문을 잠그거나 여는 데 쓰는 작은 금속 물건", lv:1},
+      {w:"문", c:"방에 들어갈 때 여는 것", lv:1},
+      {w:"컵", c:"음료를 마실 때 쓰는 작은 그릇", lv:1},
+      {w:"접시", c:"음식을 담는 납작한 그릇", lv:1},
+      {w:"숟가락", c:"국을 떠먹을 때 쓰는 도구", lv:1},
+      {w:"포크", c:"음식을 찍어 먹는, 뾰족한 갈래가 있는 도구", lv:1},
+      {w:"칼", c:"음식을 자르는, 날카로운 도구", lv:1},
+      {w:"밥", c:"쌀을 지은 음식. 식사를 뜻하기도 함", lv:1},
+      {w:"빵", c:"밀가루 반죽을 구워 만든 음식", lv:1},
+      {w:"계란", c:"닭이 낳는, 아침에 자주 먹는 식재료", lv:1},
+      {w:"고기", c:"동물에서 얻는, 단백질이 많은 식재료", lv:1},
+      {w:"생선", c:"물에 사는, 먹는 물고기", lv:1},
+      {w:"수프", c:"따뜻한 국물 요리", lv:1},
+      {w:"샐러드", c:"여러 채소를 섞은 차가운 요리", lv:1},
+      {w:"케이크", c:"생일에 자주 먹는 달콤한 구운 디저트", lv:1},
+      {w:"우유", c:"소에서 나오는 하얀 음료", lv:1},
+      {w:"주스", c:"과일을 짜서 만든 음료", lv:1},
+      {w:"커피", c:"볶은 원두로 만드는, 쓴맛의 갈색 음료", lv:1},
+      {w:"차", c:"잎을 물에 우려 만드는 따뜻한 음료", lv:1},
+      {w:"설탕", c:"음식을 달게 만드는 하얀 조미료", lv:1},
+      {w:"소금", c:"음식을 짜게 만드는 조미료", lv:1},
+      {w:"치즈", c:"우유로 만드는, 피자에 자주 올리는 유제품", lv:1},
+      {w:"피자", c:"치즈와 소스를 올려 구운 둥근 음식", lv:1},
+      {w:"학교", c:"아이들이 공부하러 가는 곳", lv:1},
+      {w:"병원", c:"몸이 아플 때 가는 곳", lv:1},
+      {w:"역", c:"기차를 타고 내리는 곳", lv:1},
+      {w:"공항", c:"비행기를 타는 곳", lv:1},
+      {w:"공원", c:"산책하거나 노는 야외 장소", lv:1},
+      {w:"도서관", c:"책을 빌리거나 읽을 수 있는 곳", lv:2},
+      {w:"동물원", c:"여러 동물을 볼 수 있는 시설", lv:1},
+      {w:"은행", c:"돈을 맡기거나 찾는 곳", lv:1},
+      {w:"시장", c:"물건을 사고파는 곳", lv:2},
+      {w:"농장", c:"작물을 기르거나 가축을 키우는 땅", lv:1},
+      {w:"해변", c:"바다 옆의 모래땅", lv:1},
+      {w:"도시", c:"사람과 건물이 많은 큰 마을", lv:1},
+      {w:"집", c:"내가 사는 곳", lv:1},
+      {w:"방", c:"건물 안의 나뉜 공간", lv:1},
+      {w:"부엌", c:"음식을 만드는 방", lv:2},
+      {w:"정원", c:"꽃과 식물을 기르는 바깥 공간", lv:1},
+      {w:"자동차", c:"도로를 달리는 바퀴 네 개짜리 탈것", lv:1},
+      {w:"기차", c:"철길을 달리는 탈것", lv:1},
+      {w:"비행기", c:"하늘을 나는 탈것", lv:1},
+      {w:"배", c:"물 위를 다니는 탈것", lv:1},
+      {w:"자전거", c:"페달을 밟아 움직이는, 바퀴 두 개인 탈것", lv:2},
+      {w:"버스", c:"많은 사람을 태우는 큰 탈것", lv:1},
+      {w:"택시", c:"돈을 내고 타는, 기사가 운전하는 차", lv:1},
+      {w:"트럭", c:"짐을 싣고 다니는 큰 차", lv:2},
+      {w:"선생님", c:"학교에서 가르치는 사람", lv:1},
+      {w:"학생", c:"학교에서 배우는 사람", lv:1},
+      {w:"수업", c:"학교에서 배우는 시간", lv:1},
+      {w:"숙제", c:"집에서 해오라고 내주는 공부 과제", lv:2},
+      {w:"회사", c:"사람들이 일하러 가는 곳", lv:1},
+      {w:"일", c:"돈을 벌기 위해 하는 활동", lv:1},
+      {w:"회의", c:"사람들이 모여 의논하는 것", lv:2},
+      {w:"컴퓨터", c:"일과 인터넷에 쓰는 전자 기기", lv:2},
+      {w:"축구", c:"발로 공을 차서 골을 넣는 운동", lv:1},
+      {w:"테니스", c:"라켓으로 공을 치는, 네트를 사이에 둔 운동", lv:2},
+      {w:"수영", c:"물속에서 헤엄치는 운동", lv:1},
+      {w:"음악", c:"리듬과 멜로디로 이루어진 소리 예술", lv:1},
+      {w:"춤", c:"음악에 맞춰 몸을 움직이는 것", lv:1},
+      {w:"게임", c:"재미로 하는, 규칙이 있는 놀이", lv:1},
+      {w:"운동", c:"몸을 움직여 건강을 챙기는 활동", lv:1},
+      {w:"노래", c:"목소리로 부르는 음악", lv:1},
+      {w:"그림", c:"연필이나 붓으로 그리는 것", lv:1},
+      {w:"여행", c:"다른 곳에 가서 즐기는 일", lv:1},
+      {w:"눈꺼풀", c:"눈을 덮어 보호하는 얇은 피부", lv:3},
+      {w:"정강이", c:"무릎 아래, 다리 앞쪽 부분", lv:3},
+      {w:"겨드랑이", c:"팔이 시작되는 곳의 움푹 들어간 부분", lv:3},
+      {w:"조카", c:"형제자매의 아들이나 딸", lv:3},
+      {w:"물방울", c:"작고 동그랗게 맺힌 물의 한 방울", lv:3},
+      {w:"안개", c:"땅 가까이에 낀 뿌연 수증기", lv:3},
+      {w:"폭풍", c:"강한 바람과 비를 동반한 거친 날씨", lv:3},
+      {w:"조개", c:"딱딱한 껍데기를 가진 바다 생물", lv:3},
+      {w:"별자리", c:"별을 이어서 만든 모양, 동물 등을 닮음", lv:3},
+      {w:"춘분", c:"낮과 밤의 길이가 거의 같아지는 봄의 날", lv:3},
+      {w:"항구", c:"배가 정박하는 바닷가의 시설", lv:3},
+      {w:"계곡", c:"산과 산 사이의 낮고 물이 흐르는 곳", lv:3},
+      {w:"사막", c:"비가 거의 오지 않는 모래로 뒤덮인 땅", lv:3},
+      {w:"화산", c:"용암이 분출할 수 있는 산", lv:3},
+      {w:"빙하", c:"천천히 움직이는 거대한 얼음 덩어리", lv:3},
+      {w:"천둥", c:"번개 뒤에 들리는 크고 우르릉거리는 소리", lv:3},
+      {w:"수평선", c:"하늘과 바다가 맞닿아 보이는 선", lv:3},
+      {w:"폭포", c:"높은 곳에서 절벽 아래로 떨어지는 물", lv:3},
+      {w:"유치원", c:"초등학교에 들어가기 전, 어린아이들이 다니는 곳", lv:2},
+      {w:"대학교", c:"고등학교를 마친 뒤 다니는 학교", lv:2},
+      {w:"중학교", c:"초등학교 다음에 다니는 학교", lv:2},
+      {w:"고등학교", c:"중학교 다음에 다니는 학교", lv:2},
+      {w:"박물관", c:"역사나 유물을 전시하는 곳", lv:2},
+      {w:"미술관", c:"그림이나 조각 작품을 전시하는 곳", lv:2},
+      {w:"수족관", c:"물고기 등 물속 생물을 전시하는 곳", lv:2},
+      {w:"지하철", c:"땅 밑을 달리는 기차 같은 교통수단", lv:2},
+      {w:"편의점", c:"24시간 여는, 간단한 물건을 파는 작은 가게", lv:2},
+      {w:"세탁기", c:"옷을 빠는 데 쓰는 기계", lv:1},
+      {w:"냉장고", c:"음식을 차게 보관하는 가전제품", lv:1},
+      {w:"청소기", c:"먼지를 빨아들이는 청소 기계", lv:1},
+      {w:"휴대폰", c:"들고 다니며 쓰는 전화기", lv:1},
+      {w:"자판기", c:"돈을 넣으면 물건이 나오는 기계", lv:2},
+      {w:"신호등", c:"빨강 노랑 초록으로 길을 안내하는 장치", lv:2}
+    ],
+    en: [
+      {w:"HEAD", c:"The top part of your body, where your brain is", lv:1},
+      {w:"FACE", c:"The front of your head, with eyes, nose and mouth", lv:1},
+      {w:"EYE", c:"The body part you see with", lv:1},
+      {w:"NOSE", c:"The body part you smell with", lv:1},
+      {w:"MOUTH", c:"The body part you eat and speak with", lv:1},
+      {w:"EAR", c:"The body part you hear with", lv:1},
+      {w:"HAND", c:"The body part at the end of your arm, used to grab things", lv:1},
+      {w:"FOOT", c:"The body part at the end of your leg, used to walk", lv:1},
+      {w:"FINGER", c:"One of the five parts at the end of your hand", lv:1},
+      {w:"HAIR", c:"What grows on top of your head", lv:1},
+      {w:"NECK", c:"Connects your head to your shoulders", lv:1},
+      {w:"CHEST", c:"The front of your body, above your stomach", lv:1},
+      {w:"KNEE", c:"The joint in the middle of your leg", lv:1},
+      {w:"TOOTH", c:"A hard white part in your mouth, used for biting", lv:1},
+      {w:"ARM", c:"The limb between your shoulder and your hand", lv:1},
+      {w:"LEG", c:"The limb you stand and walk on", lv:1},
+      {w:"BACK", c:"The rear side of your body, opposite your chest", lv:1},
+      {w:"SKIN", c:"The outer covering of your whole body", lv:1},
+      {w:"CHIN", c:"The bottom part of your face, below your mouth", lv:1},
+      {w:"MOTHER", c:"Your female parent", lv:1},
+      {w:"FATHER", c:"Your male parent", lv:1},
+      {w:"SISTER", c:"A female sibling", lv:1},
+      {w:"BROTHER", c:"A male sibling", lv:1},
+      {w:"FAMILY", c:"Parents, children and relatives together", lv:1},
+      {w:"CHILD", c:"A young person, not yet an adult", lv:1},
+      {w:"BABY", c:"A very young child, just born", lv:1},
+      {w:"COUSIN", c:"The child of your aunt or uncle", lv:2},
+      {w:"WIFE", c:"A married woman, from her husband's view", lv:2},
+      {w:"UNCLE", c:"Your father's or mother's brother", lv:2},
+      {w:"AUNT", c:"Your father's or mother's sister", lv:2},
+      {w:"SKY", c:"The blue space above you where clouds float", lv:1},
+      {w:"CLOUD", c:"A white or gray shape floating in the sky", lv:1},
+      {w:"RAIN", c:"Water that falls from clouds", lv:1},
+      {w:"SNOW", c:"Soft white flakes that fall in winter", lv:1},
+      {w:"WIND", c:"Moving air you can't see but can feel", lv:1},
+      {w:"MOON", c:"The bright object in the night sky that orbits Earth", lv:1},
+      {w:"STAR", c:"A tiny bright point of light in the night sky", lv:1},
+      {w:"MOUNTAIN", c:"A very tall landform, higher than a hill", lv:2},
+      {w:"RIVER", c:"A long flowing body of water heading to the sea", lv:1},
+      {w:"OCEAN", c:"A huge body of salt water", lv:1},
+      {w:"FOREST", c:"A large area covered with trees", lv:2},
+      {w:"POND", c:"A small body of still water, smaller than a lake", lv:2},
+      {w:"SAND", c:"Tiny grains found on a beach or in a desert", lv:1},
+      {w:"LAKE", c:"A large body of water surrounded by land", lv:1},
+      {w:"ISLAND", c:"Land completely surrounded by water", lv:2},
+      {w:"RAINBOW", c:"A colorful arc that appears after rain", lv:2},
+      {w:"SUN", c:"The bright star that gives Earth light and heat", lv:1},
+      {w:"TREE", c:"A tall plant with a trunk, branches and leaves", lv:1},
+      {w:"LEAF", c:"A green, flat part that grows on a tree branch", lv:1},
+      {w:"ROCK", c:"A hard, solid piece of the earth's surface", lv:1},
+      {w:"SPRING", c:"The season when flowers bloom, between winter and summer", lv:1},
+      {w:"SUMMER", c:"The hottest season of the year", lv:1},
+      {w:"AUTUMN", c:"The season when leaves change color, before winter", lv:2},
+      {w:"WINTER", c:"The coldest season of the year", lv:1},
+      {w:"MORNING", c:"The early part of the day, right after sunrise", lv:1},
+      {w:"NIGHT", c:"The dark part of the day, after sunset", lv:1},
+      {w:"TODAY", c:"The current day, right now", lv:1},
+      {w:"TOMORROW", c:"The day right after today", lv:2},
+      {w:"YESTERDAY", c:"The day right before today", lv:2},
+      {w:"TIME", c:"What a clock measures", lv:1},
+      {w:"HOUR", c:"A unit of time equal to sixty minutes", lv:1},
+      {w:"MINUTE", c:"A unit of time equal to sixty seconds", lv:2},
+      {w:"WEEK", c:"A period of seven days", lv:1},
+      {w:"MONTH", c:"A period of about thirty days", lv:1},
+      {w:"YEAR", c:"A period of twelve months", lv:1},
+      {w:"RED", c:"The color of blood or a ripe tomato", lv:1},
+      {w:"BLUE", c:"The color of a clear sky", lv:1},
+      {w:"YELLOW", c:"The color of a lemon or a banana", lv:1},
+      {w:"GREEN", c:"The color of grass and most leaves", lv:1},
+      {w:"WHITE", c:"The color of fresh snow", lv:1},
+      {w:"BLACK", c:"The darkest color, like the night sky", lv:1},
+      {w:"PURPLE", c:"A color made by mixing red and blue", lv:2},
+      {w:"BROWN", c:"The color of tree bark or chocolate", lv:1},
+      {w:"PINK", c:"A pale, light shade of red", lv:1},
+      {w:"GRAY", c:"A color between black and white", lv:1},
+      {w:"ORANGE", c:"A color, and also the name of a citrus fruit", lv:1},
+      {w:"DESK", c:"A table you sit at to study or work", lv:1},
+      {w:"CHAIR", c:"Furniture you sit on", lv:1},
+      {w:"BOOK", c:"Printed pages bound together, meant for reading", lv:1},
+      {w:"PENCIL", c:"A wooden writing tool with graphite inside", lv:1},
+      {w:"BAG", c:"Something you carry belongings in", lv:1},
+      {w:"CLOCK", c:"A device that tells you the time", lv:1},
+      {w:"MIRROR", c:"Glass that reflects your image back at you", lv:2},
+      {w:"WINDOW", c:"An opening in a wall that lets in light", lv:1},
+      {w:"UMBRELLA", c:"You open this over your head when it rains", lv:2},
+      {w:"SCISSORS", c:"A tool with two blades, used to cut paper", lv:2},
+      {w:"PHONE", c:"A device used to talk to people far away", lv:1},
+      {w:"PILLOW", c:"A soft cushion you rest your head on in bed", lv:1},
+      {w:"TOWEL", c:"Cloth used to dry yourself off", lv:1},
+      {w:"SOAP", c:"What you lather up to wash your hands", lv:1},
+      {w:"SHOE", c:"Something you wear on your foot outdoors", lv:1},
+      {w:"HAT", c:"Something you wear on your head", lv:1},
+      {w:"KEY", c:"A small metal object used to lock or unlock a door", lv:1},
+      {w:"DOOR", c:"What you open to walk into a room", lv:1},
+      {w:"CUP", c:"A small container you drink from", lv:1},
+      {w:"PLATE", c:"A flat dish you put food on", lv:1},
+      {w:"SPOON", c:"Utensil with a small bowl, used for soup", lv:1},
+      {w:"FORK", c:"Utensil with prongs, used to pick up food", lv:1},
+      {w:"KNIFE", c:"A sharp utensil used to cut food", lv:1},
+      {w:"RICE", c:"Small white grains, a staple food in Asia", lv:1},
+      {w:"BREAD", c:"Baked food made from flour dough", lv:1},
+      {w:"EGG", c:"Oval food laid by a chicken, often eaten at breakfast", lv:1},
+      {w:"MEAT", c:"Food that comes from an animal's flesh", lv:1},
+      {w:"FISH", c:"An animal that lives in water, also eaten as food", lv:1},
+      {w:"SOUP", c:"A warm liquid dish, often with vegetables or meat", lv:1},
+      {w:"SALAD", c:"A cold dish of mixed vegetables", lv:1},
+      {w:"CAKE", c:"A sweet baked dessert, often eaten on birthdays", lv:1},
+      {w:"MILK", c:"A white drink that comes from cows", lv:1},
+      {w:"JUICE", c:"A drink squeezed from fruit", lv:1},
+      {w:"COFFEE", c:"A bitter, dark brown drink made from roasted beans", lv:1},
+      {w:"TEA", c:"A hot drink made by steeping leaves in water", lv:1},
+      {w:"SUGAR", c:"A sweet white substance used to sweeten food", lv:1},
+      {w:"SALT", c:"A white seasoning that makes food taste savory", lv:1},
+      {w:"CHEESE", c:"A dairy food made from milk, often used on pizza", lv:1},
+      {w:"PIZZA", c:"A round baked dish topped with cheese and sauce", lv:1},
+      {w:"SCHOOL", c:"Where children go to learn", lv:1},
+      {w:"HOSPITAL", c:"Where you go when you are sick or hurt", lv:1},
+      {w:"STATION", c:"Where you get on and off a train", lv:1},
+      {w:"AIRPORT", c:"Where you catch a flight", lv:1},
+      {w:"PARK", c:"A green outdoor space for walking or playing", lv:1},
+      {w:"LIBRARY", c:"A building full of books you can borrow", lv:2},
+      {w:"MUSEUM", c:"A building where art or historical items are displayed", lv:2},
+      {w:"MARKET", c:"A place where food and goods are bought and sold", lv:2},
+      {w:"FARM", c:"Land used to grow crops or raise animals", lv:1},
+      {w:"BEACH", c:"Sandy land next to the ocean", lv:1},
+      {w:"CITY", c:"A large town with many people and buildings", lv:1},
+      {w:"HOME", c:"The place where you live", lv:1},
+      {w:"ROOM", c:"A separate space inside a building", lv:1},
+      {w:"KITCHEN", c:"The room in a house where meals are cooked", lv:2},
+      {w:"GARDEN", c:"An outdoor area where plants and flowers are grown", lv:1},
+      {w:"CAR", c:"A four-wheeled vehicle you drive on roads", lv:1},
+      {w:"TRAIN", c:"A vehicle that runs on rails", lv:1},
+      {w:"PLANE", c:"A vehicle that flies through the sky", lv:1},
+      {w:"BOAT", c:"A small vehicle that travels on water", lv:1},
+      {w:"BICYCLE", c:"A two-wheeled vehicle you pedal", lv:2},
+      {w:"BUS", c:"A large vehicle that carries many passengers", lv:1},
+      {w:"TAXI", c:"A car you pay a driver to take you somewhere", lv:1},
+      {w:"TRUCK", c:"A large vehicle used to carry heavy cargo", lv:2},
+      {w:"TEACHER", c:"A person who teaches students at school", lv:1},
+      {w:"STUDENT", c:"A person who studies at a school", lv:1},
+      {w:"CLASS", c:"A group of students learning together", lv:1},
+      {w:"HOMEWORK", c:"Schoolwork students do at home", lv:2},
+      {w:"OFFICE", c:"A room or building where people do business work", lv:2},
+      {w:"JOB", c:"Work someone does to earn money", lv:1},
+      {w:"MEETING", c:"When people gather to discuss something", lv:2},
+      {w:"COMPUTER", c:"An electronic device used for work and the internet", lv:2},
+      {w:"SOCCER", c:"A sport where players kick a ball into a goal", lv:1},
+      {w:"TENNIS", c:"A sport played with rackets over a net", lv:2},
+      {w:"SWIM", c:"To move through water using your arms and legs", lv:1},
+      {w:"MUSIC", c:"Sounds arranged with rhythm and melody", lv:1},
+      {w:"DANCE", c:"To move your body rhythmically to music", lv:1},
+      {w:"GAME", c:"An activity played for fun, often with rules", lv:1},
+      {w:"RUN", c:"To move quickly on foot, faster than walking", lv:1},
+      {w:"SING", c:"To make music with your voice", lv:1},
+      {w:"DRAW", c:"To make a picture with a pencil or pen", lv:1},
+      {w:"TRAVEL", c:"To go to a different place, often for fun", lv:1},
+      {w:"EYELID", c:"The skin that covers and protects your eye", lv:3},
+      {w:"SHIN", c:"The front part of your leg, below the knee", lv:3},
+      {w:"ARMPIT", c:"The hollow under your arm, at the shoulder", lv:3},
+      {w:"NIECE", c:"The daughter of your brother or sister", lv:3},
+      {w:"NEPHEW", c:"The son of your brother or sister", lv:3},
+      {w:"DROPLET", c:"A tiny drop of liquid", lv:3},
+      {w:"FOG", c:"A thick cloud of mist near the ground", lv:3},
+      {w:"STORM", c:"Violent weather with strong wind and rain", lv:3},
+      {w:"SHELL", c:"The hard outer covering of an egg or sea creature", lv:3},
+      {w:"CONSTELLATION", c:"A group of stars that forms a recognizable pattern", lv:3},
+      {w:"EQUINOX", c:"The day when daytime and nighttime are equal length", lv:3},
+      {w:"HARBOR", c:"A sheltered area of water where ships dock", lv:3},
+      {w:"VALLEY", c:"Low land between two hills or mountains", lv:3},
+      {w:"DESERT", c:"A dry, sandy area that gets very little rain", lv:3},
+      {w:"VOLCANO", c:"A mountain that can erupt with lava", lv:3},
+      {w:"GLACIER", c:"A huge, slow-moving mass of ice", lv:3},
+      {w:"THUNDER", c:"The loud rumbling sound that follows lightning", lv:3},
+      {w:"HORIZON", c:"The line where the sky seems to meet the land or sea", lv:3},
+      {w:"WATERFALL", c:"Water falling from a high place, like off a cliff", lv:3},
+      {w:"THERMOMETER", c:"A device used to measure temperature", lv:3},
+      {w:"REFRIGERATOR", c:"A large appliance that keeps food cold", lv:3},
+      {w:"KINDERGARTEN", c:"A school for very young children, before first grade", lv:3},
+      {w:"TELEVISION", c:"A device you watch shows and movies on", lv:2},
+      {w:"TELEPHONE", c:"A device used to talk to someone far away", lv:2},
+      {w:"UNIVERSITY", c:"A school people attend after high school", lv:2},
+      {w:"RESTAURANT", c:"A place where you pay to eat a meal", lv:2},
+      {w:"SUPERMARKET", c:"A large store that sells food and household goods", lv:2},
+      {w:"HELICOPTER", c:"An aircraft with spinning blades on top", lv:2},
+      {w:"SKYSCRAPER", c:"A very tall city building", lv:2},
+      {w:"NEIGHBORHOOD", c:"The area and people living around your home", lv:3},
+      {w:"VETERINARIAN", c:"A doctor who treats animals", lv:3},
+      {w:"WHEELCHAIR", c:"A chair on wheels for people who can't walk", lv:2}
+    ]
+  }
+};
+
+/* ---------------------------------------------------------
+   2. UI STRINGS
+--------------------------------------------------------- */
+const STR = {
+  ja: {
+    topicLabel: "お題",
+    newPuzzle: "新しいパズル",
+    check: "答え合わせ",
+    reveal: "答えを見る",
+    across: "よこ (ACROSS)",
+    down: "たて (DOWN)",
+    acrossShort: "よこ",
+    downShort: "たて",
+    statusEmpty: "マスをうめて「答え合わせ」を押してね",
+    statusCorrect: "🎉 正解！ぜんぶ合っています",
+    statusIncomplete: "まだ空欄のマスがあります",
+    statusWrong: "違うマスがあります。ピンク色のマスを見直してね",
+    revealed: "答えを表示しました",
+    footer: "このパズルはブラウザ上でランダム生成されています。単語同士の重なり方によって、出題数は毎回多少前後します。",
+    diffHeading: "難易度をえらんでね",
+    backToHome: "言語をえらびなおす",
+    backToDiff: "難易度を変える",
+    nativeName: "日本語",
+    diff: {
+      beginner: { label: "初級", desc: "かんたん◎ みじかい単語だけでサクサク解ける！" },
+      intermediate: { label: "中級", desc: "ちょいムズ！長めの単語も混ざってくるよ" },
+      advanced: { label: "上級", desc: "ガチ勢向け！全部の単語からガンガン出題！" }
+    }
+  },
+  ko: {
+    topicLabel: "주제",
+    newPuzzle: "새 퍼즐",
+    check: "정답 확인",
+    reveal: "정답 보기",
+    across: "가로 (ACROSS)",
+    down: "세로 (DOWN)",
+    acrossShort: "가로",
+    downShort: "세로",
+    statusEmpty: "칸을 채우고 '정답 확인'을 눌러보세요",
+    statusCorrect: "🎉 정답! 모두 맞았어요",
+    statusIncomplete: "아직 빈칸이 있어요",
+    statusWrong: "틀린 칸이 있어요. 분홍색 칸을 다시 확인해보세요",
+    revealed: "정답을 표시했어요",
+    footer: "이 퍼즐은 브라우저에서 무작위로 생성됩니다. 단어가 겹치는 방식에 따라 문제 수는 매번 조금씩 달라져요.",
+    diffHeading: "난이도를 선택하세요",
+    backToHome: "언어 다시 선택",
+    backToDiff: "난이도 변경",
+    nativeName: "한국어",
+    diff: {
+      beginner: { label: "초급", desc: "쉬워요! 짧은 단어만 나와서 술술 풀려요" },
+      intermediate: { label: "중급", desc: "살짝 도전! 긴 단어도 슬쩍 섞여 나와요" },
+      advanced: { label: "고급", desc: "찐고수용! 모든 단어가 다 등장해요" }
+    }
+  },
+  en: {
+    topicLabel: "Topic",
+    newPuzzle: "New puzzle",
+    check: "Check answers",
+    reveal: "Reveal answers",
+    across: "ACROSS",
+    down: "DOWN",
+    acrossShort: "Across",
+    downShort: "Down",
+    statusEmpty: "Fill in the grid, then press \u201cCheck answers.\u201d",
+    statusCorrect: "\ud83c\udf89 All correct!",
+    statusIncomplete: "There are still empty cells.",
+    statusWrong: "Some cells are wrong \u2014 check the pink ones.",
+    revealed: "Answers revealed.",
+    footer: "This puzzle is randomly generated in your browser. How many words fit depends on how they happen to overlap, so the count varies a little each time.",
+    diffHeading: "Choose a difficulty",
+    backToHome: "Choose another language",
+    backToDiff: "Change difficulty",
+    nativeName: "English",
+    diff: {
+      beginner: { label: "Beginner", desc: "Easy mode \u2014 short words only, breeze right through!" },
+      intermediate: { label: "Intermediate", desc: "A bit trickier \u2014 some longer words sneak in" },
+      advanced: { label: "Advanced", desc: "Full send \u2014 every word in the bank is fair game!" }
+    }
+  }
+};
+
+/* per-topic, per-language difficulty tuning: each word carries an explicit
+   lv (1/2/3) tag reflecting how *familiar* it is, not how long it is — a
+   short cultivar name like せとか is still lv:3, because character length
+   doesn't track real difficulty. beginner only draws from lv:1, so it can
+   never leak a hard word just because it happens to be short. intermediate
+   adds lv:2, advanced opens the full lv:3 bank.
+   Targets are tuned per topic to each difficulty's fixed square grid (see
+   GRID_SIZE): every combination was verified to reliably reach its target
+   inside that square across many randomized trials, so a filled grid
+   always matches its declared word count exactly. The "general" (自由)
+   topic pulls from a much larger, theme-free everyday-vocabulary bank
+   (short, high letter-overlap words spanning body parts, nature, food,
+   places, etc. instead of one narrow theme), which is why it reaches
+   noticeably higher fill percentages than "fruits" at the same grid size.
+   Korean has a much flatter lv split (mostly lv:1, a slim lv:3 tail) and
+   is largely left unfiltered by level — Hangul syllable blocks intersect
+   far less readily than kana or Latin letters, so splitting the bank into
+   tiers mostly starves the pool without making the puzzle easier. Even
+   with a bigger, theme-free bank, Korean's generator still plateaus at a
+   much lower word count than Japanese/English (it can't reliably beat
+   ~10-12 words no matter the grid size or topic) — that ceiling is
+   intrinsic to how few Hangul syllable blocks share letters, not a
+   setting that can be tuned away. */
+// A few targets below are backed off from what the crossing algorithm can
+// technically reach, for the same reason as the general topic's comment
+// further down: with the new border-cleanliness check (see
+// countThinBorderLines), a target sitting right at a bank's max-achievable
+// edge means most attempts fall just short and get discarded, which is
+// also what makes them slow to also land a clean border — sitting a
+// couple of words below that edge finds a valid, clean layout far faster.
+const DIFFICULTY_CONFIG = {
+  fruits: {
+    ja: { beginner:{level:1,target:10}, intermediate:{level:2,target:13}, advanced:{level:3,target:20} },
+    ko: { beginner:{level:1,target:7},  intermediate:{level:1,target:8},  advanced:{level:1,target:10} },
+    en: { beginner:{level:1,target:8},  intermediate:{level:2,target:11}, advanced:{level:3,target:19} }
+  },
+  animals: {
+    ja: { beginner:{level:2,target:11}, intermediate:{level:3,target:14}, advanced:{level:3,target:16} },
+    ko: { beginner:{level:2,target:7},  intermediate:{level:3,target:8},  advanced:{level:3,target:9} },
+    en: { beginner:{level:1,target:9},  intermediate:{level:2,target:14}, advanced:{level:3,target:24} }
+  },
+  vegetables: {
+    ja: { beginner:{level:1,target:8},  intermediate:{level:2,target:12}, advanced:{level:3,target:19} },
+    ko: { beginner:{level:2,target:6},  intermediate:{level:3,target:7},  advanced:{level:3,target:8} },
+    en: { beginner:{level:1,target:8},  intermediate:{level:2,target:12}, advanced:{level:3,target:18} }
+  },
+  jobs: {
+    ja: { beginner:{level:1,target:9},  intermediate:{level:2,target:13}, advanced:{level:3,target:20} },
+    ko: { beginner:{level:2,target:6},  intermediate:{level:3,target:8},  advanced:{level:3,target:9} },
+    en: { beginner:{level:1,target:7},  intermediate:{level:2,target:10}, advanced:{level:3,target:14} }
+  },
+  sports: {
+    ja: { beginner:{level:3,target:10}, intermediate:{level:3,target:10}, advanced:{level:3,target:12} },
+    ko: { beginner:{level:2,target:6}, intermediate:{level:3,target:7}, advanced:{level:3,target:8} },
+    en: { beginner:{level:2,target:6}, intermediate:{level:3,target:9}, advanced:{level:3,target:12} }
+  },
+  vehicles: {
+    ja: { beginner:{level:2,target:7}, intermediate:{level:3,target:10}, advanced:{level:3,target:14} },
+    ko: { beginner:{level:2,target:6}, intermediate:{level:3,target:7}, advanced:{level:3,target:8} },
+    en: { beginner:{level:2,target:7}, intermediate:{level:3,target:10}, advanced:{level:3,target:14} }
+  },
+  countries: {
+    ja: { beginner:{level:2,target:8}, intermediate:{level:3,target:10}, advanced:{level:3,target:17} },
+    ko: { beginner:{level:2,target:7}, intermediate:{level:3,target:9}, advanced:{level:3,target:9} },
+    en: { beginner:{level:2,target:8}, intermediate:{level:3,target:11}, advanced:{level:3,target:16} }
+  },
+  // The general topic's word bank is much larger than the others (100-190
+  // words per language/difficulty, vs. ~55 elsewhere), and its previous
+  // targets sat right at the edge of what that many words can still cross
+  // into a fixed square. That edge is where the generator gets slow: most
+  // shuffled attempts fall just short of the target and get thrown away,
+  // so on an unlucky run it can take thousands of attempts (and several
+  // seconds) before one finally reaches it. Backing each target off by a
+  // couple of words gives the generator far more valid configurations to
+  // find, cutting the worst-case time from multiple seconds to well under
+  // one, with only a marginal drop in how full the board ends up.
+  general: {
+    ja: { beginner:{level:1,target:15}, intermediate:{level:2,target:23}, advanced:{level:3,target:43} },
+    ko: { beginner:{level:3,target:9},  intermediate:{level:3,target:10}, advanced:{level:3,target:11} },
+    en: { beginner:{level:1,target:13}, intermediate:{level:2,target:18}, advanced:{level:3,target:33} }
+  }
+};
+// Japanese and English render into a fixed square grid per difficulty, so
+// the board never feels lopsided or half-empty. Words longer than the grid
+// size are filtered out of the pool for that difficulty (they physically
+// couldn't fit), and the generator is constrained to only place letters
+// inside this square, centering the very first word so later words can
+// branch outward in every direction rather than only right/down.
+const GRID_SIZE = {
+  fruits: {
+    ja: { beginner: 8, intermediate: 9, advanced: 13 },
+    en: { beginner: 8, intermediate: 10, advanced: 15 }
+  },
+  // Animal names cross far less readily than fruit or general-vocabulary
+  // words (shorter, more phonetically varied), so a fixed square the same
+  // size as fruits/general leaves it mostly empty. Smaller squares keep
+  // the fill ratio comparable instead.
+  animals: {
+    ja: { beginner: 7, intermediate: 9, advanced: 11 },
+    en: { beginner: 8, intermediate: 10, advanced: 15 }
+  },
+  // Vegetable and job words cross about as readily as fruit words, so they
+  // use the same smaller squares as fruits rather than the full-size ones.
+  vegetables: {
+    ja: { beginner: 8, intermediate: 10, advanced: 13 },
+    en: { beginner: 8, intermediate: 10, advanced: 13 }
+  },
+  jobs: {
+    ja: { beginner: 8, intermediate: 10, advanced: 13 },
+    en: { beginner: 8, intermediate: 10, advanced: 13 }
+  },
+  sports: {
+    ja: { beginner: 8, intermediate: 10, advanced: 13 },
+    en: { beginner: 8, intermediate: 10, advanced: 13 }
+  },
+  vehicles: {
+    ja: { beginner: 8, intermediate: 10, advanced: 13 },
+    en: { beginner: 8, intermediate: 10, advanced: 13 }
+  },
+  countries: {
+    ja: { beginner: 8, intermediate: 10, advanced: 13 },
+    en: { beginner: 8, intermediate: 10, advanced: 13 }
+  },
+  general: {
+    ja: { beginner: 8, intermediate: 10, advanced: 15 },
+    en: { beginner: 8, intermediate: 10, advanced: 15 }
+  }
+};
+// Korean doesn't get a fixed square at all: because Hangul syllable blocks
+// share letters far less often than kana or Latin letters (see the note
+// above DIFFICULTY_CONFIG), any fixed square big enough to comfortably fit
+// on screen was reliably leaving one whole edge row or column completely
+// black — a stray blank stripe rather than ordinary scattered blocks. So
+// for Korean the board self-sizes instead: generateSelfSizedPuzzle() (see
+// below) generates against a generous bound, crops tightly to whatever was
+// actually placed, and only pads the shorter side just enough to make that
+// tight box square — trying a few times and keeping the least-padded
+// result. KO_GEN_BOUND is that generous bound, not a display size.
+const KO_GEN_BOUND = 9;
+const DIFFICULTY_ORDER = ["beginner","intermediate","advanced"];
+
+/* ---------------------------------------------------------
+   3. CROSSWORD GENERATOR  (verified in isolation before
+      being wired into the UI)
+--------------------------------------------------------- */
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function chars(w){ return Array.from(w); }
+
+function generateCrossword(wordEntries, maxWords, attempts, gridSize){
+  maxWords = maxWords || 10;
+  attempts = attempts || 400;
+  let best = null;
+  for(let attempt=0; attempt<attempts; attempt++){
+    const pool = shuffle(wordEntries);
+    const cellLetter = new Map();
+    const cellAcross = new Set();
+    const cellDown = new Set();
+    // cellOwner tracks which placed[] word "first wrote" each cell, so we
+    // can tell how many other words already cross a given word (its
+    // degree). Piling every new word onto the same already-busy word is
+    // what produced the tightly-clustered hubs players flagged, so
+    // candidate scoring below prefers crossing lightly-used words instead.
+    const cellOwner = new Map();
+    const wordDegree = [];
+    const placed = [];
+    function key(r,c){ return r+","+c; }
+    // Distance of a candidate word's midpoint from the grid's center.
+    // When a fixed gridSize is given, this is used as a tie-break so
+    // later words fan outward evenly from the middle instead of piling
+    // toward one edge and leaving the opposite side of the square empty.
+    const center = gridSize ? (gridSize-1)/2 : 0;
+    function centerDist(row, col, dir, L){
+      if(!gridSize) return 0;
+      const midR = dir==="down" ? row + (L-1)/2 : row;
+      const midC = dir==="across" ? col + (L-1)/2 : col;
+      return Math.abs(midR-center) + Math.abs(midC-center);
+    }
+
+    function fits(word, row, col, dir){
+      const L = word.length;
+      if(gridSize){
+        if(dir==="across"){
+          if(row<0 || row>=gridSize || col<0 || col+L>gridSize) return false;
+        } else {
+          if(col<0 || col>=gridSize || row<0 || row+L>gridSize) return false;
+        }
+      }
+      if(dir==="across"){
+        if(cellLetter.has(key(row,col-1))) return false;
+        if(cellLetter.has(key(row,col+L))) return false;
+      } else {
+        if(cellLetter.has(key(row-1,col))) return false;
+        if(cellLetter.has(key(row+L,col))) return false;
+      }
+      let overlapCount = 0;
+      const owners = new Set();
+      for(let i=0;i<L;i++){
+        const r = dir==="down" ? row+i : row;
+        const c = dir==="across" ? col+i : col;
+        const k = key(r,c);
+        const ch = word[i];
+        if(cellLetter.has(k)){
+          if(cellLetter.get(k) !== ch) return false;
+          if(dir==="across" && cellAcross.has(k)) return false;
+          if(dir==="down" && cellDown.has(k)) return false;
+          overlapCount++;
+          owners.add(cellOwner.get(k));
+        } else {
+          if(dir==="across"){
+            if(cellLetter.has(key(r-1,c))) return false;
+            if(cellLetter.has(key(r+1,c))) return false;
+          } else {
+            if(cellLetter.has(key(r,c-1))) return false;
+            if(cellLetter.has(key(r,c+1))) return false;
+          }
+        }
+      }
+      if(overlapCount === 0) return false;
+      // degree = how many words already cross the busiest anchor word this
+      // candidate would attach to; used to steer new words toward
+      // lightly-crossed words instead of piling onto the same hub.
+      let maxDegree = 0;
+      owners.forEach(o => { maxDegree = Math.max(maxDegree, wordDegree[o] || 0); });
+      return { overlapCount, owners, degree: maxDegree };
+    }
+    function place(word, row, col, dir, wordIdx){
+      const L = word.length;
+      for(let i=0;i<L;i++){
+        const r = dir==="down" ? row+i : row;
+        const c = dir==="across" ? col+i : col;
+        const k = key(r,c);
+        if(cellLetter.has(k)){
+          const owner = cellOwner.get(k);
+          wordDegree[owner] = (wordDegree[owner] || 0) + 1;
+        } else {
+          cellLetter.set(k, word[i]);
+          cellOwner.set(k, wordIdx);
+        }
+        if(dir==="across") cellAcross.add(k); else cellDown.add(k);
+      }
+      wordDegree[wordIdx] = wordDegree[wordIdx] || 0;
+    }
+    // Score candidates so the best-laid-out option is tried first: prefer
+    // crossing a lightly-used word (spreads connections out, avoids dense
+    // hubs), then prefer whichever placement sits closer to the grid's
+    // center (fills the fixed square evenly instead of drifting toward
+    // one edge and leaving the rest empty).
+    function isBetter(a, b){
+      if(a.res.overlapCount !== b.res.overlapCount) return a.res.overlapCount < b.res.overlapCount;
+      if(a.res.degree !== b.res.degree) return a.res.degree < b.res.degree;
+      return a.dist < b.dist;
+    }
+    function bestCandidate(candidates, wChars){
+      let best = null;
+      for(const cand of candidates){
+        const res = fits(wChars, cand.row, cand.col, cand.dir);
+        if(!res) continue;
+        const dist = centerDist(cand.row, cand.col, cand.dir, wChars.length);
+        const scored = { cand, res, dist };
+        if(!best || isBetter(scored, best)) best = scored;
+      }
+      return best;
+    }
+
+    const first = pool[0];
+    const firstChars = chars(first.w);
+    // Center the very first word in the fixed square (when one is given)
+    // so later words have room to branch outward in every direction
+    // instead of only growing right/down from a top-left corner.
+    const firstRow = gridSize ? Math.floor((gridSize-1)/2) : 0;
+    const firstCol = gridSize ? Math.max(0, Math.floor((gridSize-firstChars.length)/2)) : 0;
+    place(firstChars, firstRow, firstCol, "across", 0);
+    placed.push({entry:first, row:firstRow, col:firstCol, dir:"across", len:firstChars.length});
+
+    for(let idx=1; idx<pool.length; idx++){
+      if(placed.length >= maxWords) break;
+      const entry = pool[idx];
+      const wChars = chars(entry.w);
+      const candidates = [];
+      for(let li=0; li<wChars.length; li++){
+        const ch = wChars[li];
+        for(const [k, letter] of cellLetter){
+          if(letter !== ch) continue;
+          const parts = k.split(",");
+          const r = Number(parts[0]), c = Number(parts[1]);
+          for(const dir of ["across","down"]){
+            const usedSet = dir==="across" ? cellAcross : cellDown;
+            if(usedSet.has(k)) continue;
+            const row = dir==="down" ? r-li : r;
+            const col = dir==="across" ? c-li : c;
+            candidates.push({row,col,dir});
+          }
+        }
+      }
+      const shuffled = shuffle(candidates);
+      // Two passes: first only consider placements that cross exactly one
+      // existing word (a single shared letter, the normal crossword case).
+      // Multiple simultaneous overlaps make solving one word give away
+      // several others at once, which is what made earlier puzzles feel
+      // "too revealing." Only fall back to allowing extra overlaps if no
+      // single-overlap placement exists, so words don't get skipped and
+      // fewer words fit than the target. Within each pass, bestCandidate()
+      // picks the placement that best spreads out crossings and keeps the
+      // grid compact, rather than just the first one found.
+      const singleOverlap = shuffled.filter(c => {
+        const r = fits(wChars, c.row, c.col, c.dir);
+        return r && r.overlapCount === 1;
+      });
+      let chosen = singleOverlap.length ? bestCandidate(singleOverlap, wChars) : null;
+      if(!chosen) chosen = bestCandidate(shuffled, wChars);
+      if(chosen){
+        const wordIdx = placed.length;
+        place(wChars, chosen.cand.row, chosen.cand.col, chosen.cand.dir, wordIdx);
+        placed.push({entry, row:chosen.cand.row, col:chosen.cand.col, dir:chosen.cand.dir, len:wChars.length});
+      }
+    }
+
+    if(!best || placed.length > best.placed.length) best = { placed: placed };
+    if(placed.length >= Math.min(maxWords, wordEntries.length)) break;
+  }
+  return best;
+}
+
+function buildGrid(result, gridSize){
+  const placed = result.placed;
+  let minR=Infinity,maxR=-Infinity,minC=Infinity,maxC=-Infinity;
+  for(const p of placed){
+    const L = p.len;
+    const endR = p.dir==="down" ? p.row+L-1 : p.row;
+    const endC = p.dir==="across" ? p.col+L-1 : p.col;
+    minR=Math.min(minR,p.row,endR); maxR=Math.max(maxR,p.row,endR);
+    minC=Math.min(minC,p.col,endC); maxC=Math.max(maxC,p.col,endC);
+  }
+  // When a fixed gridSize was passed to generateCrossword, every placed
+  // letter already sits inside [0, gridSize), so the rendered grid is the
+  // full square rather than a tight shrink-wrap around just the letters —
+  // that's what makes the board read as "an 8x8 / 10x10 / 15x15 frame."
+  const rows = gridSize || (maxR-minR+1), cols = gridSize || (maxC-minC+1);
+  if(gridSize){ minR = 0; minC = 0; }
+  const grid = Array.from({length:rows},()=>Array(cols).fill(null));
+  for(const p of placed){
+    const wChars = chars(p.entry.w);
+    for(let i=0;i<wChars.length;i++){
+      const r = (p.dir==="down"? p.row+i : p.row) - minR;
+      const c = (p.dir==="across"? p.col+i : p.col) - minC;
+      grid[r][c] = wChars[i];
+    }
+  }
+  const numberAt = new Map();
+  let num = 1;
+  // General-topic banks include some 1-letter answers (め, て, 눈, 손, ...),
+  // which only ever get placed by crossing into the *middle* of a longer
+  // word — the normal "starts across/down" adjacency test below never
+  // fires for them, since they have no run of their own. Without this,
+  // those words would render with no clue number at all. So every placed
+  // word's own start cell is also forced to get a number, even when it
+  // sits mid-run of a different word.
+  const wordStarts = new Set();
+  for(const p of placed){
+    wordStarts.add((p.row - minR) + "," + (p.col - minC));
+  }
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      if(!grid[r][c]) continue;
+      const startsAcross = (c===0 || !grid[r][c-1]) && (c+1<cols && grid[r][c+1]);
+      const startsDown = (r===0 || !grid[r-1][c]) && (r+1<rows && grid[r+1][c]);
+      const isWordStart = wordStarts.has(r+","+c);
+      if(startsAcross || startsDown || isWordStart){
+        numberAt.set(r+","+c, num);
+        num++;
+      }
+    }
+  }
+  // attach numbers + normalized coords to placed words
+  const words = placed.map((p, srcIndex) => {
+    const r0 = p.row - minR, c0 = p.col - minC;
+    return {
+      clue: p.entry.c,
+      answer: chars(p.entry.w),
+      row: r0, col: c0, dir: p.dir, len: p.len,
+      number: numberAt.get(r0+","+c0),
+      // Index into the *original* placed[] array this word came from,
+      // captured before the sort below reorders everything by clue
+      // number. trimThinBorders() needs this to remove the right word
+      // from the raw placed list — a plain array position in the sorted
+      // `words` array does not correspond to the same word's position in
+      // placed[], and using it as if it did silently deletes the wrong
+      // word.
+      srcIndex
+    };
+  }).sort((a,b)=> a.number - b.number);
+
+  return { grid, rows, cols, words };
+}
+
+// Counts how many of a built grid's 4 *border* lines (its first/last row,
+// first/last column) are "thin" — holding at most maxFill filled cells.
+// This is deliberately scoped to just the border, not every row/column:
+// an ordinary interior column that's crossed by only one across word (and
+// no down word) is completely normal in a crossword — most of a word's
+// letters aren't intersection points — and trying to stamp those out too
+// would mean rejecting almost every layout these word banks can produce,
+// gutting the puzzle for no visual benefit. What actually reads as
+// "wasted" is a straggler at the very edge: a border row/column holding
+// just one lonely letter (or, before cropToContent ran, none at all),
+// which looks like an afterthought sticking out past the rest of the
+// board. cropToContent() already rules out a fully-empty border by
+// construction, so with maxFill=1 this only ever flags the one-letter
+// case. generateFilledPuzzle()/generateSelfSizedPuzzle() use it to reject
+// attempts that produce one.
+function countThinBorderLines(puzzle, maxFill){
+  const { grid, rows, cols } = puzzle;
+  if(rows === 0 || cols === 0) return 0;
+  const fillOf = (cells) => cells.reduce((n, v) => n + (v ? 1 : 0), 0);
+  let n = 0;
+  if(fillOf(grid[0]) <= maxFill) n++;
+  if(rows > 1 && fillOf(grid[rows-1]) <= maxFill) n++;
+  if(fillOf(grid.map(row => row[0])) <= maxFill) n++;
+  if(cols > 1 && fillOf(grid.map(row => row[cols-1])) <= maxFill) n++;
+  return n;
+}
+
+// Finds the one filled cell in whichever border line is thin (see
+// countThinBorderLines), checking top/bottom row then left/right column,
+// or null if the border is clean.
+function firstThinBorderCell(puzzle, maxFill){
+  const { grid, rows, cols } = puzzle;
+  if(rows === 0 || cols === 0) return null;
+  function loneInRow(r){
+    let count = 0, lastC = -1;
+    for(let c=0;c<cols;c++){ if(grid[r][c]){ count++; lastC = c; } }
+    return count <= maxFill ? { r, c: lastC } : null;
+  }
+  function loneInCol(c){
+    let count = 0, lastR = -1;
+    for(let r=0;r<rows;r++){ if(grid[r][c]){ count++; lastR = r; } }
+    return count <= maxFill ? { r: lastR, c } : null;
+  }
+  return loneInRow(0) || (rows > 1 && loneInRow(rows-1)) || loneInCol(0) || (cols > 1 && loneInCol(cols-1)) || null;
+}
+
+function wordAtCell(words, r, c){
+  for(const w of words){
+    if(w.dir === "across"){
+      if(w.row === r && c >= w.col && c < w.col + w.len) return w;
+    } else {
+      if(w.col === c && r >= w.row && r < w.row + w.len) return w;
+    }
+  }
+  return null;
+}
+
+// True unless the puzzle's letters form two or more separate islands with
+// gaps between them — flood-fills from one filled cell through its
+// 4-directional neighbors and checks every filled cell got reached.
+// generateCrossword() itself can't produce this (every word it places is
+// required to cross at least one already-placed word), but removing a
+// word during trimThinBorders() can: if that word was the only bridge
+// between two otherwise-separate clusters, deleting it splits the puzzle
+// in two, with the gap between them showing up as an empty interior
+// row/column. trimThinBorders() uses this to make sure it never does that.
+function isFullyConnected(puzzle){
+  const { grid, rows, cols } = puzzle;
+  let start = null, totalFilled = 0;
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      if(grid[r][c]){
+        totalFilled++;
+        if(!start) start = { r, c };
+      }
+    }
+  }
+  if(!start) return true;
+  const seen = new Set([start.r + "," + start.c]);
+  const stack = [start];
+  while(stack.length){
+    const { r, c } = stack.pop();
+    for(const [nr, nc] of [[r-1,c],[r+1,c],[r,c-1],[r,c+1]]){
+      if(nr<0 || nr>=rows || nc<0 || nc>=cols || !grid[nr][nc]) continue;
+      const key = nr + "," + nc;
+      if(seen.has(key)) continue;
+      seen.add(key);
+      stack.push({ r: nr, c: nc });
+    }
+  }
+  return seen.size === totalFilled;
+}
+
+// Last-resort cleanup for when no generation attempt came back with a
+// clean border within its retry budget: rather than shipping a board with
+// a near-empty edge, prune the specific word responsible for it. A thin
+// border row/column exists because exactly one word happens to reach
+// further than everything else around it — dropping that one word (and
+// re-cropping) removes the thin line outright, at the cost of one fewer
+// word in the puzzle. Removing one straggler can occasionally expose
+// another word as the new border's sole occupant, so this repeats a few
+// times — but it's capped by minWords (never trims below that many words)
+// as well as an iteration count, so a puzzle that's inherently too sparse
+// to ever have a fully "supported" border (a lone word crossing the
+// middle of an otherwise-empty board, say) settles for its best effort
+// rather than getting trimmed away to nothing.
+//
+// Critically, a candidate removal is only ever kept if the *rest* of the
+// puzzle is still one connected piece afterward (isFullyConnected). The
+// one word touching a thin border is sometimes also the only bridge
+// joining two clusters of words — deleting it would split the board into
+// disconnected islands with a dead gap between them, which is a far worse
+// defect than the thin border it was trying to fix. When that's the case,
+// the word is left in place and the thin border is accepted instead.
+function trimThinBorders(rawPlaced, gridSize, maxFill, minWords){
+  let placed = rawPlaced.slice();
+  let built = cropToContent(buildGrid({ placed }, gridSize));
+  const original = built;
+  for(let iter=0; iter<8 && placed.length > minWords; iter++){
+    const thin = firstThinBorderCell(built, maxFill);
+    if(!thin) break;
+    const word = wordAtCell(built.words, thin.r, thin.c);
+    if(!word) break;
+    const candidatePlaced = placed.slice();
+    candidatePlaced.splice(word.srcIndex, 1);
+    const candidateBuilt = cropToContent(buildGrid({ placed: candidatePlaced }, gridSize));
+    if(!isFullyConnected(candidateBuilt)) break; // would disconnect the puzzle — keep the word, accept the thin border
+    placed = candidatePlaced;
+    built = candidateBuilt;
+  }
+  // If trimming still couldn't clear the border, the shrunken puzzle is
+  // strictly worse (fewer words AND still thin) — keep the full one.
+  if(countThinBorderLines(built, maxFill) > 0 && placed.length < rawPlaced.length){
+    return { placed: rawPlaced, puzzle: original };
+  }
+  return { placed, puzzle: built };
+}
+
+// Wraps generateCrossword()+buildGrid() with a few extra tries when the
+// first attempt leaves a thin row or column (empty, or holding only a
+// single lonely letter), and crops every attempt down to its content's
+// bounding box before checking. Cropping alone already rules out a wasted
+// *empty* border row/column (see the note on cropToContent above) — with a
+// fixed gridSize, generateCrossword doesn't always use the whole square,
+// and this is what turns that leftover margin into a smaller, fully-used
+// board instead of a visible blank stripe. But cropping can still leave a
+// border row/column with just one cell in it (whichever single word
+// happened to reach furthest), which reads just as oddly as a fully blank
+// one — the retry loop rejects those too. If nothing within maxTries comes
+// back with a clean border, trimThinBorders() prunes the stray word(s)
+// from the best attempt instead of shipping a thin-edged board.
+function generateFilledPuzzle(bank, target, attempts, gridSize, maxTries){
+  maxTries = maxTries || 4;
+  let bestResult = null, bestPuzzle = null, bestScore = -Infinity;
+  for(let i=0;i<maxTries;i++){
+    const result = generateCrossword(bank, target, attempts, gridSize);
+    const built = cropToContent(buildGrid(result, gridSize));
+    const thinBorders = countThinBorderLines(built, 1);
+    if(thinBorders === 0) return { result, puzzle: built };
+    const score = -thinBorders * 1000 + result.placed.length;
+    if(score > bestScore){ bestScore = score; bestResult = result; bestPuzzle = built; }
+  }
+  const minWords = Math.max(4, Math.ceil(target * 0.5));
+  const trimmed = trimThinBorders(bestResult.placed, gridSize, 1, minWords);
+  return { result: bestResult, puzzle: trimmed.puzzle };
+}
+
+// Crops a built puzzle down to the tight bounding box of its actually-
+// placed letters — no padding, so the result can be (and usually is)
+// rectangular rather than square. A crossword doesn't need to be square;
+// what it must never have is a fully blank row or column, and forcing a
+// square (the old cropAndSquare behavior) actually *created* one whenever
+// the tight content wasn't already square, by padding the shorter side
+// with empty cells. Cropping to exactly the content's bounding box instead
+// makes a wasted border row/column structurally impossible: by
+// definition, the first and last row and the first and last column of the
+// result always contain at least one letter.
+function cropToContent(puzzle){
+  const { grid, rows, cols, words } = puzzle;
+  let minR = Infinity, maxR = -Infinity, minC = Infinity, maxC = -Infinity;
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      if(grid[r][c]){
+        if(r < minR) minR = r;
+        if(r > maxR) maxR = r;
+        if(c < minC) minC = c;
+        if(c > maxC) maxC = c;
+      }
+    }
+  }
+  if(minR === Infinity){
+    return { grid: [], rows: 0, cols: 0, words: [] };
+  }
+  const newRows = maxR - minR + 1, newCols = maxC - minC + 1;
+  const newGrid = Array.from({length: newRows}, (_, r) =>
+    Array.from({length: newCols}, (_, c) => grid[r + minR][c + minC])
+  );
+  // Cropping only removes cells that were already empty on every side, so
+  // it never changes which cell starts which word — the clue numbers
+  // buildGrid() assigned stay correct as-is, just shifted onto the new,
+  // smaller coordinate space.
+  const newWords = words.map(w => Object.assign({}, w, { row: w.row - minR, col: w.col - minC }));
+  return { grid: newGrid, rows: newRows, cols: newCols, words: newWords };
+}
+
+// Korean's self-sizing counterpart to generateFilledPuzzle(): generates
+// against a generous (not final) bound, then crops to content. Keeps
+// trying (up to maxTries) for a crop with a clean border (see
+// countThinBorderLines) — cropping already rules out an empty border
+// row/column by construction, but not a border row/column with just one
+// lonely cell in it, so this retry loop is what actually catches that
+// case. If nothing within maxTries comes back clean, trimThinBorders()
+// prunes the stray word(s) from the best attempt instead of shipping a
+// thin-edged board — same fallback generateFilledPuzzle() uses.
+function generateSelfSizedPuzzle(bank, target, attempts, genBound, maxTries){
+  maxTries = maxTries || 8;
+  let best = null, bestScore = -Infinity, bestRawPlaced = null;
+  for(let i=0;i<maxTries;i++){
+    const result = generateCrossword(bank, target, attempts, genBound);
+    if(result.placed.length < target) continue;
+    const cropped = cropToContent(buildGrid(result, genBound));
+    const thinBorders = countThinBorderLines(cropped, 1);
+    if(thinBorders === 0) return { puzzle: cropped };
+    const score = -thinBorders * 1000 + result.placed.length;
+    if(score > bestScore){ bestScore = score; best = cropped; bestRawPlaced = result.placed; }
+  }
+  if(!bestRawPlaced){
+    const result = generateCrossword(bank, target, attempts, genBound);
+    bestRawPlaced = result.placed;
+    best = cropToContent(buildGrid(result, genBound));
+  }
+  const minWords = Math.max(4, Math.ceil(target * 0.5));
+  const trimmed = trimThinBorders(bestRawPlaced, genBound, 1, minWords);
+  return { puzzle: trimmed.puzzle };
+}
+
+/* ---------------------------------------------------------
+   4. UI STATE + RENDERING
+--------------------------------------------------------- */
+let currentLang = null;
+let currentDifficulty = null;
+let currentTopic = "fruits";
+let puzzle = null;         // {grid, rows, cols, words}
+let inputs = null;         // 2D array mirroring grid, holding <input> or null
+let activeWord = null;     // currently highlighted word (for arrow/typing nav)
+let lastClickCell = null;  // {r,c} of the last cell clicked/tapped, used to detect a repeat tap on the same cell (across/down toggle)
+let compositionSettleTimer = null; // fallback timer that advances a cell once its IME composition goes quiet, without needing Enter
+let isComposing = false;   // true while an IME composition (kana/hangul) is in progress
+
+const LANG_NATIVE = { ja: "日本語", ko: "한국어", en: "English" };
+
+const el = {
+  grid: document.getElementById("grid"),
+  acrossList: document.getElementById("acrossList"),
+  downList: document.getElementById("downList"),
+  status: document.getElementById("statusLine"),
+  topicSelect: document.getElementById("topicSelect"),
+  homeView: document.getElementById("homeView"),
+  difficultyView: document.getElementById("difficultyView"),
+  puzzleView: document.getElementById("puzzleView"),
+  diffCards: document.getElementById("diffCards"),
+  hero: document.getElementById("hero"),
+  activeClueBar: document.getElementById("activeClueBar"),
+  activeClueNumber: document.getElementById("activeClueNumber"),
+  activeClueText: document.getElementById("activeClueText")
+};
+
+function showView(name){
+  el.homeView.classList.toggle("hidden", name !== "home");
+  el.difficultyView.classList.toggle("hidden", name !== "difficulty");
+  el.puzzleView.classList.toggle("hidden", name !== "puzzle");
+  if(el.hero) el.hero.classList.toggle("hero-collapsed", name !== "home");
+}
+
+function populateTopicSelect(){
+  el.topicSelect.innerHTML = "";
+  const available = TOPICS.filter(t => !(t.noLang && t.noLang.indexOf(currentLang) !== -1));
+  if(!available.some(t => t.id === currentTopic)) currentTopic = available[0].id;
+  available.forEach(t => {
+    const opt = document.createElement("option");
+    opt.value = t.id;
+    opt.textContent = t.label[currentLang];
+    opt.disabled = !t.enabled;
+    el.topicSelect.appendChild(opt);
+  });
+  el.topicSelect.value = currentTopic;
+}
+
+function applyLangStrings(){
+  document.documentElement.lang = currentLang;
+  const s = STR[currentLang];
+  document.getElementById("topicLabel").textContent = s.topicLabel;
+  document.getElementById("newPuzzleLabel").textContent = s.newPuzzle;
+  document.getElementById("checkLabel").textContent = s.check;
+  document.getElementById("revealLabel").textContent = s.reveal;
+  document.getElementById("acrossLabel").textContent = s.across;
+  document.getElementById("downLabel").textContent = s.down;
+  document.getElementById("footerNote").textContent = s.footer;
+  document.getElementById("backToHomeLabel").textContent = s.backToHome;
+  document.getElementById("backToDiffLabel").textContent = s.backToDiff;
+  document.getElementById("badgeLang").textContent = LANG_NATIVE[currentLang];
+  document.documentElement.lang = currentLang;
+  populateTopicSelect();
+}
+
+function renderDiffCards(){
+  const s = STR[currentLang];
+  el.diffCards.innerHTML = "";
+  const heading = document.createElement("p");
+  heading.className = "status-line";
+  heading.style.marginBottom = "12px";
+  heading.textContent = s.diffHeading;
+  el.diffCards.parentElement.insertBefore(heading, el.diffCards);
+  DIFFICULTY_ORDER.forEach((id, i) => {
+    const info = s.diff[id];
+    const btn = document.createElement("button");
+    btn.className = "diff-card";
+    btn.dataset.diff = id;
+    const dots = document.createElement("span");
+    dots.className = "dots";
+    dots.textContent = "●".repeat(i+1) + "○".repeat(2-i);
+    const label = document.createElement("span");
+    label.className = "label";
+    label.textContent = info.label;
+    const desc = document.createElement("span");
+    desc.className = "desc";
+    desc.textContent = info.desc;
+    btn.appendChild(dots);
+    btn.appendChild(label);
+    btn.appendChild(desc);
+    btn.addEventListener("click", () => selectDifficulty(id));
+    el.diffCards.appendChild(btn);
+  });
+}
+
+function selectLanguage(lang){
+  currentLang = lang;
+  applyLangStrings();
+  el.difficultyView.querySelectorAll(".status-line").forEach(x => x.remove());
+  renderDiffCards();
+  showView("difficulty");
+}
+
+function selectDifficulty(diff){
+  currentDifficulty = diff;
+  document.getElementById("badgeDiff").textContent = STR[currentLang].diff[diff].label;
+  showView("puzzle");
+  newPuzzle();
+}
+
+// The "back" crumbs used to rely on history.back()/pushState, but an
+// artifact runs inside a sandboxed iframe where the browser History API
+// is not reliably available to it, so back() could silently fail to
+// fire a popstate at all. Going directly to the target view instead
+// works everywhere and doesn't depend on iframe/browser history state.
+function goToHome(){
+  currentDifficulty = null;
+  showView("home");
+}
+
+function goToDifficulty(){
+  currentDifficulty = null;
+  el.difficultyView.querySelectorAll(".status-line").forEach(x => x.remove());
+  showView("difficulty");
+}
+
+function setStatus(text, cls){
+  el.status.textContent = text;
+  el.status.className = "status-line" + (cls ? " " + cls : "");
+}
+
+function newPuzzle(){
+  if(!currentLang || !currentDifficulty) return;
+  const fullBank = WORDS[currentTopic] && WORDS[currentTopic][currentLang];
+  if(!fullBank){ return; }
+  const cfg = DIFFICULTY_CONFIG[currentTopic][currentLang][currentDifficulty];
+  let built;
+  if(currentLang === "ko"){
+    const bank = fullBank.filter(e => (e.lv||1) <= cfg.level && Array.from(e.w).length <= KO_GEN_BOUND);
+    built = generateSelfSizedPuzzle(bank, cfg.target, 15000, KO_GEN_BOUND, 8).puzzle;
+  } else {
+    const gridSize = GRID_SIZE[currentTopic][currentLang][currentDifficulty];
+    const bank = fullBank.filter(e => (e.lv||1) <= cfg.level && Array.from(e.w).length <= gridSize);
+    built = generateFilledPuzzle(bank, cfg.target, 25000, gridSize, 5).puzzle;
+  }
+  puzzle = built;
+  renderGrid();
+  renderClues();
+  setStatus(STR[currentLang].statusEmpty, "");
+}
+
+function renderGrid(){
+  activeWord = null;
+  lastClickCell = null;
+  updateActiveClueBar(null);
+  const { grid, rows, cols } = puzzle;
+  el.grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+  el.grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+  el.grid.innerHTML = "";
+  inputs = Array.from({length: rows}, () => Array(cols).fill(null));
+
+  const numberAtCoord = new Map();
+  puzzle.words.forEach(w => numberAtCoord.set(w.row+","+w.col, w.number));
+
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const cellDiv = document.createElement("div");
+      const letter = grid[r][c];
+      if(!letter){
+        cellDiv.className = "cell block";
+        el.grid.appendChild(cellDiv);
+        continue;
+      }
+      cellDiv.className = "cell";
+      cellDiv.dataset.r = r;
+      cellDiv.dataset.c = c;
+
+      const num = numberAtCoord.get(r+","+c);
+      if(num){
+        const numSpan = document.createElement("span");
+        numSpan.className = "num";
+        numSpan.textContent = num;
+        cellDiv.appendChild(numSpan);
+      }
+
+      const input = document.createElement("input");
+      input.setAttribute("maxlength", "1");
+      input.setAttribute("autocomplete", "off");
+      input.setAttribute("autocapitalize", "characters");
+      input.setAttribute("inputmode", currentLang === "en" ? "text" : "text");
+      input.dataset.r = r;
+      input.dataset.c = c;
+      input.addEventListener("input", onCellInput);
+      input.addEventListener("compositionstart", onCompositionStart);
+      input.addEventListener("compositionupdate", onCompositionUpdate);
+      input.addEventListener("compositionend", onCompositionEnd);
+      input.addEventListener("keydown", onCellKeydown);
+      input.addEventListener("focus", () => onCellFocus(r, c));
+      input.addEventListener("pointerdown", () => onCellPointerDown(r, c));
+      cellDiv.appendChild(input);
+      el.grid.appendChild(cellDiv);
+      inputs[r][c] = input;
+    }
+  }
+}
+
+function renderClues(){
+  el.acrossList.innerHTML = "";
+  el.downList.innerHTML = "";
+  puzzle.words.forEach(w => {
+    const li = document.createElement("li");
+    li.dataset.number = w.number;
+    li.dataset.dir = w.dir;
+    const n = document.createElement("span");
+    n.className = "n";
+    n.textContent = w.number + ".";
+    const t = document.createElement("span");
+    t.textContent = w.clue + "\u3000(" + w.len + ")";
+    li.appendChild(n);
+    li.appendChild(t);
+    li.addEventListener("click", () => {
+      focusWord(w);
+    });
+    (w.dir === "across" ? el.acrossList : el.downList).appendChild(li);
+  });
+}
+
+// All words (0, 1, or 2) that occupy a given cell, across and/or down.
+function wordsAtCell(r, c){
+  return puzzle.words.filter(w => {
+    if(w.dir === "across") return w.row === r && c >= w.col && c < w.col + w.len;
+    return w.col === c && r >= w.row && r < w.row + w.len;
+  });
+}
+
+function findWordAt(r, c, preferDir){
+  const candidates = wordsAtCell(r, c);
+  if(candidates.length === 0) return null;
+  if(preferDir){
+    const match = candidates.find(w => w.dir === preferDir);
+    if(match) return match;
+  }
+  return candidates[0];
+}
+
+function onCellFocus(r, c){
+  // A focus that lands on a different cell than the last click means the
+  // click-to-toggle streak (see onCellClick) no longer applies to that
+  // earlier cell, so a later click straight back onto it is treated as a
+  // fresh tap rather than a toggle.
+  if(!lastClickCell || lastClickCell.r !== r || lastClickCell.c !== c){
+    lastClickCell = null;
+  }
+  const preferDir = activeWord && (activeWord.dir === "across" || activeWord.dir === "down")
+    ? activeWord.dir : null;
+  // A tapped cell may be the FIRST cell of one or two words (that's what
+  // its printed number means). Tapping a numbered cell should always
+  // select a word that starts there, even if the previously active word
+  // happened to pass through this cell too — otherwise tapping cell "2"
+  // right after cell "1" was active kept showing word 1's clue, since
+  // findWordAt's preferDir carried the old direction forward regardless
+  // of what was actually tapped. Only when the cell starts no word of
+  // its own (a plain continuation cell) do we fall back to preferDir so
+  // arrow-key/typing navigation still tracks the word being typed.
+  const startingWords = puzzle.words.filter(w => w.row === r && w.col === c);
+  let word;
+  if(startingWords.length === 1){
+    word = startingWords[0];
+  } else if(startingWords.length > 1){
+    word = (preferDir && startingWords.find(w => w.dir === preferDir)) || startingWords[0];
+  } else {
+    word = findWordAt(r, c, preferDir);
+  }
+  focusWord(word, r, c);
+}
+
+// A cell where both an across and a down word meet (most often a numbered
+// cell that starts both, like "4" in the crossing example) shows only one
+// clue at a time. Tapping that same cell again — while it's already
+// focused, so no new "focus" event fires — switches to the other
+// direction's word instead of doing nothing, so both clues are reachable
+// from the one cell.
+//
+// This runs on "pointerdown" rather than "click": focusWord() scrolls the
+// matching clue into view as part of handling focus, and on a touchscreen
+// a scroll that happens between touchstart and touchend can make the
+// browser cancel the click event entirely (it reinterprets the touch as a
+// scroll instead of a tap). Using pointerdown means the toggle still
+// fires reliably even when that scroll cancels the click.
+function onCellPointerDown(r, c){
+  const isRepeatTap = !!(lastClickCell && lastClickCell.r === r && lastClickCell.c === c && activeWord);
+  lastClickCell = { r, c };
+  if(!isRepeatTap) return; // fresh landing: the upcoming "focus" event picks the default word
+  const candidates = wordsAtCell(r, c);
+  if(candidates.length < 2) return;
+  const other = candidates.find(w => w.dir !== activeWord.dir);
+  if(other) focusWord(other, r, c);
+}
+
+function focusWord(word, r, c){
+  if(!word) return;
+  activeWord = word;
+  document.querySelectorAll(".cell.active-word").forEach(x => x.classList.remove("active-word"));
+  document.querySelectorAll(".clues li.active").forEach(x => x.classList.remove("active"));
+  for(let i=0;i<word.len;i++){
+    const rr = word.dir === "down" ? word.row + i : word.row;
+    const cc = word.dir === "across" ? word.col + i : word.col;
+    const input = inputs[rr] && inputs[rr][cc];
+    if(input) input.closest(".cell").classList.add("active-word");
+  }
+  const li = document.querySelector(`.clues li[data-number="${word.number}"][data-dir="${word.dir}"]`);
+  if(li){ li.classList.add("active"); li.scrollIntoView({block:"nearest"}); }
+  updateActiveClueBar(word);
+  if(typeof r === "number" && typeof c === "number" && inputs[r][c] && document.activeElement !== inputs[r][c]){
+    inputs[r][c].focus();
+  }
+}
+
+// Keeps the mobile "active clue" bar (shown just above the grid, below the
+// 720px breakpoint where the clue list is a visible side panel instead) in
+// sync with whichever word is currently focused, so a tap on a numbered
+// cell shows its clue without needing to scroll down to the clue list.
+function updateActiveClueBar(word){
+  if(!el.activeClueBar || !el.activeClueNumber || !el.activeClueText) return;
+  if(!word || !currentLang){
+    el.activeClueBar.classList.add("hidden");
+    return;
+  }
+  const dirLabel = word.dir === "across" ? STR[currentLang].acrossShort : STR[currentLang].downShort;
+  el.activeClueNumber.textContent = `${word.number} ${dirLabel}`;
+  el.activeClueText.textContent = `${word.clue}　(${word.len})`;
+  el.activeClueBar.classList.remove("hidden");
+}
+
+function onCellInput(e){
+  // While an IME (romaji -> kana/hangul) is composing, the browser fires
+  // several "input" events for a single character the user is typing.
+  // Advancing focus on each of those was the bug: it kept moving to the
+  // next cell mid-composition, spilling one intended letter across
+  // several cells. So during composition we do nothing and wait for the
+  // official "compositionend" event below.
+  if(e.isComposing || isComposing) return;
+  clearTimeout(compositionSettleTimer);
+  commitCellValue(e.target);
+}
+
+function onCompositionStart(){
+  isComposing = true;
+  clearTimeout(compositionSettleTimer);
+}
+
+function onCompositionEnd(e){
+  isComposing = false;
+  clearTimeout(compositionSettleTimer);
+  commitCellValue(e.target);
+}
+
+// Each cell only ever holds one character, so as soon as a kana/hangul
+// composition has produced one, there is nothing left to type in that
+// cell — but the browser doesn't know that, and (Korean especially) won't
+// fire "compositionend" on its own until something else happens: another
+// keystroke, tapping away, or pressing Enter. Left alone, that meant the
+// cell never advanced without an explicit Enter press. This watches for
+// the composition going quiet with a character already in it and, after a
+// short pause, treats it as finished and advances — without waiting for
+// the browser's own compositionend, which will still arrive harmlessly
+// later (composing text is already in input.value long before then, so
+// re-running commitCellValue on it is a no-op).
+function onCompositionUpdate(e){
+  clearTimeout(compositionSettleTimer);
+  const input = e.target;
+  compositionSettleTimer = setTimeout(() => {
+    if(input.value) commitCellValue(input);
+  }, 400);
+}
+
+function commitCellValue(input){
+  input.value = input.value.slice(-1).toUpperCase();
+  input.closest(".cell").classList.remove("correct", "wrong");
+  if(input.value && activeWord){
+    const r = Number(input.dataset.r), c = Number(input.dataset.c);
+    const next = nextCellInWord(activeWord, r, c, 1);
+    if(next) next.focus();
+  }
+}
+
+function onCellKeydown(e){
+  const r = Number(e.target.dataset.r), c = Number(e.target.dataset.c);
+  if(e.key === "Backspace" && !e.target.value && activeWord){
+    const prev = nextCellInWord(activeWord, r, c, -1);
+    if(prev){ prev.focus(); prev.value = ""; e.preventDefault(); }
+    return;
+  }
+  let dr=0, dc=0;
+  if(e.key === "ArrowRight") dc=1;
+  else if(e.key === "ArrowLeft") dc=-1;
+  else if(e.key === "ArrowDown") dr=1;
+  else if(e.key === "ArrowUp") dr=-1;
+  else return;
+  e.preventDefault();
+  const target = inputs[r+dr] && inputs[r+dr][c+dc];
+  if(target) target.focus();
+}
+
+function nextCellInWord(word, r, c, step){
+  if(word.dir === "across"){
+    const nc = c + step;
+    if(nc < word.col || nc >= word.col + word.len) return null;
+    return inputs[r][nc];
+  } else {
+    const nr = r + step;
+    if(nr < word.row || nr >= word.row + word.len) return null;
+    return inputs[nr][c];
+  }
+}
+
+function checkAnswers(){
+  const { grid, rows, cols } = puzzle;
+  let allFilled = true, allCorrect = true;
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const letter = grid[r][c];
+      if(!letter) continue;
+      const input = inputs[r][c];
+      const cellDiv = input.closest(".cell");
+      cellDiv.classList.remove("correct","wrong");
+      if(!input.value){ allFilled = false; continue; }
+      if(input.value === letter.toUpperCase()){
+        cellDiv.classList.add("correct");
+      } else {
+        cellDiv.classList.add("wrong");
+        allCorrect = false;
+      }
+    }
+  }
+  const s = STR[currentLang];
+  if(!allFilled) setStatus(s.statusIncomplete, "");
+  else if(allCorrect) setStatus(s.statusCorrect, "correct");
+  else setStatus(s.statusWrong, "wrong");
+}
+
+function revealAnswers(){
+  const { grid, rows, cols } = puzzle;
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const letter = grid[r][c];
+      if(!letter) continue;
+      const input = inputs[r][c];
+      input.value = letter.toUpperCase();
+      const cellDiv = input.closest(".cell");
+      cellDiv.classList.remove("wrong");
+      cellDiv.classList.add("correct");
+    }
+  }
+  setStatus(STR[currentLang].revealed, "correct");
+}
+
+/* ---------------------------------------------------------
+   5. WIRE UP CONTROLS
+--------------------------------------------------------- */
+document.querySelectorAll(".lang-card").forEach(btn => {
+  btn.addEventListener("click", () => selectLanguage(btn.dataset.lang));
+});
+document.getElementById("backToHomeBtn").addEventListener("click", goToHome);
+document.getElementById("backToDiffBtn").addEventListener("click", goToDifficulty);
+
+document.getElementById("topicSelect").addEventListener("change", (e) => {
+  currentTopic = e.target.value;
+  newPuzzle();
+});
+document.getElementById("newPuzzleBtn").addEventListener("click", newPuzzle);
+document.getElementById("checkBtn").addEventListener("click", checkAnswers);
+document.getElementById("revealBtn").addEventListener("click", revealAnswers);
+
+/* ---------------------------------------------------------
+   5b. LIGHT / DARK TOGGLE
+   The page already follows the OS's light/dark preference via
+   prefers-color-scheme (see :root vs. the dark media query in <style>).
+   This button lets a visitor override that for the current visit:
+   manualTheme stays null (follow the system) until they click, then
+   flips to an explicit "light"/"dark" that's written to
+   documentElement's data-theme attribute, which the CSS already knows
+   how to honor. There's no localStorage here (artifacts don't get
+   persistent storage), so the override only lasts for this page load.
+--------------------------------------------------------- */
+const themeToggleBtn = document.getElementById("themeToggleBtn");
+let manualTheme = null;
+function systemPrefersDark(){
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+function isDarkNow(){
+  return manualTheme ? manualTheme === "dark" : systemPrefersDark();
+}
+function applyTheme(){
+  if(manualTheme){
+    document.documentElement.setAttribute("data-theme", manualTheme);
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+  }
+  themeToggleBtn.textContent = isDarkNow() ? "☀️" : "🌙";
+}
+themeToggleBtn.addEventListener("click", () => {
+  manualTheme = isDarkNow() ? "light" : "dark";
+  applyTheme();
+});
+applyTheme();
+
+/* ---------------------------------------------------------
+   5c. FOOTER INFO MODAL (使い方 / よくある質問 / 運営者情報 / プライバシーポリシー)
+--------------------------------------------------------- */
+const INFO_CONTENT = {
+  howto: {
+    title: "使い方",
+    body: `
+      <ol>
+        <li>遊びたい言語（日本語・한국어・English）を選びます。</li>
+        <li>難易度（初級・中級・上級）を選ぶと、その場でパズルが生成されます。</li>
+        <li>マスをクリック（タップ）すると、そのマスを含む単語がハイライトされます。右側のヒント一覧をクリックしても同じマスに移動します。</li>
+        <li>そのままキーボードで文字を入力すると、自動的に次のマスへ進みます。矢印キーでもマスを移動できます。</li>
+        <li>「答え合わせ」を押すと、正解・不正解のマスが色分け表示されます。</li>
+        <li>「答えを見る」を押すと、すべての答えが表示されます。</li>
+        <li>「新しいパズル」を押すと、同じ言語・難易度のままランダムに新しいパズルが生成されます。お題（テーマ）も切り替えられます。</li>
+      </ol>`
+  },
+  faq: {
+    title: "よくある質問",
+    body: `
+      <h3>Q. 同じ難易度でも毎回問題数が違うのはなぜですか？</h3>
+      <p>パズルはブラウザ上でランダムに生成されています。単語同士がどう重なるかによって配置できる語数が変わるため、出題数は毎回多少前後します。</p>
+      <h3>Q. 入力した答えは保存されますか？</h3>
+      <p>保存されません。ページを離れたり「新しいパズル」を押したりすると、それまでの入力は消えます。</p>
+      <h3>Q. スマートフォンでも遊べますか？</h3>
+      <p>はい。スマートフォンやタブレットのブラウザからもそのまま遊べます。</p>
+      <h3>Q. 料金はかかりますか？</h3>
+      <p>現在、本サイトは無料でご利用いただけます。</p>
+      <h3>Q. 間違いや要望を伝えたいです</h3>
+      <p>フッターの「お問い合わせ」フォームからご連絡ください。</p>`
+  },
+  about: {
+    title: "運営者情報",
+    body: `
+      <p>本サイト「多言語クロスワード」は、個人（FD）が開発・運営しています。</p>
+      <p>日本語・한국어・English、3つの言語でクロスワードパズルを楽しめるサイトを目指して制作しています。</p>
+      <p>お問い合わせはフッターの「お問い合わせ」フォームよりお願いいたします。</p>`
+  },
+  privacy: {
+    title: "プライバシーポリシー",
+    body: `
+      <h3>取得する情報について</h3>
+      <p>本サイトのクロスワードパズルは、生成・採点まですべてお使いのブラウザ内で完結しており、入力した回答などの情報をサーバーに送信・保存することはありません。</p>
+      <h3>アクセス解析・広告について</h3>
+      <p>本サイトでは、サービス改善や広告配信のために、アクセス解析ツールや第三者配信の広告サービス（Google Analytics、Google アドセンスなど）を利用する場合があります。これらのサービスは Cookie 等を用いてアクセス情報を取得することがありますが、氏名・住所など個人を特定できる情報は含まれません。詳細は各サービス提供元のプライバシーポリシーをご確認ください。</p>
+      <h3>Cookie の無効化について</h3>
+      <p>お使いのブラウザの設定により、Cookie の送信を無効にすることができます。無効にした場合、一部機能がご利用いただけないことがあります。</p>
+      <h3>お問い合わせ</h3>
+      <p>個人情報の取り扱いに関するお問い合わせは、フッターの「お問い合わせ」フォームからご連絡ください。</p>
+      <h3>本ポリシーの変更について</h3>
+      <p>本ポリシーの内容は、法令の変更や本サイトの運営状況に応じて、予告なく変更される場合があります。</p>`
+  }
+};
+
+const infoModalOverlay = document.getElementById("infoModalOverlay");
+const infoModalTitle = document.getElementById("infoModalTitle");
+const infoModalBody = document.getElementById("infoModalBody");
+
+function openInfoModal(key){
+  const info = INFO_CONTENT[key];
+  if(!info) return;
+  infoModalTitle.textContent = info.title;
+  infoModalBody.innerHTML = info.body;
+  infoModalOverlay.classList.remove("hidden");
+  document.getElementById("infoModalClose").focus();
+}
+function closeInfoModal(){
+  infoModalOverlay.classList.add("hidden");
+}
+document.querySelectorAll(".footer-link[data-info]").forEach(btn => {
+  btn.addEventListener("click", () => openInfoModal(btn.dataset.info));
+});
+document.getElementById("infoModalClose").addEventListener("click", closeInfoModal);
+infoModalOverlay.addEventListener("click", (e) => {
+  if(e.target === infoModalOverlay) closeInfoModal();
+});
+window.addEventListener("keydown", (e) => {
+  if(e.key === "Escape" && !infoModalOverlay.classList.contains("hidden")) closeInfoModal();
+});
+
+const footerYearEl = document.getElementById("footerYear");
+if(footerYearEl) footerYearEl.textContent = new Date().getFullYear();
+
+/* ---------------------------------------------------------
+   6. INIT
+--------------------------------------------------------- */
+showView("home");
+
+})();
+</script>
+</body>
+</html>
