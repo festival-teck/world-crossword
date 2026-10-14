@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GK0SS0BLJ9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GK0SS0BLJ9');
+</script>
+<title>遊び方｜多言語クロスワード</title>
+<meta name="description" content="多言語クロスワードの遊び方。言語と難易度の選び方、マスへの文字の入力方法、答え合わせ、8つのお題、日本語・韓国語・英語それぞれの入力のコツを解説します。">
+<link rel="canonical" href="https://crossword.labfond.com/howto.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="遊び方｜多言語クロスワード">
+<meta property="og:description" content="多言語クロスワードの遊び方。言語と難易度の選び方、マスへの文字の入力方法、答え合わせ、8つのお題、日本語・韓国語・英語それぞれの入力のコツを解説します。">
+<meta property="og:url" content="https://crossword.labfond.com/howto.html">
+<meta property="og:image" content="https://crossword.labfond.com/og-image.png">
+<meta name="theme-color" content="#EFF3EA">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#EFF3EA; --panel:#F7FAF3; --line:#C7D2BE; --ink:#223022; --ink-soft:#556354; --accent:#E07B10; --accent-soft:#F3D6AE; color-scheme: light dark; }
+  @media (prefers-color-scheme: dark) { :root { --paper:#171D16; --panel:#1E2620; --line:#3A4636; --ink:#EAF0E4; --ink-soft:#AFBBA6; --accent:#F2A24E; --accent-soft:#4A3A22; } }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Segoe UI", sans-serif; line-height: 1.85; padding: 24px 16px calc(40px + env(safe-area-inset-bottom, 0px)); }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  .brand { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 1.05rem; color: var(--ink); text-decoration: none; }
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .play { font-size: 0.85rem; font-weight: 700; color: var(--accent); text-decoration: none; }
+  h1 { font-family: 'Fraunces', Georgia, 'Hiragino Mincho ProN', serif; font-size: 1.6rem; margin: 0 0 6px; }
+  .lead { color: var(--ink-soft); font-size: 0.9rem; margin: 0 0 20px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px 22px 8px; }
+  h2 { font-size: 1.05rem; margin: 26px 0 8px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .panel > h2:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+  h3 { font-size: 0.95rem; margin: 18px 0 4px; }
+  p, li { font-size: 0.93rem; }
+  ul, ol { padding-left: 1.4em; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 6px 0 14px; }
+  th, td { border-bottom: 1px solid var(--line); padding: 7px 6px; text-align: left; vertical-align: top; }
+  th { color: var(--ink-soft); font-size: 0.8rem; }
+  td:first-child, th:first-child { white-space: nowrap; }
+  .cta { display: inline-block; margin: 4px 0 18px; padding: 10px 20px; border-radius: 999px; background: var(--accent); color: #fff !important; text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+  .muted { color: var(--ink-soft); font-size: 0.82rem !important; }
+  footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--line); text-align: center; font-size: 0.78rem; color: var(--ink-soft); }
+  footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; margin-bottom: 8px; }
+  footer a { color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="/">多言語クロスワード</a>
+    <a class="play" href="/">パズルで遊ぶ →</a>
+  </div>
+  <h1>遊び方</h1>
+  <p class="lead">日本語・한국어・English の3つの言語で遊べるクロスワードの遊び方を紹介します。</p>
+  <div class="panel">
+    <h2>基本の遊び方</h2>
+    <ol>
+      <li>トップページで、遊びたい言語（日本語・한국어・English）を選びます。</li>
+      <li>難易度（初級・中級・上級）を選ぶと、その場でパズルが自動生成されます。</li>
+      <li>マスをクリック（タップ）すると、そのマスを含む単語がハイライトされます。ヒント一覧の項目をクリックしても、対応するマスに移動できます。</li>
+      <li>キーボードで文字を入力すると、自動で次のマスに進みます。矢印キーでもマスを移動できます。</li>
+      <li>「答え合わせ」を押すと、正解のマスと間違っているマスが色分けして表示されます。</li>
+      <li>わからないときは「答えを見る」で、すべての答えを表示できます。</li>
+      <li>「新しいパズル」を押すと、同じ言語・難易度のまま新しいパズルが作られます。お題（テーマ）もここで切り替えられます。</li>
+    </ol>
+
+    <h2>お題（テーマ）</h2>
+    <p>お題を選ぶと、そのテーマの単語だけでパズルが作られます。</p>
+    <table>
+      <thead><tr><th>お題</th><th>日本語</th><th>한국어</th><th>English</th></tr></thead>
+      <tbody>
+        <tr><td>果物</td><td>○</td><td>○</td><td>○</td></tr>
+        <tr><td>動物</td><td>○</td><td>○</td><td>○</td></tr>
+        <tr><td>野菜</td><td>○</td><td>○</td><td>○</td></tr>
+        <tr><td>仕事</td><td>○</td><td>○</td><td>○</td></tr>
+        <tr><td>運動</td><td>○</td><td>—</td><td>○</td></tr>
+        <tr><td>乗り物</td><td>○</td><td>—</td><td>○</td></tr>
+        <tr><td>国</td><td>○</td><td>○</td><td>○</td></tr>
+        <tr><td>自由（いろいろな単語）</td><td>○</td><td>○</td><td>○</td></tr>
+      </tbody>
+    </table>
+    <p class="muted">※「運動」と「乗り物」は、現在、日本語と英語のみで遊べます。</p>
+
+    <h2>難易度</h2>
+    <table>
+      <thead><tr><th>難易度</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td>初級</td><td>短くて身近な単語が中心。はじめての人や、外国語の単語に慣れたい人におすすめです。</td></tr>
+        <tr><td>中級</td><td>長めの単語も混ざり、少し考えごたえが出てきます。</td></tr>
+        <tr><td>上級</td><td>すべての単語から出題されます。なじみの薄い単語にも挑戦したい人向けです。</td></tr>
+      </tbody>
+    </table>
+    <p>パズルは毎回ランダムに生成されるため、単語の重なり方によって出題数は少しずつ変わります。</p>
+
+    <h2>言語ごとの入力のコツ</h2>
+    <h3>日本語</h3>
+    <p>1マスに1文字ずつ、<b>ひらがな</b>で入力します。カタカナの言葉も、ひらがなで入力してください（例：「バナナ」は「ばなな」）。</p>
+    <h3>한국어（韓国語）</h3>
+    <p>1マスにハングルを1文字（1音節）ずつ入力します。韓国語のキーボード入力を有効にしておくと、スムーズに入力できます。</p>
+    <h3>English（英語）</h3>
+    <p>1マスにアルファベットを1文字ずつ入力します。小文字で入力しても、自動で大文字に変換されます。</p>
+    <p class="muted">日本語や韓国語の入力中（変換が確定する前）は、文字が確定してから次のマスへ進みます。</p>
+
+    <h2>語学の練習にも</h2>
+    <p>ヒントは、選んだ言語で書かれています。韓国語や英語のパズルは、ヒントを読んで答えを考えることで、単語と意味をセットで覚える練習にもなります。まずは初級の「果物」や「動物」など、身近なお題から始めてみてください。</p>
+    <a class="cta" href="/">パズルで遊ぶ →</a>
+  </div>
+  <footer>
+    <nav>
+      <a href="/">パズルで遊ぶ</a>
+      <a href="/howto.html">使い方</a>
+      <a href="/faq.html">よくある質問</a>
+      <a href="/about.html">運営者情報</a>
+      <a href="/privacy.html">プライバシーポリシー</a>
+      <a href="https://docs.google.com/forms/d/1ul9e318yHhixHOjYTOZlA2eYhhNiN5sS4JxnIKr2HPA/viewform" target="_blank" rel="noopener noreferrer">お問い合わせ</a>
+    </nav>
+    <p>&copy; 2026 多言語クロスワード（<a href="https://labfond.com/">labfond</a>）</p>
+  </footer>
+</div>
+</body>
+</html>
