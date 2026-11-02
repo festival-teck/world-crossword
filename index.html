@@ -470,6 +470,16 @@
     .theme-toggle { top: 20px; right: 20px; }
   }
 
+  /* ---- home intro (static description for readers & crawlers) ---- */
+  .home-intro { margin: 28px auto 0; max-width: 720px; background: var(--paper-panel); border: 1px solid var(--grid-line); border-radius: 14px; padding: 20px 22px 10px; line-height: 1.85; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", sans-serif; }
+  .home-intro h2 { font-family: 'Fraunces', Georgia, 'Hiragino Mincho ProN', serif; font-size: 1.15rem; margin: 0 0 8px; }
+  .home-intro h3 { font-size: 0.95rem; margin: 16px 0 4px; }
+  .home-intro p, .home-intro li { font-size: 0.9rem; }
+  .home-intro ol { padding-left: 1.4em; margin: 4px 0 10px; }
+  .home-intro a { color: var(--accent); }
+  .home-intro-links { font-size: 0.85rem !important; }
+  .home-intro-sub { font-size: 0.82rem !important; color: var(--ink-soft); margin: 6px 0; }
+
   /* ---- site-wide footer ---- */
   .site-footer {
     max-width: 920px;
@@ -593,6 +603,23 @@
         <span class="caption">ENGLISH</span>
       </button>
     </div>
+    <section class="home-intro">
+      <h2>3つの言語で遊べる、無料のクロスワード</h2>
+      <p>「多言語クロスワード」は、日本語・한국어（韓国語）・English（英語）の中から言語を選んで遊べるクロスワードパズルです。言語と難易度を選ぶと、その場で新しいパズルが自動で作られるので、何度でも違う問題に挑戦できます。会員登録やアプリのインストールは不要で、スマートフォンでもパソコンでも遊べます。</p>
+      <h3>遊び方</h3>
+      <ol>
+        <li>上のボタンから、遊びたい言語を選びます。</li>
+        <li>初級・中級・上級から難易度を選ぶと、パズルが表示されます。</li>
+        <li>マスを選んで文字を入力し、「答え合わせ」で正解を確認します。</li>
+      </ol>
+      <h3>お題と難易度</h3>
+      <p>果物・動物・野菜・仕事・運動・乗り物・国・自由（いろいろな単語）の8つのお題があります（韓国語は運動・乗り物を除く6つ）。初級は短くて身近な単語が中心、上級ではすべての単語から出題されます。</p>
+      <h3>語学の練習にも</h3>
+      <p>ヒントは選んだ言語で書かれています。韓国語や英語のパズルは、ヒントの説明文を読んで答えを考えることで、単語を意味とセットで覚える練習になります。</p>
+      <p class="home-intro-links"><a href="/howto.html">くわしい遊び方</a>・<a href="/faq.html">よくある質問</a>・<a href="https://labfond.com/articles/word-memory.html">単語を忘れにくくするコツ</a></p>
+      <p class="home-intro-sub" lang="ko">일본어·한국어·영어로 즐기는 무료 크로스워드 퍼즐입니다. 언어와 난이도를 고르면 새로운 퍼즐이 자동으로 만들어집니다.</p>
+      <p class="home-intro-sub" lang="en">A free crossword you can play in Japanese, Korean or English. Pick a language and difficulty, and a fresh puzzle is generated instantly.</p>
+    </section>
   </div>
 
   <!-- SCREEN 2: difficulty picker -->
